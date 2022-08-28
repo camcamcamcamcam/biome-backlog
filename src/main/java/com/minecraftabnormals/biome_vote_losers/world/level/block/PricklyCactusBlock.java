@@ -9,6 +9,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.BushBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -17,7 +18,7 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 
-public class PricklyCactusBlock extends BushBlock {
+public class PricklyCactusBlock extends BushBlock implements BonemealableBlock {
 	public static final IntegerProperty AGE = IntegerProperty.create("age", 0, 2);
 
 	public PricklyCactusBlock(BlockBehaviour.Properties properties) {
@@ -31,7 +32,7 @@ public class PricklyCactusBlock extends BushBlock {
 
 	public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
 		int i = state.getValue(AGE);
-		if (i < 3 && level.getRawBrightness(pos.above(), 0) >= 9 && net.minecraftforge.common.ForgeHooks.onCropsGrowPre(level, pos, state, random.nextInt(5) == 0)) {
+		if (i < 2 && level.getRawBrightness(pos.above(), 0) >= 9 && net.minecraftforge.common.ForgeHooks.onCropsGrowPre(level, pos, state, random.nextInt(5) == 0)) {
 			BlockState blockstate = state.setValue(AGE, Integer.valueOf(i + 1));
 			level.setBlock(pos, blockstate, 2);
 			level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(blockstate));
@@ -64,4 +65,21 @@ public class PricklyCactusBlock extends BushBlock {
 		return state.is(BlockTags.DIRT) || state.is(BlockTags.SAND);
 	}
 
+	@Override
+	public boolean isValidBonemealTarget(BlockGetter p_50897_, BlockPos p_50898_, BlockState p_50899_, boolean p_50900_) {
+		return p_50899_.getValue(AGE) < 2;
+	}
+
+	@Override
+	public boolean isBonemealSuccess(Level p_220878_, RandomSource p_220879_, BlockPos p_220880_, BlockState p_220881_) {
+		return true;
+	}
+
+	@Override
+	public void performBonemeal(ServerLevel level, RandomSource randomSource, BlockPos pos, BlockState state) {
+		int i = state.getValue(AGE);
+		BlockState blockstate = state.setValue(AGE, Integer.valueOf(i + 1));
+		level.setBlock(pos, blockstate, 2);
+		level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(blockstate));
+	}
 }
