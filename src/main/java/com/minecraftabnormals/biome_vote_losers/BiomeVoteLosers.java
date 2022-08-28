@@ -1,11 +1,14 @@
 package com.minecraftabnormals.biome_vote_losers;
 
+import com.minecraftabnormals.biome_vote_losers.client.ClientRegistrar;
 import com.minecraftabnormals.biome_vote_losers.register.ModBlocks;
 import com.minecraftabnormals.biome_vote_losers.register.ModItems;
 import com.mojang.logging.LogUtils;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -30,7 +33,7 @@ public class BiomeVoteLosers {
 
         modEventBus.addListener(this::commonSetup);
         MinecraftForge.EVENT_BUS.register(this);
-
+        DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientRegistrar::setup));
     }
 
     public static ResourceLocation prefix(String name) {
