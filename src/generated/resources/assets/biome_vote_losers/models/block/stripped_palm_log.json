@@ -1,7 +1,6 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "minecraft:block/cube_column",
   "textures": {
-    "all": "biome_vote_losers:block/stripped_palm_log",
     "end": "biome_vote_losers:block/stripped_palm_log_top",
     "side": "biome_vote_losers:block/stripped_palm_log"
   }

@@ -32,8 +32,8 @@ public class BlockstateGenerator extends BlockStateProvider {
 		this.leavesTintBlock(ModBlocks.PALM_LEAVES.get());
 		// todo PALM_LEAVES_HANGING
 		this.logBlock(ModBlocks.STRIPPED_PALM_LOG.get());
-		this.simpleBlock(ModBlocks.PALM_WOOD.get(), cubeAll(ModBlocks.PALM_LOG.get()));
-		this.simpleBlock(ModBlocks.STRIPPED_PALM_WOOD.get(), cubeAll(ModBlocks.STRIPPED_PALM_LOG.get()));
+		this.simpleBlock(ModBlocks.PALM_WOOD.get(), texture(name(ModBlocks.PALM_LOG.get())));
+		this.simpleBlock(ModBlocks.STRIPPED_PALM_WOOD.get(), texture(name(ModBlocks.STRIPPED_PALM_LOG.get())));
 		// todo fix logs and wood looking the same
 		this.simpleBlock(ModBlocks.PALM_PLANKS.get());
 		this.stairs(ModBlocks.PALM_STAIRS.get(), ModBlocks.PALM_PLANKS.get());
@@ -53,6 +53,15 @@ public class BlockstateGenerator extends BlockStateProvider {
 		this.pressurePlateBlock(ModBlocks.PALM_PRESSURE_PLATE.get(), texture(name(ModBlocks.PALM_PLANKS.get())));
 
 	}
+
+	public ModelFile cubeAll(Block block, ResourceLocation resourceLocation) {
+		return models().cubeAll(name(block), resourceLocation);
+	}
+
+	public void simpleBlock(Block block, ResourceLocation resourceLocation) {
+		simpleBlock(block, cubeAll(block, resourceLocation));
+	}
+
 
 	public void leavesTintBlock(Block block) {
 		ModelFile tint = models().singleTexture(name(block), mcLoc("minecraft:block/leaves"), "all", texture(name(block))).renderType("minecraft:cutout_mipped");

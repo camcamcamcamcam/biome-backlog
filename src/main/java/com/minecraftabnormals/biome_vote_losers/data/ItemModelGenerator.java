@@ -53,15 +53,15 @@ public class ItemModelGenerator extends ItemModelProvider {
 		this.toBlock(ModBlocks.PALM_PLANKS);
 		this.itemBlockFlat(ModBlocks.PALM_SAPLING);
 		// todo PALM_DOOR
-		this.toBlock(ModBlocks.PALM_TRAPDOOR);
-		this.toBlock(ModBlocks.PALM_FENCE);
+		this.toBlockModel(ModBlocks.PALM_TRAPDOOR.get(), "palm_trapdoor_bottom");
+		// todo PALM_FENCE INVENTORY
+		this.toBlockModel(ModBlocks.PALM_FENCE.get(), "palm_fence_post");
 		this.toBlock(ModBlocks.PALM_FENCE_GATE);
 		this.toBlock(ModBlocks.PALM_STAIRS);
 		this.toBlock(ModBlocks.PALM_SLAB);
 		this.toBlock(ModBlocks.PALM_BUTTON);
 		this.toBlock(ModBlocks.PALM_PRESSURE_PLATE);
 		// todo replace toBlock with the right method lol
-
 
 
 	}
