@@ -1,6 +1,87 @@
 {
   "variants": {
-    "": {
+    "distance=1,persistent=false,waterlogged=false": {
+      "model": "biome_vote_losers:block/palm_leaves"
+    },
+    "distance=1,persistent=false,waterlogged=true": {
+      "model": "biome_vote_losers:block/palm_leaves"
+    },
+    "distance=1,persistent=true,waterlogged=false": {
+      "model": "biome_vote_losers:block/palm_leaves"
+    },
+    "distance=1,persistent=true,waterlogged=true": {
+      "model": "biome_vote_losers:block/palm_leaves"
+    },
+    "distance=2,persistent=false,waterlogged=false": {
+      "model": "biome_vote_losers:block/palm_leaves"
+    },
+    "distance=2,persistent=false,waterlogged=true": {
+      "model": "biome_vote_losers:block/palm_leaves"
+    },
+    "distance=2,persistent=true,waterlogged=false": {
+      "model": "biome_vote_losers:block/palm_leaves"
+    },
+    "distance=2,persistent=true,waterlogged=true": {
+      "model": "biome_vote_losers:block/palm_leaves"
+    },
+    "distance=3,persistent=false,waterlogged=false": {
+      "model": "biome_vote_losers:block/palm_leaves"
+    },
+    "distance=3,persistent=false,waterlogged=true": {
+      "model": "biome_vote_losers:block/palm_leaves"
+    },
+    "distance=3,persistent=true,waterlogged=false": {
+      "model": "biome_vote_losers:block/palm_leaves"
+    },
+    "distance=3,persistent=true,waterlogged=true": {
+      "model": "biome_vote_losers:block/palm_leaves"
+    },
+    "distance=4,persistent=false,waterlogged=false": {
+      "model": "biome_vote_losers:block/palm_leaves"
+    },
+    "distance=4,persistent=false,waterlogged=true": {
+      "model": "biome_vote_losers:block/palm_leaves"
+    },
+    "distance=4,persistent=true,waterlogged=false": {
+      "model": "biome_vote_losers:block/palm_leaves"
+    },
+    "distance=4,persistent=true,waterlogged=true": {
+      "model": "biome_vote_losers:block/palm_leaves"
+    },
+    "distance=5,persistent=false,waterlogged=false": {
+      "model": "biome_vote_losers:block/palm_leaves"
+    },
+    "distance=5,persistent=false,waterlogged=true": {
+      "model": "biome_vote_losers:block/palm_leaves"
+    },
+    "distance=5,persistent=true,waterlogged=false": {
+      "model": "biome_vote_losers:block/palm_leaves"
+    },
+    "distance=5,persistent=true,waterlogged=true": {
+      "model": "biome_vote_losers:block/palm_leaves"
+    },
+    "distance=6,persistent=false,waterlogged=false": {
+      "model": "biome_vote_losers:block/palm_leaves"
+    },
+    "distance=6,persistent=false,waterlogged=true": {
+      "model": "biome_vote_losers:block/palm_leaves"
+    },
+    "distance=6,persistent=true,waterlogged=false": {
+      "model": "biome_vote_losers:block/palm_leaves"
+    },
+    "distance=6,persistent=true,waterlogged=true": {
+      "model": "biome_vote_losers:block/palm_leaves"
+    },
+    "distance=7,persistent=false,waterlogged=false": {
+      "model": "biome_vote_losers:block/palm_leaves"
+    },
+    "distance=7,persistent=false,waterlogged=true": {
+      "model": "biome_vote_losers:block/palm_leaves"
+    },
+    "distance=7,persistent=true,waterlogged=false": {
+      "model": "biome_vote_losers:block/palm_leaves"
+    },
+    "distance=7,persistent=true,waterlogged=true": {
       "model": "biome_vote_losers:block/palm_leaves"
     }
   }

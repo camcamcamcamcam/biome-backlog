@@ -23,7 +23,7 @@ public class ItemModelGenerator extends ItemModelProvider {
 
 	@Override
 	protected void registerModels() {
-		this.toBlock(ModBlocks.PRICKLY_CACTUS);
+		this.toBlockModel(ModBlocks.PRICKLY_CACTUS.get(), "prickly_cactus_0");
 		this.singleTex(ModItems.CACTUS_PAD);
 		this.singleTex(ModItems.PRICKLY_PEAR);
 
@@ -124,9 +124,8 @@ public class ItemModelGenerator extends ItemModelProvider {
 	}
 
 	private void toBlock(RegistryObject<? extends Block> b) {
-		toBlockModel(b.get(), "prickly_cactus_0");
+		toBlockModel(b.get(), ForgeRegistries.BLOCKS.getKey(b.get()).getPath());
 	}
-
 	private void toBlockModel(Block b, String model) {
 		toBlockModel(b, prefix("block/" + model));
 	}

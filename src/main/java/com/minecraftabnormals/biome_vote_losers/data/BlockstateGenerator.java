@@ -11,7 +11,6 @@ import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
@@ -26,11 +25,11 @@ public class BlockstateGenerator extends BlockStateProvider {
 		this.simpleBlock(ModBlocks.MOUND.get());
 		this.simpleBlock(ModBlocks.TERMITE_MOUND.get());
 
-		this.translucentBlock(ModBlocks.BAOBAB_LEAVES.get());
+		this.leavesTintBlock(ModBlocks.BAOBAB_LEAVES.get());
 		this.logBlock(ModBlocks.BAOBAB_TRUNK.get());
 
 		this.logBlock(ModBlocks.PALM_LOG.get());
-		this.translucentBlock(ModBlocks.PALM_LEAVES.get());
+		this.leavesTintBlock(ModBlocks.PALM_LEAVES.get());
 		// todo PALM_LEAVES_HANGING
 		this.logBlock(ModBlocks.STRIPPED_PALM_LOG.get());
 		this.simpleBlock(ModBlocks.PALM_WOOD.get(), cubeAll(ModBlocks.PALM_LOG.get()));
@@ -53,6 +52,18 @@ public class BlockstateGenerator extends BlockStateProvider {
 		this.buttonBlock(ModBlocks.PALM_BUTTON.get(), texture(name(ModBlocks.PALM_PLANKS.get())));
 		this.pressurePlateBlock(ModBlocks.PALM_PRESSURE_PLATE.get(), texture(name(ModBlocks.PALM_PLANKS.get())));
 
+	}
+
+	public void leavesTintBlock(Block block) {
+		ModelFile tint = models().singleTexture(name(block), mcLoc("minecraft:block/leaves"), "all", texture(name(block))).renderType("minecraft:cutout_mipped");
+		leavesBlock(block, tint);
+	}
+
+	private void leavesBlock(Block block, ModelFile model) {
+		getVariantBuilder(block).forAllStates(state ->
+				ConfiguredModel.builder()
+						.modelFile(model)
+						.build());
 	}
 
 	public void translucentBlock(Block block) {
