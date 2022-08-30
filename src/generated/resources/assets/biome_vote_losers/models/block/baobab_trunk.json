@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "biome_vote_losers:block/baobab_trunk_top",
+    "side": "biome_vote_losers:block/baobab_trunk"
+  }
+}

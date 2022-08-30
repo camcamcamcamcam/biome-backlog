@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "biome_vote_losers:block/palm_planks",
+    "side": "biome_vote_losers:block/palm_planks",
+    "top": "biome_vote_losers:block/palm_planks"
+  }
+}

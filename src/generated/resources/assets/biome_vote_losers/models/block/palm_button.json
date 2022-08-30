@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/button",
+  "textures": {
+    "texture": "biome_vote_losers:block/palm_planks"
+  }
+}

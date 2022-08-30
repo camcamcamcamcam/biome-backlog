@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "biome_vote_losers:block/stripped_palm_log_horizontal",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "biome_vote_losers:block/stripped_palm_log"
+    },
+    "axis=z": {
+      "model": "biome_vote_losers:block/stripped_palm_log_horizontal",
+      "x": 90
+    }
+  }
+}
