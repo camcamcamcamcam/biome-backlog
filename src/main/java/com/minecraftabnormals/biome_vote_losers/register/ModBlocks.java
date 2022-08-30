@@ -20,7 +20,7 @@ import java.util.function.Supplier;
 public class ModBlocks {
 	public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, BiomeVoteLosers.MODID);
 
-	public static final RegistryObject<Block> PRICKLY_CACTUS = noItemRegister("prickly_cactus", () -> new PricklyCactusBlock(BlockBehaviour.Properties.of(Material.CACTUS).noOcclusion().randomTicks().instabreak().sound(SoundType.WOOL)));
+	public static final RegistryObject<Block> PRICKLY_CACTUS = register("prickly_cactus", () -> new PricklyCactusBlock(BlockBehaviour.Properties.of(Material.CACTUS).noOcclusion().randomTicks().instabreak().sound(SoundType.WOOL)));
 
 
 	private static <T extends Block> RegistryObject<T> baseRegister(String name, Supplier<? extends T> block, Function<RegistryObject<T>, Supplier<? extends Item>> item) {
