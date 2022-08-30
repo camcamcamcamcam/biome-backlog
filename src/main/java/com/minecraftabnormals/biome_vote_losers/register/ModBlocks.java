@@ -5,8 +5,8 @@ import com.minecraftabnormals.biome_vote_losers.world.level.block.PricklyCactusB
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.grower.OakTreeGrower;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
 import net.minecraftforge.registries.DeferredRegister;
@@ -20,8 +20,32 @@ import java.util.function.Supplier;
 public class ModBlocks {
 	public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, BiomeVoteLosers.MODID);
 
-	public static final RegistryObject<Block> PRICKLY_CACTUS = register("prickly_cactus", () -> new PricklyCactusBlock(BlockBehaviour.Properties.of(Material.CACTUS).noOcclusion().randomTicks().instabreak().sound(SoundType.WOOL)));
+	public static final RegistryObject<PricklyCactusBlock> PRICKLY_CACTUS = register("prickly_cactus", () -> new PricklyCactusBlock(BlockBehaviour.Properties.of(Material.CACTUS).noOcclusion().randomTicks().instabreak().sound(SoundType.WOOL)));
 
+	public static final RegistryObject<Block> MOUND = register("mound", () -> new Block(BlockBehaviour.Properties.of(Material.CLAY)), CreativeModeTab.TAB_DECORATIONS);
+	public static final RegistryObject<Block> TERMITE_MOUND = register("termite_mound", () -> new Block(BlockBehaviour.Properties.of(Material.CLAY)), CreativeModeTab.TAB_DECORATIONS);
+
+	public static final RegistryObject<Block> BAOBAB_LEAVES = register("baobab_leaves", () -> new LeavesBlock(BlockBehaviour.Properties.of(Material.LEAVES).noOcclusion()), CreativeModeTab.TAB_DECORATIONS);
+	public static final RegistryObject<RotatedPillarBlock> BAOBAB_TRUNK = register("baobab_trunk", () -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD)), CreativeModeTab.TAB_BUILDING_BLOCKS);
+
+	public static final RegistryObject<RotatedPillarBlock> PALM_LOG = register("palm_log", () -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD)));
+	public static final RegistryObject<LeavesBlock> PALM_LEAVES = register("palm_leaves", () -> new LeavesBlock(BlockBehaviour.Properties.of(Material.LEAVES).noOcclusion()));
+	// todo public static final RegistryObject<Block> PALM_LEAVES_HANGING = register("hanging_palm_leaves", () -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD)));
+	public static final RegistryObject<RotatedPillarBlock> STRIPPED_PALM_LOG = register("stripped_palm_log", () -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD)));
+	public static final RegistryObject<Block> PALM_WOOD = register("palm_wood", () -> new Block(BlockBehaviour.Properties.of(Material.WOOD)));
+	public static final RegistryObject<Block> STRIPPED_PALM_WOOD = register("stripped_palm_wood", () -> new Block(BlockBehaviour.Properties.of(Material.WOOD)));
+	public static final RegistryObject<Block> PALM_PLANKS = register("palm_planks", () -> new Block(BlockBehaviour.Properties.of(Material.WOOD)));
+	public static final RegistryObject<Block> PALM_SAPLING = register("palm_sapling", () -> new SaplingBlock(new OakTreeGrower(), BlockBehaviour.Properties.of(Material.WOOD)));
+	public static final RegistryObject<DoorBlock> PALM_DOOR = register("palm_door", () -> new DoorBlock(BlockBehaviour.Properties.of(Material.WOOD)));
+	public static final RegistryObject<TrapDoorBlock> PALM_TRAPDOOR = register("palm_trapdoor", () -> new TrapDoorBlock(BlockBehaviour.Properties.of(Material.WOOD)));
+	// todo public static final RegistryObject<StandingSignBlock> PALM_SIGN = register("palm_sign", () -> new StandingSignBlock(BlockBehaviour.Properties.of(Material.WOOD), WoodType.OAK));
+	// todo public static final RegistryObject<WallSignBlock> PALM_WALL_SIGN = register("palm_wall_sign", () -> new WallSignBlock(BlockBehaviour.Properties.of(Material.WOOD), WoodType.OAK));
+	public static final RegistryObject<FenceBlock> PALM_FENCE = register("palm_fence", () -> new FenceBlock(BlockBehaviour.Properties.of(Material.WOOD)));
+	public static final RegistryObject<FenceGateBlock> PALM_FENCE_GATE = register("palm_fence_gate", () -> new FenceGateBlock(BlockBehaviour.Properties.of(Material.WOOD)));
+	public static final RegistryObject<StairBlock> PALM_STAIRS = register("palm_stairs", () -> new StairBlock(PALM_PLANKS.get().defaultBlockState(), BlockBehaviour.Properties.of(Material.WOOD)));
+	public static final RegistryObject<SlabBlock> PALM_SLAB = register("palm_slab", () -> new SlabBlock(BlockBehaviour.Properties.of(Material.WOOD)));
+	public static final RegistryObject<WoodButtonBlock> PALM_BUTTON = register("palm_button", () -> new WoodButtonBlock(BlockBehaviour.Properties.of(Material.WOOD)));
+	public static final RegistryObject<PressurePlateBlock> PALM_PRESSURE_PLATE = register("palm_pressure_plate", () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, BlockBehaviour.Properties.of(Material.WOOD)));
 
 	private static <T extends Block> RegistryObject<T> baseRegister(String name, Supplier<? extends T> block, Function<RegistryObject<T>, Supplier<? extends Item>> item) {
 		RegistryObject<T> register = BLOCKS.register(name, block);

@@ -26,6 +26,44 @@ public class ItemModelGenerator extends ItemModelProvider {
 		this.toBlock(ModBlocks.PRICKLY_CACTUS);
 		this.singleTex(ModItems.CACTUS_PAD);
 		this.singleTex(ModItems.PRICKLY_PEAR);
+
+		this.singleTex(ModItems.BAOBAB_FRUIT);
+
+		this.singleTex(ModItems.DATE);
+		this.singleTex(ModItems.COCONUT);
+		this.singleTex(ModItems.COCONUT_HALF);
+		this.singleTex(ModItems.COCONUT_CHUNK);
+		this.singleTex(ModItems.DESICCATED_COCONUT);
+		this.singleTex(ModItems.COCONUT_SHELL);
+
+		this.singleTex(ModItems.SUCCULENT_CUTTING);
+
+		this.itemBlockFlat(ModBlocks.MOUND);
+		this.toBlock(ModBlocks.TERMITE_MOUND);
+
+		this.toBlock(ModBlocks.BAOBAB_TRUNK);
+		this.toBlock(ModBlocks.BAOBAB_LEAVES);
+		// todo tint leaves
+
+		this.toBlock(ModBlocks.PALM_LOG);
+		this.toBlock(ModBlocks.PALM_LEAVES);
+		this.toBlock(ModBlocks.STRIPPED_PALM_LOG);
+		this.toBlock(ModBlocks.PALM_WOOD);
+		this.toBlock(ModBlocks.STRIPPED_PALM_WOOD);
+		this.toBlock(ModBlocks.PALM_PLANKS);
+		this.itemBlockFlat(ModBlocks.PALM_SAPLING);
+		// todo PALM_DOOR
+		this.toBlock(ModBlocks.PALM_TRAPDOOR);
+		this.toBlock(ModBlocks.PALM_FENCE);
+		this.toBlock(ModBlocks.PALM_FENCE_GATE);
+		this.toBlock(ModBlocks.PALM_STAIRS);
+		this.toBlock(ModBlocks.PALM_SLAB);
+		this.toBlock(ModBlocks.PALM_BUTTON);
+		this.toBlock(ModBlocks.PALM_PRESSURE_PLATE);
+		// todo replace toBlock with the right method lol
+
+
+
 	}
 
 	private ItemModelBuilder generated(String name, ResourceLocation... layers) {
