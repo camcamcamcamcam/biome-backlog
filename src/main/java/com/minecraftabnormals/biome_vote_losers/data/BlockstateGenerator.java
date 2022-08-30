@@ -22,8 +22,8 @@ public class BlockstateGenerator extends BlockStateProvider {
 
 	@Override
 	protected void registerStatesAndModels() {
-		this.simpleBlock(ModBlocks.MOUND.get());
-		this.simpleBlock(ModBlocks.TERMITE_MOUND.get());
+		this.logBlock(ModBlocks.MOUND.get());
+		this.simpleBlock(ModBlocks.TERMITE_MOUND.get()); // todo replace with log once texture is here
 
 		this.leavesTintBlock(ModBlocks.BAOBAB_LEAVES.get());
 		this.logBlock(ModBlocks.BAOBAB_TRUNK.get());
@@ -34,15 +34,13 @@ public class BlockstateGenerator extends BlockStateProvider {
 		this.logBlock(ModBlocks.STRIPPED_PALM_LOG.get());
 		this.simpleBlock(ModBlocks.PALM_WOOD.get(), texture(name(ModBlocks.PALM_LOG.get())));
 		this.simpleBlock(ModBlocks.STRIPPED_PALM_WOOD.get(), texture(name(ModBlocks.STRIPPED_PALM_LOG.get())));
-		// todo fix logs and wood looking the same
 		this.simpleBlock(ModBlocks.PALM_PLANKS.get());
 		this.stairs(ModBlocks.PALM_STAIRS.get(), ModBlocks.PALM_PLANKS.get());
 		this.slab(ModBlocks.PALM_SLAB.get(), ModBlocks.PALM_PLANKS.get());
 		this.crossBlock(ModBlocks.PALM_SAPLING.get());
 
-		this.doorBlock(ModBlocks.PALM_DOOR.get(), texture(name(ModBlocks.PALM_DOOR.get()) + "_bottom"), texture(name(ModBlocks.PALM_DOOR.get()) + "_top"));
-		this.trapdoorBlock(ModBlocks.PALM_TRAPDOOR.get(), texture(name(ModBlocks.PALM_TRAPDOOR.get())), true);
-		// todo make door and trapdoor transparent
+		this.doorBlockWithRenderType(ModBlocks.PALM_DOOR.get(), texture(name(ModBlocks.PALM_DOOR.get()) + "_bottom"), texture(name(ModBlocks.PALM_DOOR.get()) + "_top"), "cutout");
+		this.trapdoorBlockWithRenderType(ModBlocks.PALM_TRAPDOOR.get(), texture(name(ModBlocks.PALM_TRAPDOOR.get())), true, "cutout");
 
 		// todo PALM_SIGN
 		// todo PALM_WALL_SIGN

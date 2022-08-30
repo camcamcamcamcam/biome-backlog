@@ -1,6 +1,3 @@
 {
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "biome_vote_losers:block/mound"
-  }
+  "parent": "biome_vote_losers:block/mound"
 }

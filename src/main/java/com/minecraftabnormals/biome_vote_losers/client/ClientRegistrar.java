@@ -24,4 +24,11 @@ public class ClientRegistrar {
 			return reader != null && pos != null ? BiomeColors.getAverageFoliageColor(reader, pos) : FoliageColor.getDefaultColor();
 		}, ModBlocks.BAOBAB_LEAVES.get(), ModBlocks.PALM_LEAVES.get());
 	}
+
+	@SubscribeEvent
+	public static void registerItemColor(RegisterColorHandlersEvent.Item event) {
+		event.register((stack, i) -> {
+			return FoliageColor.getDefaultColor();
+		}, ModBlocks.BAOBAB_LEAVES.get().asItem());
+	}
 }

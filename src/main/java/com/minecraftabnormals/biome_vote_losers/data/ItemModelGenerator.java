@@ -38,12 +38,11 @@ public class ItemModelGenerator extends ItemModelProvider {
 
 		this.singleTex(ModItems.SUCCULENT_CUTTING);
 
-		this.itemBlockFlat(ModBlocks.MOUND);
+		this.toBlock(ModBlocks.MOUND);
 		this.toBlock(ModBlocks.TERMITE_MOUND);
 
 		this.toBlock(ModBlocks.BAOBAB_TRUNK);
 		this.toBlock(ModBlocks.BAOBAB_LEAVES);
-		// todo tint leaves
 
 		this.toBlock(ModBlocks.PALM_LOG);
 		this.toBlock(ModBlocks.PALM_LEAVES);
@@ -52,16 +51,14 @@ public class ItemModelGenerator extends ItemModelProvider {
 		this.toBlock(ModBlocks.STRIPPED_PALM_WOOD);
 		this.toBlock(ModBlocks.PALM_PLANKS);
 		this.itemBlockFlat(ModBlocks.PALM_SAPLING);
-		// todo PALM_DOOR
+		this.basicItem(ModBlocks.PALM_DOOR.get().asItem());
 		this.toBlockModel(ModBlocks.PALM_TRAPDOOR.get(), "palm_trapdoor_bottom");
-		// todo PALM_FENCE INVENTORY
-		this.toBlockModel(ModBlocks.PALM_FENCE.get(), "palm_fence_post");
+		this.woodenFence(ModBlocks.PALM_FENCE, ModBlocks.PALM_PLANKS);
 		this.toBlock(ModBlocks.PALM_FENCE_GATE);
 		this.toBlock(ModBlocks.PALM_STAIRS);
 		this.toBlock(ModBlocks.PALM_SLAB);
-		this.toBlock(ModBlocks.PALM_BUTTON);
+		this.woodenButton(ModBlocks.PALM_BUTTON, ModBlocks.PALM_PLANKS);
 		this.toBlock(ModBlocks.PALM_PRESSURE_PLATE);
-		// todo replace toBlock with the right method lol
 
 
 	}
@@ -105,10 +102,10 @@ public class ItemModelGenerator extends ItemModelProvider {
 				.override().predicate(new ResourceLocation("pulling"), 1).predicate(new ResourceLocation("pull"), (float) 0.9).model(pull2).end();
 	}
 
-	private void woodenButton(Block button, String variant) {
-		getBuilder(ForgeRegistries.BLOCKS.getKey(button).getPath())
+	private void woodenButton(RegistryObject<? extends Block> button, RegistryObject<Block> wood) {
+		getBuilder(ForgeRegistries.BLOCKS.getKey(button.get()).getPath())
 				.parent(getExistingFile(mcLoc("block/button_inventory")))
-				.texture("texture", "block/wood/planks_" + variant + "_0");
+				.texture("texture", "block/" + ForgeRegistries.BLOCKS.getKey(wood.get()).getPath());
 	}
 
 	private void woodenFence(RegistryObject<? extends Block> fence, RegistryObject<? extends Block> block) {
