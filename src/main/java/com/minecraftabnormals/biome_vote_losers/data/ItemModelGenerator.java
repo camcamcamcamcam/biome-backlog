@@ -23,7 +23,7 @@ public class ItemModelGenerator extends ItemModelProvider {
 
 	@Override
 	protected void registerModels() {
-		this.toBlockModel(ModBlocks.PRICKLY_CACTUS.get(), "prickly_cactus_0");
+		this.toBlockModel(ModBlocks.PEAR_CACTUS.get(), "pear_cactus_0");
 		this.singleTex(ModItems.CACTUS_PAD);
 		this.singleTex(ModItems.PRICKLY_PEAR);
 
@@ -43,9 +43,11 @@ public class ItemModelGenerator extends ItemModelProvider {
 
 		this.toBlock(ModBlocks.BAOBAB_TRUNK);
 		this.toBlock(ModBlocks.BAOBAB_LEAVES);
+		this.toBlock(ModBlocks.BAOBAB_FLOWER);
 
 		this.toBlock(ModBlocks.PALM_LOG);
 		this.toBlock(ModBlocks.PALM_LEAVES);
+		this.itemBlockFlat(ModBlocks.PALM_LEAVES_HANGING);
 		this.toBlock(ModBlocks.STRIPPED_PALM_LOG);
 		this.toBlock(ModBlocks.PALM_WOOD);
 		this.toBlock(ModBlocks.STRIPPED_PALM_WOOD);

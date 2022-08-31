@@ -6,7 +6,7 @@
     128
   ],
   "textures": {
-    "0": "biome_vote_losers:block/prickly_cactus",
+    "0": "biome_vote_losers:block/pear_cactus",
     "particle": "#0"
   },
   "elements": [

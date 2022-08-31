@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "hatch=0": {
+      "model": "biome_vote_losers:block/ostrich_egg_0"
+    },
+    "hatch=1": {
+      "model": "biome_vote_losers:block/ostrich_egg_1"
+    },
+    "hatch=2": {
+      "model": "biome_vote_losers:block/ostrich_egg_2"
+    }
+  }
+}

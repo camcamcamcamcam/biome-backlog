@@ -1,0 +1,21 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "biome_vote_losers:block/ostrich_egg_2",
+		"particle": "biome_vote_losers:block/ostrich_egg_2"
+	},
+	"elements": [
+		{
+			"from": [3, 0, 3],
+			"to": [13, 12, 13],
+			"faces": {
+				"north": {"uv": [0, 0, 5, 12], "texture": "#0"},
+				"east": {"uv": [0, 0, 5, 12], "texture": "#0"},
+				"south": {"uv": [0, 0, 5, 12], "texture": "#0"},
+				"west": {"uv": [0, 0, 5, 12], "texture": "#0"},
+				"up": {"uv": [5.5, 0, 10.5, 10], "texture": "#0"},
+				"down": {"uv": [11, 0, 16, 10], "texture": "#0"}
+			}
+		}
+	]
+}

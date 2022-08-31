@@ -22,7 +22,7 @@ public class ClientRegistrar {
 	public static void registerBlockColor(RegisterColorHandlersEvent.Block event) {
 		event.register((state, reader, pos, color) -> {
 			return reader != null && pos != null ? BiomeColors.getAverageFoliageColor(reader, pos) : FoliageColor.getDefaultColor();
-		}, ModBlocks.BAOBAB_LEAVES.get(), ModBlocks.PALM_LEAVES.get());
+		}, ModBlocks.BAOBAB_LEAVES.get());
 	}
 
 	@SubscribeEvent

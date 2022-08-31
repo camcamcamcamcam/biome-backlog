@@ -1,0 +1,57 @@
+{
+	"render_type": "minecraft:cutout",
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "biome_vote_losers:block/baobab_flower",
+		"particle": "biome_vote_losers:block/baobab_flower"
+	},
+	"elements": [
+		{
+			"from": [8.3, 7, 5.125],
+			"to": [8.3, 16, 10.125],
+			"rotation": {"angle": 45, "axis": "y", "origin": [8.675, 7, 8.025]},
+			"faces": {
+				"north": {"uv": [0, 0, 0, 1], "texture": "#0"},
+				"east": {"uv": [5, 0, 10, 9], "texture": "#0"},
+				"south": {"uv": [0, 0, 0, 1], "texture": "#0"},
+				"west": {"uv": [5, 0, 10, 9], "texture": "#0"},
+				"up": {"uv": [0, 0, 0, 5], "texture": "#0"},
+				"down": {"uv": [0, 0, 0, 5], "texture": "#0"}
+			}
+		},
+		{
+			"from": [8.275, 7, 5.875],
+			"to": [8.275, 16, 10.875],
+			"rotation": {"angle": -45, "axis": "y", "origin": [8.675, 7, 8.025]},
+			"faces": {
+				"north": {"uv": [0, 0, 0, 1], "texture": "#0"},
+				"east": {"uv": [5, 0, 10, 9], "texture": "#0"},
+				"south": {"uv": [0, 0, 0, 1], "texture": "#0"},
+				"west": {"uv": [5, 0, 10, 9], "texture": "#0"},
+				"up": {"uv": [0, 0, 0, 5], "rotation": 180, "texture": "#0"},
+				"down": {"uv": [0, 0, 0, 5], "rotation": 180, "texture": "#0"}
+			}
+		},
+		{
+			"from": [5.675, 14, 5.525],
+			"to": [10.675, 14, 10.525],
+			"rotation": {"angle": 0, "axis": "y", "origin": [5.675, -5, 5.525]},
+			"faces": {
+				"north": {"uv": [0, 0, 5, 0], "texture": "#0"},
+				"east": {"uv": [0, 0, 5, 0], "texture": "#0"},
+				"south": {"uv": [0, 0, 5, 0], "texture": "#0"},
+				"west": {"uv": [0, 0, 5, 0], "texture": "#0"},
+				"up": {"uv": [0, 0, 5, 5], "texture": "#0"},
+				"down": {"uv": [0, 0, 5, 5], "texture": "#0"}
+			}
+		}
+	],
+	"groups": [
+		{
+			"name": "group",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"children": [0, 1, 2]
+		}
+	]
+}

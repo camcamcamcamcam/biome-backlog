@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "biome_vote_losers:block/pear_cactus_0"
+    },
+    "age=1": {
+      "model": "biome_vote_losers:block/pear_cactus_1"
+    },
+    "age=2": {
+      "model": "biome_vote_losers:block/pear_cactus_2"
+    }
+  }
+}
