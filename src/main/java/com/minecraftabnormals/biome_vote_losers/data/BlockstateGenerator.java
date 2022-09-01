@@ -23,7 +23,7 @@ public class BlockstateGenerator extends BlockStateProvider {
 	@Override
 	protected void registerStatesAndModels() {
 		this.logBlock(ModBlocks.MOUND.get());
-		this.simpleBlock(ModBlocks.TERMITE_MOUND.get()); // todo replace with log once texture is here
+		this.axisBlock(ModBlocks.TERMITE_MOUND.get(), texture(name(ModBlocks.TERMITE_MOUND.get())), texture(name(ModBlocks.MOUND.get())+"_top"));
 
 		this.leavesTintBlock(ModBlocks.BAOBAB_LEAVES.get());
 		this.logBlock(ModBlocks.BAOBAB_TRUNK.get());

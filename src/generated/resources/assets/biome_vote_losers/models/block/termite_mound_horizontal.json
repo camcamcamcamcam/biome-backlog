@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:block/cube_column",
+  "parent": "minecraft:block/cube_column_horizontal",
   "textures": {
     "end": "biome_vote_losers:block/mound_top",
     "side": "biome_vote_losers:block/termite_mound"
