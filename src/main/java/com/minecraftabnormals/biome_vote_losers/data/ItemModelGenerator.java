@@ -28,6 +28,7 @@ public class ItemModelGenerator extends ItemModelProvider {
 		this.singleTex(ModItems.PRICKLY_PEAR);
 
 		this.singleTex(ModItems.BAOBAB_FRUIT);
+		this.basicItem(ModBlocks.OSTRICH_EGG.get().asItem());
 
 		this.singleTex(ModItems.DATE);
 		this.singleTex(ModItems.COCONUT);
