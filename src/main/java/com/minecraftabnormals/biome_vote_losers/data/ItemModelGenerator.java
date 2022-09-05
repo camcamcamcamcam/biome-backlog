@@ -87,7 +87,7 @@ public class ItemModelGenerator extends ItemModelProvider {
 		return builder;
 	}
 
-	private ItemModelBuilder singleTex(RegistryObject<Item> item) {
+	private ItemModelBuilder singleTex(RegistryObject<? extends Item> item) {
 		return generated(ForgeRegistries.ITEMS.getKey(item.get()).getPath(), prefix("item/" + ForgeRegistries.ITEMS.getKey(item.get()).getPath()));
 	}
 
