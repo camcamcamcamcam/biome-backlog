@@ -4,6 +4,7 @@ import com.minecraftabnormals.biome_vote_losers.BiomeVoteLosers;
 import com.minecraftabnormals.biome_vote_losers.world.level.item.VinegarBottleItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemNameBlockItem;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -13,6 +14,7 @@ public class ModItems {
 
 	public static final RegistryObject<Item> CACTUS_PAD = ITEMS.register("cactus_pad", () -> new Item((new Item.Properties()).tab(CreativeModeTab.TAB_MATERIALS)));
 	public static final RegistryObject<Item> PRICKLY_PEAR = ITEMS.register("prickly_pear", () -> new Item((new Item.Properties()).food(ModFoods.PRICKLY_PEAR).tab(CreativeModeTab.TAB_FOOD)));
+	public static final RegistryObject<Item> TUMBLEWEED_SEED = ITEMS.register("tumbleweed_seed", () -> new ItemNameBlockItem(ModBlocks.TUMBLEWEED.get(), new Item.Properties().tab(CreativeModeTab.TAB_MATERIALS)));
 
 	public static final RegistryObject<Item> BAOBAB_FRUIT = ITEMS.register("baobab_fruit", () -> new Item(new Item.Properties().food(ModFoods.BAOBAB_FRUIT).tab(CreativeModeTab.TAB_FOOD)));
 

@@ -1,10 +1,7 @@
 package com.minecraftabnormals.biome_vote_losers.register;
 
 import com.minecraftabnormals.biome_vote_losers.BiomeVoteLosers;
-import com.minecraftabnormals.biome_vote_losers.world.level.block.HangingLeavesBlock;
-import com.minecraftabnormals.biome_vote_losers.world.level.block.MoundBlock;
-import com.minecraftabnormals.biome_vote_losers.world.level.block.OstrichEggBlock;
-import com.minecraftabnormals.biome_vote_losers.world.level.block.PricklyCactusBlock;
+import com.minecraftabnormals.biome_vote_losers.world.level.block.*;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -26,6 +23,8 @@ public class ModBlocks {
 	// BADLANDS
 
 	public static final RegistryObject<PricklyCactusBlock> PEAR_CACTUS = register("pear_cactus", () -> new PricklyCactusBlock(BlockBehaviour.Properties.of(Material.CACTUS).noOcclusion().randomTicks().instabreak().sound(SoundType.WOOL)), CreativeModeTab.TAB_DECORATIONS);
+
+	public static final RegistryObject<TumbleWeedBlock> TUMBLEWEED = noItemRegister("tumbleweed", () -> new TumbleWeedBlock(BlockBehaviour.Properties.of(Material.PLANT).noOcclusion().randomTicks().instabreak().sound(SoundType.SWEET_BERRY_BUSH)));
 
 	// SAVANNA
 
