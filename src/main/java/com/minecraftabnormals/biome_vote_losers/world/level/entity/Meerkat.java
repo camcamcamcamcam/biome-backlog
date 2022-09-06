@@ -8,21 +8,27 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.AnimationState;
+import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.BreedGoal;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -31,34 +37,63 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 import java.util.UUID;
-import java.util.function.Predicate;
 
 public class Meerkat extends Animal {
 	private static final EntityDataAccessor<Optional<UUID>> DATA_TRUSTED_ID_0 = SynchedEntityData.defineId(Meerkat.class, EntityDataSerializers.OPTIONAL_UUID);
+	private static final EntityDataAccessor<Boolean> DATA_STANDING = SynchedEntityData.defineId(Meerkat.class, EntityDataSerializers.BOOLEAN);
 
-	public static final Predicate<Meerkat> TRUSTED_SELECTOR = (p_30226_) -> {
-		return p_30226_.isBaby() && !p_30226_.isInWater();
-	};
+	public static final EntityDimensions STANDING_DIMENSIONS = EntityDimensions.scalable(0.6F, 0.8F);
+
+	public final AnimationState standingAnimationState = new AnimationState();
+	public final AnimationState stopStandingAnimationState = new AnimationState();
 
 	public Meerkat(EntityType<? extends Meerkat> p_27557_, Level p_27558_) {
 		super(p_27557_, p_27558_);
+	}
+
+	public void onSyncedDataUpdated(EntityDataAccessor<?> p_29615_) {
+		if (DATA_STANDING.equals(p_29615_)) {
+			this.refreshDimensions();
+			if (this.isStanding()) {
+				this.standingAnimationState.start(this.tickCount);
+				this.stopStandingAnimationState.stop();
+			} else {
+				this.stopStandingAnimationState.start(this.tickCount);
+				this.standingAnimationState.stop();
+			}
+		}
+
+		super.onSyncedDataUpdated(p_29615_);
 	}
 
 	@Override
 	protected void defineSynchedData() {
 		super.defineSynchedData();
 		this.entityData.define(DATA_TRUSTED_ID_0, Optional.empty());
+		this.entityData.define(DATA_STANDING, false);
 	}
 
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(1, new FloatGoal(this));
 		this.goalSelector.addGoal(5, new MeleeAttackGoal(this, 1.25D, true));
-		this.goalSelector.addGoal(7, new BreedGoal(this, 0.85D));
-		this.goalSelector.addGoal(8, new WaterAvoidingRandomStrollGoal(this, 1.0D));
+		this.goalSelector.addGoal(6, new BreedGoal(this, 0.85D));
+		this.goalSelector.addGoal(7, new StandGoal(this));
+		this.goalSelector.addGoal(8, new StopStandGoal(this));
+		this.goalSelector.addGoal(9, new WaterAvoidingRandomStrollGoal(this, 1.0D) {
+			@Override
+			public boolean canUse() {
+				return !isStanding() && super.canUse();
+			}
+
+			@Override
+			public boolean canContinueToUse() {
+				return !isStanding() && super.canContinueToUse();
+			}
+		});
 		this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, Player.class, 8.0F));
 		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)).setAlertOthers());
-		this.targetSelector.addGoal(2, new HurtByTargetGoal(this, Meerkat.class));
+		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Meerkat.class, true));
 
 	}
 
@@ -68,7 +103,62 @@ public class Meerkat extends Animal {
 
 	@Override
 	public boolean canAttack(LivingEntity p_21171_) {
-		return (this.getTrustedLeaderUUID() != null && this.getTrustedLeaderUUID() != p_21171_.getUUID()) && super.canAttack(p_21171_);
+		return (this.getTrustedLeaderUUID() == null && p_21171_.getType() != ModEntities.MEERKAT.get()) || (this.getTrustedLeaderUUID() != null && this.getTrustedLeaderUUID() != p_21171_.getUUID()) && super.canAttack(p_21171_);
+	}
+
+	public int getMaxSpawnClusterSize() {
+		return 8;
+	}
+
+	public boolean isStanding() {
+		return this.entityData.get(DATA_STANDING);
+	}
+
+	public void setStanding(boolean standing) {
+		this.entityData.set(DATA_STANDING, standing);
+	}
+
+	@Nullable
+	public UUID getTrustedLeaderUUID() {
+		return this.entityData.get(DATA_TRUSTED_ID_0).orElse((UUID) null);
+	}
+
+	public void setTrustedLeaderUUID(@javax.annotation.Nullable UUID p_28516_) {
+		this.entityData.set(DATA_TRUSTED_ID_0, Optional.ofNullable(p_28516_));
+	}
+
+	//This thing write save datas(called nbt(CompoundTag) I guess)
+	@Override
+	public void addAdditionalSaveData(CompoundTag p_28518_) {
+		super.addAdditionalSaveData(p_28518_);
+		ListTag listtag = new ListTag();
+
+		UUID uuid = this.getTrustedLeaderUUID();
+		if (uuid != null) {
+			listtag.add(NbtUtils.createUUID(uuid));
+		}
+
+		p_28518_.put("TrustedLeader", listtag);
+
+		p_28518_.putBoolean("Standing", this.isStanding());
+	}
+
+	//This thing read save datas(called nbt(CompoundTag) I guess)
+	@Override
+	public void readAdditionalSaveData(CompoundTag p_28493_) {
+		super.readAdditionalSaveData(p_28493_);
+		ListTag listtag = p_28493_.getList("Trusted", 11);
+
+		for (int i = 0; i < listtag.size(); ++i) {
+			this.setTrustedLeaderUUID(NbtUtils.loadUUID(listtag.get(i)));
+		}
+
+		this.setStanding(p_28493_.getBoolean("Standing"));
+	}
+
+	@Override
+	public EntityDimensions getDimensions(Pose p_149361_) {
+		return this.isStanding() ? STANDING_DIMENSIONS.scale(this.getScale()) : super.getDimensions(p_149361_);
 	}
 
 	@Nullable
@@ -108,44 +198,6 @@ public class Meerkat extends Animal {
 		return super.finalizeSpawn(p_146746_, p_146747_, p_146748_, p_146749_, p_146750_);
 	}
 
-	public int getMaxSpawnClusterSize() {
-		return 8;
-	}
-
-	@Nullable
-	protected UUID getTrustedLeaderUUID() {
-		return this.entityData.get(DATA_TRUSTED_ID_0).orElse((UUID) null);
-	}
-
-	protected void setTrustedLeaderUUID(@javax.annotation.Nullable UUID p_28516_) {
-		this.entityData.set(DATA_TRUSTED_ID_0, Optional.ofNullable(p_28516_));
-	}
-
-	//This thing write save datas(called nbt(CompoundTag) I guess)
-	@Override
-	public void addAdditionalSaveData(CompoundTag p_28518_) {
-		super.addAdditionalSaveData(p_28518_);
-		ListTag listtag = new ListTag();
-
-		UUID uuid = this.getTrustedLeaderUUID();
-		if (uuid != null) {
-			listtag.add(NbtUtils.createUUID(uuid));
-		}
-
-		p_28518_.put("TrustedLeader", listtag);
-	}
-
-	//This thing read save datas(called nbt(CompoundTag) I guess)
-	@Override
-	public void readAdditionalSaveData(CompoundTag p_28493_) {
-		super.readAdditionalSaveData(p_28493_);
-		ListTag listtag = p_28493_.getList("Trusted", 11);
-
-		for (int i = 0; i < listtag.size(); ++i) {
-			this.setTrustedLeaderUUID(NbtUtils.loadUUID(listtag.get(i)));
-		}
-	}
-
 	/*
 	 *  group data class
 	 */
@@ -155,6 +207,87 @@ public class Meerkat extends Animal {
 		public MeerkatGroupData(UUID p_28703_) {
 			super(false);
 			this.uuid = p_28703_;
+		}
+	}
+
+	private class StandGoal extends Goal {
+		public final Meerkat meerkat;
+
+		private static final UniformInt TIME_BETWEEN_STANDING = UniformInt.of(300, 1200);
+
+
+		private int cooldown = 300;
+
+		public StandGoal(Meerkat meerkat) {
+			this.meerkat = meerkat;
+		}
+
+		@Override
+		public boolean canUse() {
+			if (!this.meerkat.isStanding()) {
+				if (this.cooldown <= 0) {
+					this.cooldown = TIME_BETWEEN_STANDING.sample(this.meerkat.random);
+					if (this.meerkat.getTarget() == null) {
+						return true;
+					}
+				} else {
+					--this.cooldown;
+					return false;
+				}
+			} else {
+				if (this.cooldown <= 0) {
+					this.cooldown = TIME_BETWEEN_STANDING.sample(this.meerkat.random);
+				}
+			}
+
+			return false;
+		}
+
+		@Override
+		public void start() {
+			super.start();
+			this.meerkat.setStanding(true);
+		}
+	}
+
+	private class StopStandGoal extends Goal {
+		public final Meerkat meerkat;
+
+		private static final UniformInt TIME_STANDING = UniformInt.of(100, 400);
+
+
+		private int cooldown;
+
+		public StopStandGoal(Meerkat meerkat) {
+			this.meerkat = meerkat;
+		}
+
+		@Override
+		public boolean canUse() {
+			if (this.meerkat.isStanding()) {
+				if (this.cooldown <= 0) {
+					this.cooldown = TIME_STANDING.sample(this.meerkat.random);
+					if (this.meerkat.getTarget() == null) {
+						return true;
+					}
+				} else {
+					--this.cooldown;
+					return false;
+				}
+			} else {
+				if (this.cooldown <= 0) {
+					this.cooldown = TIME_STANDING.sample(this.meerkat.random);
+				}
+			}
+
+			return false;
+		}
+
+		@Override
+		public void start() {
+			super.start();
+			this.meerkat.setStanding(true);
+			this.meerkat.getNavigation().stop();
 		}
 	}
 }

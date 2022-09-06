@@ -3,6 +3,7 @@ package com.minecraftabnormals.biome_vote_losers.client.model;// Made with Block
 // Paste this class into your mod and generate all required imports
 
 
+import com.minecraftabnormals.biome_vote_losers.client.animation.definitions.MeerkatAnimation;
 import com.minecraftabnormals.biome_vote_losers.world.level.entity.Meerkat;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
@@ -64,12 +65,20 @@ public class MeerkatModel<T extends Meerkat> extends HierarchicalModel<T> {
 
 	@Override
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+		this.root().getAllParts().forEach(ModelPart::resetPose);
+
 		this.head.xRot = headPitch * ((float) Math.PI / 180F);
 		this.head.yRot = netHeadYaw * ((float) Math.PI / 180F);
-		this.rightLeg.xRot = Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-		this.leftLeg.xRot = Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
-		this.rightArm.xRot = Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
-		this.leftArm.xRot = Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
+
+		if (!entity.isStanding()) {
+			this.rightLeg.xRot = Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
+			this.leftLeg.xRot = Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
+			this.rightArm.xRot = Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
+			this.leftArm.xRot = Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
+		}
+
+		this.animate(entity.standingAnimationState, MeerkatAnimation.STAND_UP, ageInTicks);
+		this.animate(entity.stopStandingAnimationState, MeerkatAnimation.STOP_STAND, ageInTicks);
 	}
 
 	@Override
