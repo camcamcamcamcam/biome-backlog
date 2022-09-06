@@ -2,7 +2,9 @@ package com.minecraftabnormals.biome_vote_losers.client;
 
 import com.minecraftabnormals.biome_vote_losers.BiomeVoteLosers;
 import com.minecraftabnormals.biome_vote_losers.client.model.MeerkatModel;
+import com.minecraftabnormals.biome_vote_losers.client.model.OstrichModel;
 import com.minecraftabnormals.biome_vote_losers.client.render.MeerkatRender;
+import com.minecraftabnormals.biome_vote_losers.client.render.OstrichRender;
 import com.minecraftabnormals.biome_vote_losers.register.ModBlocks;
 import com.minecraftabnormals.biome_vote_losers.register.ModEntities;
 import net.minecraft.client.renderer.BiomeColors;
@@ -25,11 +27,13 @@ public class ClientRegistrar {
 	@SubscribeEvent
 	public static void registerEntityRenders(EntityRenderersEvent.RegisterRenderers event) {
 		event.registerEntityRenderer(ModEntities.MEERKAT.get(), MeerkatRender::new);
+		event.registerEntityRenderer(ModEntities.OSTRICH.get(), OstrichRender::new);
 	}
 
 	@SubscribeEvent
 	public static void registerLayerDefinition(EntityRenderersEvent.RegisterLayerDefinitions event) {
 		event.registerLayerDefinition(ModModelLayers.MEERKAT, MeerkatModel::createBodyLayer);
+		event.registerLayerDefinition(ModModelLayers.OSTRICH, OstrichModel::createBodyLayer);
 	}
 
 	@SubscribeEvent
