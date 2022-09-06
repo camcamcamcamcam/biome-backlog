@@ -91,7 +91,7 @@ public class Meerkat extends Animal {
 
 		if (p_146749_ instanceof MeerkatGroupData meerkat$group) {
 			uuid = meerkat$group.uuid;
-			if (meerkat$group.getGroupSize() >= 2) {
+			if (meerkat$group.getGroupSize() >= 2 && p_146746_.getRandom().nextFloat() < 0.25F) {
 				flag = true;
 			}
 		} else {
@@ -105,6 +105,10 @@ public class Meerkat extends Animal {
 		}
 
 		return super.finalizeSpawn(p_146746_, p_146747_, p_146748_, p_146749_, p_146750_);
+	}
+
+	public int getMaxSpawnClusterSize() {
+		return 8;
 	}
 
 	@Nullable
