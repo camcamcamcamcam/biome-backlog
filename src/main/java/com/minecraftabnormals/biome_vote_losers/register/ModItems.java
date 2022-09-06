@@ -5,6 +5,7 @@ import com.minecraftabnormals.biome_vote_losers.world.level.item.VinegarBottleIt
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemNameBlockItem;
+import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -29,5 +30,8 @@ public class ModItems {
 	// todo palm boat and chest boat
 
 	public static final RegistryObject<Item> SUCCULENT_CUTTING = ITEMS.register("succulent_cutting", () -> new Item(new Item.Properties().tab(CreativeModeTab.TAB_MATERIALS)));
+
+
+	public static final RegistryObject<Item> MEERKAT_SPAWN_EGG = ITEMS.register("meerkat_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.MEERKAT, 0xBC895C, 0x302B31, new Item.Properties().tab(CreativeModeTab.TAB_MATERIALS)));
 
 }
