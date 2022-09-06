@@ -24,6 +24,7 @@ public class ItemModelGenerator extends ItemModelProvider {
 	@Override
 	protected void registerModels() {
 		this.toBlockModel(ModBlocks.PEAR_CACTUS.get(), "pear_cactus_0");
+		this.toBlockModel(ModBlocks.STRIPPED_PEAR_CACTUS.get(), "stripped_pear_cactus_0");
 		this.singleTex(ModItems.CACTUS_PAD);
 		this.singleTex(ModItems.PRICKLY_PEAR);
 		// this.singleTex(ModItems.TUMBLEWEED_SEED);

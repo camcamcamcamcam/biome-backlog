@@ -1,5 +1,6 @@
 package com.minecraftabnormals.biome_vote_losers.world.level.block;
 
+import com.minecraftabnormals.biome_vote_losers.register.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
@@ -18,10 +19,10 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 
-public class PricklyCactusBlock extends BushBlock implements BonemealableBlock {
+public class PearCactusBlock extends BushBlock implements BonemealableBlock {
 	public static final IntegerProperty AGE = IntegerProperty.create("age", 0, 2);
 
-	public PricklyCactusBlock(BlockBehaviour.Properties properties) {
+	public PearCactusBlock(BlockBehaviour.Properties properties) {
 		super(properties);
 		this.registerDefaultState(this.stateDefinition.any().setValue(AGE, Integer.valueOf(0)));
 	}
@@ -41,7 +42,7 @@ public class PricklyCactusBlock extends BushBlock implements BonemealableBlock {
 	}
 
 	public void entityInside(BlockState p_51148_, Level p_51149_, BlockPos p_51150_, Entity p_51151_) {
-		if (p_51151_.isPickable()) {
+		if (p_51151_.isPickable() & p_51148_.getBlock() == ModBlocks.PEAR_CACTUS.get()) {
 			p_51151_.hurt(DamageSource.CACTUS, 1.0F);
 		}
 	}
