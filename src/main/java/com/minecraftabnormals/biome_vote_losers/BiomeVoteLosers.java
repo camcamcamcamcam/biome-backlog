@@ -2,6 +2,7 @@ package com.minecraftabnormals.biome_vote_losers;
 
 import com.minecraftabnormals.biome_vote_losers.client.ClientRegistrar;
 import com.minecraftabnormals.biome_vote_losers.register.ModBlocks;
+import com.minecraftabnormals.biome_vote_losers.register.ModEntities;
 import com.minecraftabnormals.biome_vote_losers.register.ModItems;
 import com.mojang.logging.LogUtils;
 import net.minecraft.resources.ResourceLocation;
@@ -29,7 +30,8 @@ public class BiomeVoteLosers {
 
         ModBlocks.BLOCKS.register(modEventBus);
 
-        ModItems.ITEMS.register(modEventBus);
+		ModItems.ITEMS.register(modEventBus);
+		ModEntities.ENTITIES.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);
         MinecraftForge.EVENT_BUS.register(this);
@@ -45,5 +47,6 @@ public class BiomeVoteLosers {
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
+		ModEntities.spawnPlacementSetup();
     }
 }

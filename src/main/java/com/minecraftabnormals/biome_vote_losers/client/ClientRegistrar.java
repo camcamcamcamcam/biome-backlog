@@ -1,11 +1,15 @@
 package com.minecraftabnormals.biome_vote_losers.client;
 
 import com.minecraftabnormals.biome_vote_losers.BiomeVoteLosers;
+import com.minecraftabnormals.biome_vote_losers.client.model.MeerkatModel;
+import com.minecraftabnormals.biome_vote_losers.client.render.MeerkatRender;
 import com.minecraftabnormals.biome_vote_losers.register.ModBlocks;
+import com.minecraftabnormals.biome_vote_losers.register.ModEntities;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.world.level.FoliageColor;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -16,6 +20,16 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 public class ClientRegistrar {
 	public static void setup(FMLCommonSetupEvent event) {
 
+	}
+
+	@SubscribeEvent
+	public static void registerEntityRenders(EntityRenderersEvent.RegisterRenderers event) {
+		event.registerEntityRenderer(ModEntities.MEERKAT.get(), MeerkatRender::new);
+	}
+
+	@SubscribeEvent
+	public static void registerLayerDefinition(EntityRenderersEvent.RegisterLayerDefinitions event) {
+		event.registerLayerDefinition(ModModelLayers.MEERKAT, MeerkatModel::createBodyLayer);
 	}
 
 	@SubscribeEvent
