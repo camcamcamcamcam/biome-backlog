@@ -91,12 +91,14 @@ public class Meerkat extends Animal {
 
 		if (p_146749_ instanceof MeerkatGroupData meerkat$group) {
 			uuid = meerkat$group.uuid;
+			//when random success and group size is many. child is spawn
 			if (meerkat$group.getGroupSize() >= 2 && p_146746_.getRandom().nextFloat() < 0.25F) {
 				flag = true;
 			}
 		} else {
 			p_146749_ = new MeerkatGroupData(this.getUUID());
 		}
+		//when group found. add leader
 		if (uuid != null) {
 			this.setTrustedLeaderUUID(uuid);
 		}
@@ -120,6 +122,7 @@ public class Meerkat extends Animal {
 		this.entityData.set(DATA_TRUSTED_ID_0, Optional.ofNullable(p_28516_));
 	}
 
+	//This thing write save datas(called nbt(CompoundTag) I guess)
 	@Override
 	public void addAdditionalSaveData(CompoundTag p_28518_) {
 		super.addAdditionalSaveData(p_28518_);
@@ -133,6 +136,7 @@ public class Meerkat extends Animal {
 		p_28518_.put("TrustedLeader", listtag);
 	}
 
+	//This thing read save datas(called nbt(CompoundTag) I guess)
 	@Override
 	public void readAdditionalSaveData(CompoundTag p_28493_) {
 		super.readAdditionalSaveData(p_28493_);
@@ -143,6 +147,9 @@ public class Meerkat extends Animal {
 		}
 	}
 
+	/*
+	 *  group data class
+	 */
 	public static class MeerkatGroupData extends AgeableMob.AgeableMobGroupData {
 		public final UUID uuid;
 
