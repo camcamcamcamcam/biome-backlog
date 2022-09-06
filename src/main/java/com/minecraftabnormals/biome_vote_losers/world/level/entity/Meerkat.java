@@ -42,7 +42,7 @@ public class Meerkat extends Animal {
 	private static final EntityDataAccessor<Optional<UUID>> DATA_TRUSTED_ID_0 = SynchedEntityData.defineId(Meerkat.class, EntityDataSerializers.OPTIONAL_UUID);
 	private static final EntityDataAccessor<Boolean> DATA_STANDING = SynchedEntityData.defineId(Meerkat.class, EntityDataSerializers.BOOLEAN);
 
-	public static final EntityDimensions STANDING_DIMENSIONS = EntityDimensions.scalable(0.6F, 0.8F);
+	public static final EntityDimensions STANDING_DIMENSIONS = EntityDimensions.scalable(0.5F, 1.0F);
 
 	public final AnimationState standingAnimationState = new AnimationState();
 	public final AnimationState stopStandingAnimationState = new AnimationState();
@@ -76,7 +76,7 @@ public class Meerkat extends Animal {
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(1, new FloatGoal(this));
-		this.goalSelector.addGoal(5, new MeleeAttackGoal(this, 1.25D, true));
+		this.goalSelector.addGoal(5, new MeleeAttackGoal(this, 1.275D, true));
 		this.goalSelector.addGoal(6, new BreedGoal(this, 0.85D));
 		this.goalSelector.addGoal(7, new StandGoal(this));
 		this.goalSelector.addGoal(8, new StopStandGoal(this));
@@ -98,7 +98,7 @@ public class Meerkat extends Animal {
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {
-		return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 12.0D).add(Attributes.MOVEMENT_SPEED, 0.25D).add(Attributes.ATTACK_DAMAGE, 2.0F).add(Attributes.FOLLOW_RANGE, 24.0F);
+		return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 12.0D).add(Attributes.MOVEMENT_SPEED, 0.26D).add(Attributes.ATTACK_DAMAGE, 2.0F).add(Attributes.FOLLOW_RANGE, 24.0F);
 	}
 
 	@Override
@@ -216,7 +216,7 @@ public class Meerkat extends Animal {
 		private static final UniformInt TIME_BETWEEN_STANDING = UniformInt.of(300, 1200);
 
 
-		private int cooldown = 300;
+		private int cooldown = -1;
 
 		public StandGoal(Meerkat meerkat) {
 			this.meerkat = meerkat;
@@ -224,10 +224,14 @@ public class Meerkat extends Animal {
 
 		@Override
 		public boolean canUse() {
+			if (this.cooldown <= -1) {
+				this.cooldown = TIME_BETWEEN_STANDING.sample(this.meerkat.random);
+			}
+
 			if (!this.meerkat.isStanding()) {
 				if (this.cooldown <= 0) {
 					this.cooldown = TIME_BETWEEN_STANDING.sample(this.meerkat.random);
-					if (this.meerkat.getTarget() == null) {
+					if (this.meerkat.getTarget() == null && this.meerkat.isOnGround() && !this.meerkat.isInWater()) {
 						return true;
 					}
 				} else {
@@ -240,6 +244,11 @@ public class Meerkat extends Animal {
 				}
 			}
 
+			return false;
+		}
+
+		@Override
+		public boolean canContinueToUse() {
 			return false;
 		}
 
@@ -265,11 +274,13 @@ public class Meerkat extends Animal {
 		@Override
 		public boolean canUse() {
 			if (this.meerkat.isStanding()) {
+
+				if (this.meerkat.getTarget() != null || !this.meerkat.isOnGround() || this.meerkat.isInWater()) {
+					return true;
+				}
 				if (this.cooldown <= 0) {
 					this.cooldown = TIME_STANDING.sample(this.meerkat.random);
-					if (this.meerkat.getTarget() == null) {
-						return true;
-					}
+					return true;
 				} else {
 					--this.cooldown;
 					return false;
@@ -284,9 +295,14 @@ public class Meerkat extends Animal {
 		}
 
 		@Override
+		public boolean canContinueToUse() {
+			return false;
+		}
+
+		@Override
 		public void start() {
 			super.start();
-			this.meerkat.setStanding(true);
+			this.meerkat.setStanding(false);
 			this.meerkat.getNavigation().stop();
 		}
 	}
