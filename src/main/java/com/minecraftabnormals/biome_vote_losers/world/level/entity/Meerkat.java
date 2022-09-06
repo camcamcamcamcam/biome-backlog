@@ -24,7 +24,6 @@ import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.Fox;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -35,7 +34,7 @@ import java.util.UUID;
 import java.util.function.Predicate;
 
 public class Meerkat extends Animal {
-	private static final EntityDataAccessor<Optional<UUID>> DATA_TRUSTED_ID_0 = SynchedEntityData.defineId(Fox.class, EntityDataSerializers.OPTIONAL_UUID);
+	private static final EntityDataAccessor<Optional<UUID>> DATA_TRUSTED_ID_0 = SynchedEntityData.defineId(Meerkat.class, EntityDataSerializers.OPTIONAL_UUID);
 
 	public static final Predicate<Meerkat> TRUSTED_SELECTOR = (p_30226_) -> {
 		return p_30226_.isBaby() && !p_30226_.isInWater();
