@@ -52,6 +52,8 @@ public class ItemModelGenerator extends ItemModelProvider {
 		this.toBlock(ModBlocks.BAOBAB_LEAVES);
 		this.toBlock(ModBlocks.BAOBAB_FLOWER);
 
+		this.toBlock(ModBlocks.BURROW);
+
 		this.toBlock(ModBlocks.PALM_LOG);
 		this.toBlock(ModBlocks.PALM_LEAVES);
 		this.itemBlockFlat(ModBlocks.PALM_LEAVES_HANGING);

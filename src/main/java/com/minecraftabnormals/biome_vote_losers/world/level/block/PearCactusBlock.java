@@ -18,13 +18,21 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.pathfinder.PathComputationType;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class PearCactusBlock extends BushBlock implements BonemealableBlock {
 	public static final IntegerProperty AGE = IntegerProperty.create("age", 0, 2);
 
+	private static final VoxelShape MID_GROWTH_SHAPE = Block.box(1.0D, 0.0D, 1.0D, 15.0D, 16.0D, 15.0D);
+
 	public PearCactusBlock(BlockBehaviour.Properties properties) {
 		super(properties);
 		this.registerDefaultState(this.stateDefinition.any().setValue(AGE, Integer.valueOf(0)));
+	}
+
+	public VoxelShape getShape(BlockState p_57291_, BlockGetter p_57292_, BlockPos p_57293_, CollisionContext p_57294_) {
+		return MID_GROWTH_SHAPE;
 	}
 
 	public boolean isRandomlyTicking(BlockState p_57284_) {

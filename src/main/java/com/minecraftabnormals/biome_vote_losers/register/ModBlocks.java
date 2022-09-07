@@ -41,6 +41,8 @@ public class ModBlocks {
 
 	// DESERT
 
+	public static final RegistryObject<Block> BURROW = register("burrow", () -> new Block(BlockBehaviour.Properties.of(Material.SAND)));
+
 	public static final BlockBehaviour.Properties PALM = BlockBehaviour.Properties.of(Material.WOOD).explosionResistance(9.0F);
 
 	public static final RegistryObject<RotatedPillarBlock> PALM_LOG = register("palm_log", () -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD)));

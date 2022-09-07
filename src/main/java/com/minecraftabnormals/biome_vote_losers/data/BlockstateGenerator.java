@@ -29,6 +29,8 @@ public class BlockstateGenerator extends BlockStateProvider {
 		this.logBlock(ModBlocks.BAOBAB_TRUNK.get());
 		this.crossBlock(ModBlocks.BAOBAB_FRUIT.get());
 
+		this.simpleBlock(ModBlocks.BURROW.get());
+
 		this.logBlock(ModBlocks.PALM_LOG.get());
 		this.leavesBlock(ModBlocks.PALM_LEAVES.get(), translucentCubeAll(ModBlocks.PALM_LEAVES.get()));
 		this.crossBlock(ModBlocks.PALM_LEAVES_HANGING.get());
