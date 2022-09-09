@@ -71,7 +71,12 @@ public class ItemModelGenerator extends ItemModelProvider {
 		this.woodenButton(ModBlocks.PALM_BUTTON, ModBlocks.PALM_PLANKS);
 		this.toBlock(ModBlocks.PALM_PRESSURE_PLATE);
 
-
+		this.toBlock(ModBlocks.SALT_BLOCK);
+		this.toBlock(ModBlocks.SALT_BRICKS);
+		this.toBlock(ModBlocks.SALT_TILES);
+		this.toBlock(ModBlocks.CHISELED_SALT_BLOCK);
+		this.toBlock(ModBlocks.SALT_LAMP);
+		this.basicItem(ModBlocks.SALT.get().asItem());
 	}
 
 	private ItemModelBuilder generated(String name, ResourceLocation... layers) {

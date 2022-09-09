@@ -53,6 +53,10 @@ public class BlockstateGenerator extends BlockStateProvider {
 		this.buttonBlock(ModBlocks.PALM_BUTTON.get(), texture(name(ModBlocks.PALM_PLANKS.get())));
 		this.pressurePlateBlock(ModBlocks.PALM_PRESSURE_PLATE.get(), texture(name(ModBlocks.PALM_PLANKS.get())));
 
+		this.simpleBlock(ModBlocks.SALT_BLOCK.get());
+		this.simpleBlock(ModBlocks.SALT_BRICKS.get());
+		this.simpleBlock(ModBlocks.SALT_TILES.get());
+		this.simpleBlock(ModBlocks.CHISELED_SALT_BLOCK.get());
 	}
 
 	public ModelFile cubeAll(Block block, ResourceLocation resourceLocation) {
