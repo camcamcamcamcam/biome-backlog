@@ -9,6 +9,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class SaltLampBlock extends SaltBlock {
 
+
+
     private static final VoxelShape SHAPE = Block.box(3.0D, 0.0D, 3.0D, 13.0D, 13.0D, 13.0D);
 
     public SaltLampBlock(Properties properties) {

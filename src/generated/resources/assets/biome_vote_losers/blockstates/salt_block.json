@@ -1,7 +1,10 @@
 {
   "variants": {
-    "": {
+    "lit=false": {
       "model": "biome_vote_losers:block/salt_block"
+    },
+    "lit=true": {
+      "model": "biome_vote_losers:block/lit_salt_block"
     }
   }
 }

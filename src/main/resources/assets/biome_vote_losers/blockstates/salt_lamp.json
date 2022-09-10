@@ -1,6 +1,9 @@
 {
   "variants": {
-    "": {
+    "lit=true": {
+      "model": "biome_vote_losers:block/lit_salt_lamp"
+    },
+	"lit=false": {
       "model": "biome_vote_losers:block/salt_lamp"
     }
   }

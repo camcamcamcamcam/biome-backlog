@@ -2,6 +2,7 @@ package com.minecraftabnormals.biome_vote_losers.data;
 
 import com.minecraftabnormals.biome_vote_losers.BiomeVoteLosers;
 import com.minecraftabnormals.biome_vote_losers.register.ModBlocks;
+import com.minecraftabnormals.biome_vote_losers.world.level.block.SaltBlock;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -53,10 +54,10 @@ public class BlockstateGenerator extends BlockStateProvider {
 		this.buttonBlock(ModBlocks.PALM_BUTTON.get(), texture(name(ModBlocks.PALM_PLANKS.get())));
 		this.pressurePlateBlock(ModBlocks.PALM_PRESSURE_PLATE.get(), texture(name(ModBlocks.PALM_PLANKS.get())));
 
-		this.simpleBlock(ModBlocks.SALT_BLOCK.get());
-		this.simpleBlock(ModBlocks.SALT_BRICKS.get());
-		this.simpleBlock(ModBlocks.SALT_TILES.get());
-		this.simpleBlock(ModBlocks.CHISELED_SALT_BLOCK.get());
+		this.saltBlock(ModBlocks.SALT_BLOCK.get());
+		this.saltBlock(ModBlocks.SALT_BRICKS.get());
+		this.saltBlock(ModBlocks.SALT_TILES.get());
+		this.saltBlock(ModBlocks.CHISELED_SALT_BLOCK.get());
 	}
 
 	public ModelFile cubeAll(Block block, ResourceLocation resourceLocation) {
@@ -67,6 +68,14 @@ public class BlockstateGenerator extends BlockStateProvider {
 		simpleBlock(block, cubeAll(block, resourceLocation));
 	}
 
+	public void saltBlock(Block block) {
+		ModelFile unlit = models().cubeAll(name(block), texture(name(block)));
+		ModelFile lit = models().cubeAll("lit_" + name(block), texture("lit_" + name(block)));
+		getVariantBuilder(block).forAllStates(state -> {
+			boolean isLit = state.getValue(SaltBlock.LIT);
+			return ConfiguredModel.builder().modelFile(isLit ? lit : unlit).build();
+		});
+	}
 
 	public void leavesTintBlock(Block block) {
 		ModelFile tint = models().singleTexture(name(block), mcLoc("minecraft:block/leaves"), "all", texture(name(block))).renderType("minecraft:cutout_mipped");
