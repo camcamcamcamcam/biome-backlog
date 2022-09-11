@@ -75,6 +75,9 @@ public class ModBlocks {
 	public static final RegistryObject<SaltLampBlock> SALT_LAMP = register("salt_lamp", () -> new SaltLampBlock(BlockBehaviour.Properties.of(Material.GLASS).noOcclusion()), CreativeModeTab.TAB_DECORATIONS);
 	public static final RegistryObject<SaltTrailBlock> SALT = register("salt", () -> new SaltTrailBlock(BlockBehaviour.Properties.of(Material.DECORATION).noCollission().instabreak()), CreativeModeTab.TAB_MISC);
 
+	public static final RegistryObject<SucculentBlock> SUCCULENT = register("succulent", () -> new SucculentBlock(BlockBehaviour.Properties.of(Material.PLANT).instabreak().noOcclusion().noCollission()), CreativeModeTab.TAB_DECORATIONS);
+	public static final RegistryObject<FlowerPotBlock> POTTED_SUCCULENT = noItemRegister("potted_succulent", () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, SUCCULENT, BlockBehaviour.Properties.of(Material.DECORATION).instabreak().noOcclusion()));
+
 	private static <T extends Block> RegistryObject<T> baseRegister(String name, Supplier<? extends T> block, Function<RegistryObject<T>, Supplier<? extends Item>> item) {
 		RegistryObject<T> register = BLOCKS.register(name, block);
 		ModItems.ITEMS.register(name, item.apply(register));

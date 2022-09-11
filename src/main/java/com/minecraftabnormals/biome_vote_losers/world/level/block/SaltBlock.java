@@ -32,7 +32,6 @@ public class SaltBlock extends AbstractGlassBlock {
             int light = level.getLightEngine().getLayerListener(LightLayer.BLOCK).getLightValue(pos);
             level.setBlock(pos, state.setValue(LIT, light != 0), Block.UPDATE_ALL);
             level.scheduleTick(pos, this, 1);
-            System.out.println("BRUH" + light);
         }
     }
 

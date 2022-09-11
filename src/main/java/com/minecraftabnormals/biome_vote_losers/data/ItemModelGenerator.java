@@ -77,6 +77,8 @@ public class ItemModelGenerator extends ItemModelProvider {
 		this.toBlock(ModBlocks.CHISELED_SALT_BLOCK);
 		this.toBlock(ModBlocks.SALT_LAMP);
 		this.basicItem(ModBlocks.SALT.get().asItem());
+
+		this.itemBlockFlat(ModBlocks.SUCCULENT);
 	}
 
 	private ItemModelBuilder generated(String name, ResourceLocation... layers) {
