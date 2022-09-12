@@ -4,17 +4,23 @@ import com.minecraftabnormals.biome_vote_losers.BiomeVoteLosers;
 import com.minecraftabnormals.biome_vote_losers.client.model.MeerkatModel;
 import com.minecraftabnormals.biome_vote_losers.client.model.OstrichModel;
 import com.minecraftabnormals.biome_vote_losers.client.model.TumbleweedModel;
+import com.minecraftabnormals.biome_vote_losers.client.particle.CalciteBubbleParticle;
 import com.minecraftabnormals.biome_vote_losers.client.render.MeerkatRender;
 import com.minecraftabnormals.biome_vote_losers.client.render.OstrichRender;
 import com.minecraftabnormals.biome_vote_losers.client.render.TumbleweedRender;
 import com.minecraftabnormals.biome_vote_losers.register.ModBlocks;
 import com.minecraftabnormals.biome_vote_losers.register.ModEntities;
+import com.minecraftabnormals.biome_vote_losers.register.ModParticles;
+
+import net.minecraft.client.particle.BubblePopParticle;
 import net.minecraft.client.renderer.BiomeColors;
+import net.minecraft.client.renderer.entity.NoopRenderer;
 import net.minecraft.world.level.FoliageColor;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
+import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -31,6 +37,7 @@ public class ClientRegistrar {
 		event.registerEntityRenderer(ModEntities.MEERKAT.get(), MeerkatRender::new);
 		event.registerEntityRenderer(ModEntities.OSTRICH.get(), OstrichRender::new);
 		event.registerEntityRenderer(ModEntities.TUMBLEWEED.get(), TumbleweedRender::new);
+		event.registerEntityRenderer(ModEntities.CALCITE_POWDER.get(), NoopRenderer::new);
 	}
 
 	@SubscribeEvent
@@ -38,6 +45,12 @@ public class ClientRegistrar {
 		event.registerLayerDefinition(ModModelLayers.MEERKAT, MeerkatModel::createBodyLayer);
 		event.registerLayerDefinition(ModModelLayers.OSTRICH, OstrichModel::createBodyLayer);
 		event.registerLayerDefinition(ModModelLayers.TUMBLEWEED, TumbleweedModel::createBodyLayer);
+	}
+
+	@SubscribeEvent
+	public static void registerParticleProviders(RegisterParticleProvidersEvent event) {
+		event.register(ModParticles.CALCITE_POWDER_BUBBLE.get(), CalciteBubbleParticle.Provider::new);
+		event.register(ModParticles.CALCITE_POWDER_BUBBLE_POP.get(), BubblePopParticle.Provider::new);
 	}
 
 	@SubscribeEvent
