@@ -4,14 +4,15 @@ import com.minecraftabnormals.biome_vote_losers.BiomeVoteLosers;
 import com.minecraftabnormals.biome_vote_losers.client.model.MeerkatModel;
 import com.minecraftabnormals.biome_vote_losers.client.model.OstrichModel;
 import com.minecraftabnormals.biome_vote_losers.client.model.TumbleweedModel;
+import com.minecraftabnormals.biome_vote_losers.client.model.VultureModel;
 import com.minecraftabnormals.biome_vote_losers.client.particle.CalciteBubbleParticle;
 import com.minecraftabnormals.biome_vote_losers.client.render.MeerkatRender;
 import com.minecraftabnormals.biome_vote_losers.client.render.OstrichRender;
 import com.minecraftabnormals.biome_vote_losers.client.render.TumbleweedRender;
+import com.minecraftabnormals.biome_vote_losers.client.render.VultureRender;
 import com.minecraftabnormals.biome_vote_losers.register.ModBlocks;
 import com.minecraftabnormals.biome_vote_losers.register.ModEntities;
 import com.minecraftabnormals.biome_vote_losers.register.ModParticles;
-
 import net.minecraft.client.particle.BubblePopParticle;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.entity.NoopRenderer;
@@ -36,6 +37,7 @@ public class ClientRegistrar {
 	public static void registerEntityRenders(EntityRenderersEvent.RegisterRenderers event) {
 		event.registerEntityRenderer(ModEntities.MEERKAT.get(), MeerkatRender::new);
 		event.registerEntityRenderer(ModEntities.OSTRICH.get(), OstrichRender::new);
+		event.registerEntityRenderer(ModEntities.VULTURE.get(), VultureRender::new);
 		event.registerEntityRenderer(ModEntities.TUMBLEWEED.get(), TumbleweedRender::new);
 		event.registerEntityRenderer(ModEntities.CALCITE_POWDER.get(), NoopRenderer::new);
 	}
@@ -44,6 +46,7 @@ public class ClientRegistrar {
 	public static void registerLayerDefinition(EntityRenderersEvent.RegisterLayerDefinitions event) {
 		event.registerLayerDefinition(ModModelLayers.MEERKAT, MeerkatModel::createBodyLayer);
 		event.registerLayerDefinition(ModModelLayers.OSTRICH, OstrichModel::createBodyLayer);
+		event.registerLayerDefinition(ModModelLayers.VULTURE, VultureModel::createBodyLayer);
 		event.registerLayerDefinition(ModModelLayers.TUMBLEWEED, TumbleweedModel::createBodyLayer);
 	}
 
