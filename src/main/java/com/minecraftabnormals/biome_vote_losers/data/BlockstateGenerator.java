@@ -58,8 +58,7 @@ public class BlockstateGenerator extends BlockStateProvider {
 		this.saltBlock(ModBlocks.SALT_BRICKS.get());
 		this.saltBlock(ModBlocks.SALT_TILES.get());
 		this.saltBlock(ModBlocks.CHISELED_SALT_BLOCK.get());
-
-		this.crossBlock(ModBlocks.SUCCULENT.get());
+		
 	}
 
 	public ModelFile cubeAll(Block block, ResourceLocation resourceLocation) {
