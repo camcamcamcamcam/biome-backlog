@@ -73,7 +73,7 @@ public class CalcitePowderReaction extends Entity {
 
     @Override
     public boolean isPickable() {
-        return true;
+        return !this.isRemoved();
     }
 
     @Override
