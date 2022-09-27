@@ -25,7 +25,7 @@ public class ModEntities {
 	public static final RegistryObject<EntityType<Meerkat>> MEERKAT = ENTITIES.register("meerkat", () -> EntityType.Builder.of(Meerkat::new, MobCategory.CREATURE).sized(0.6F, 0.7F).clientTrackingRange(8).build(prefix("meerkat")));
 	public static final RegistryObject<EntityType<Ostrich>> OSTRICH = ENTITIES.register("ostrich", () -> EntityType.Builder.of(Ostrich::new, MobCategory.CREATURE).sized(1.0F, 2.5F).clientTrackingRange(8).build(prefix("ostrich")));
 	public static final RegistryObject<EntityType<Vulture>> VULTURE = ENTITIES.register("vulture", () -> EntityType.Builder.of(Vulture::new, MobCategory.CREATURE).sized(0.85F, 0.85F).clientTrackingRange(8).build(prefix("vulture")));
-	public static final RegistryObject<EntityType<Tumbleweed>> TUMBLEWEED = ENTITIES.register("tumbleweed", () -> EntityType.Builder.of(Tumbleweed::new, MobCategory.AMBIENT).sized(0.7F, 0.7F).clientTrackingRange(8).build(prefix("tumbleweed")));
+	public static final RegistryObject<EntityType<Tumbleweed>> TUMBLEWEED = ENTITIES.register("tumbleweed", () -> EntityType.Builder.of(Tumbleweed::new, MobCategory.MISC).sized(0.7F, 0.8F).clientTrackingRange(8).build(prefix("tumbleweed")));
 	public static final RegistryObject<EntityType<CalcitePowderReaction>> CALCITE_POWDER = ENTITIES.register("calcite_powder_reaction", () -> EntityType.Builder.of(CalcitePowderReaction::new, MobCategory.MISC).sized(1.0F, 0.2F).clientTrackingRange(6).build(prefix("calcite_powder_reaction")));
 
 	private static String prefix(String path) {
@@ -41,6 +41,5 @@ public class ModEntities {
 		event.put(MEERKAT.get(), Meerkat.createAttributes().build());
 		event.put(OSTRICH.get(), Ostrich.createAttributes().build());
 		event.put(VULTURE.get(), Vulture.createAttributes().build());
-		event.put(TUMBLEWEED.get(), Tumbleweed.createAttributes().build());
 	}
 }
