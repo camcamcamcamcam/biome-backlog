@@ -1,7 +1,19 @@
 {
   "variants": {
-    "": {
+    "type=0": {
       "model": "biome_vote_losers:block/succulent"
+    },
+	"type=1": {
+      "model": "biome_vote_losers:block/succulent1"
+    },
+	"type=2": {
+      "model": "biome_vote_losers:block/succulent2"
+    },
+	"type=3": {
+      "model": "biome_vote_losers:block/succulent3"
+    },
+	"type=4": {
+      "model": "biome_vote_losers:block/succulent4"
     }
   }
 }

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "biome_vote_losers:block/salt_tiles",
+    "side": "biome_vote_losers:block/salt_tiles",
+    "top": "biome_vote_losers:block/salt_tiles"
+  }
+}

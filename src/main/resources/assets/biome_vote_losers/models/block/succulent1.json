@@ -2,8 +2,8 @@
 	"render_type": "minecraft:cutout",
 	"credit": "Made with Blockbench",
 	"textures": {
-		"3": "biome_vote_losers:block/succulent",
-		"particle": "biome_vote_losers:block/succulent"
+		"3": "biome_vote_losers:block/succulent1",
+		"particle": "biome_vote_losers:block/succulent1"
 	},
 	"elements": [
 		{

@@ -43,7 +43,7 @@ public class SaltStairBlock extends StairBlock {
     }
 
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> p_57799_) {
-        p_57799_.add(LIT);
+        p_57799_.add(FACING, HALF, SHAPE, WATERLOGGED, LIT);
     }
 
     public VoxelShape getVisualShape(BlockState p_48735_, BlockGetter p_48736_, BlockPos p_48737_, CollisionContext p_48738_) {

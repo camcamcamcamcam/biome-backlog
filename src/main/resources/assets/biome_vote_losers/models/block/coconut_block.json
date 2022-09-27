@@ -1,0 +1,21 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "biome_vote_losers:block/coconut",
+		"particle": "biome_vote_losers:block/coconut"
+	},
+	"elements": [
+		{
+			"from": [4, 0, 6],
+			"to": [12, 8, 14],
+			"faces": {
+				"north": {"uv": [0, 8, 4, 16], "texture": "#0"},
+				"east": {"uv": [0, 8, 4, 16], "texture": "#0"},
+				"south": {"uv": [4, 8, 8, 16], "texture": "#0"},
+				"west": {"uv": [0, 8, 4, 16], "texture": "#0"},
+				"up": {"uv": [0, 0, 4, 8], "texture": "#0"},
+				"down": {"uv": [0, 8, 4, 16], "texture": "#0"}
+			}
+		}
+	]
+}
