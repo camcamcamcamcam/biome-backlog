@@ -40,6 +40,7 @@ public class ModBlocks {
 
 	public static final RegistryObject<Block> BAOBAB_LEAVES = register("baobab_leaves", () -> new LeavesBlock(BlockBehaviour.Properties.of(Material.LEAVES).noOcclusion()), CreativeModeTab.TAB_DECORATIONS);
 	public static final RegistryObject<RotatedPillarBlock> BAOBAB_TRUNK = register("baobab_trunk", () -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD)));
+	public static final RegistryObject<RotatedPillarBlock> BAOBAB_BARK = register("baobab_bark", () -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD)));
 	public static final RegistryObject<HangingLeavesBlock> BAOBAB_FLOWER = register("baobab_flower", () -> new HangingLeavesBlock(BlockBehaviour.Properties.of(Material.PLANT)), CreativeModeTab.TAB_DECORATIONS);
 	public static final RegistryObject<HangingLeavesBlock> BAOBAB_FRUIT = noItemRegister("baobab_fruit", () -> new HangingLeavesBlock(BlockBehaviour.Properties.of(Material.PLANT)));
 
@@ -63,7 +64,7 @@ public class ModBlocks {
 	// todo public static final RegistryObject<WallSignBlock> PALM_WALL_SIGN = register("palm_wall_sign", () -> new WallSignBlock(BlockBehaviour.Properties.of(Material.WOOD), WoodType.OAK), CreativeModeTab.TAB_DECORATIONS);
 	public static final RegistryObject<FenceBlock> PALM_FENCE = register("palm_fence", () -> new FenceBlock(PALM), CreativeModeTab.TAB_DECORATIONS);
 	public static final RegistryObject<FenceGateBlock> PALM_FENCE_GATE = register("palm_fence_gate", () -> new FenceGateBlock(PALM), CreativeModeTab.TAB_REDSTONE);
-	public static final RegistryObject<StairBlock> PALM_STAIRS = register("palm_stairs", () -> new StairBlock(PALM_PLANKS.get().defaultBlockState(), PALM));
+	public static final RegistryObject<StairBlock> PALM_STAIRS = register("palm_stairs", () -> new StairBlock(() -> PALM_PLANKS.get().defaultBlockState(), PALM));
 	public static final RegistryObject<SlabBlock> PALM_SLAB = register("palm_slab", () -> new SlabBlock(PALM));
 	public static final RegistryObject<WoodButtonBlock> PALM_BUTTON = register("palm_button", () -> new WoodButtonBlock(PALM), CreativeModeTab.TAB_REDSTONE);
 	public static final RegistryObject<PressurePlateBlock> PALM_PRESSURE_PLATE = register("palm_pressure_plate", () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, PALM), CreativeModeTab.TAB_REDSTONE);
@@ -72,6 +73,13 @@ public class ModBlocks {
 	public static final RegistryObject<SaltBlock> SALT_BRICKS = register("salt_bricks", () -> new SaltBlock(BlockBehaviour.Properties.of(Material.GLASS).noOcclusion()));
 	public static final RegistryObject<SaltBlock> SALT_TILES = register("salt_tiles", () -> new SaltBlock(BlockBehaviour.Properties.of(Material.GLASS).noOcclusion()));
 	public static final RegistryObject<SaltBlock> CHISELED_SALT_BLOCK = register("chiseled_salt_block", () -> new SaltBlock(BlockBehaviour.Properties.of(Material.GLASS).noOcclusion()));
+	public static final RegistryObject<SaltBlock> SALT_SLAB = register("salt_slab", () -> new SaltSlabBlock(BlockBehaviour.Properties.of(Material.GLASS).noOcclusion()));
+	public static final RegistryObject<SaltBlock> SALT_BRICK_SLAB = register("salt_brick_slab", () -> new SaltSlabBlock(BlockBehaviour.Properties.of(Material.GLASS).noOcclusion()));
+	public static final RegistryObject<SaltBlock> SALT_TILE_SLAB = register("salt_tile_slab", () -> new SaltSlabBlock(BlockBehaviour.Properties.of(Material.GLASS).noOcclusion()));
+	public static final RegistryObject<SaltBlock> SALT_STAIRS = register("salt_stairs", () -> new SaltStairBlock(BlockBehaviour.Properties.of(Material.GLASS).noOcclusion()));
+	public static final RegistryObject<SaltBlock> SALT_BRICK_STAIRS = register("salt_brick_stairs", () -> new SaltStairBlock(BlockBehaviour.Properties.of(Material.GLASS).noOcclusion()));
+	public static final RegistryObject<SaltBlock> SALT_TILE_STAIRS = register("salt_tile_stairs", () -> new SaltStairBlock(BlockBehaviour.Properties.of(Material.GLASS).noOcclusion()));
+
 	public static final RegistryObject<SaltLampBlock> SALT_LAMP = register("salt_lamp", () -> new SaltLampBlock(BlockBehaviour.Properties.of(Material.GLASS).noOcclusion()), CreativeModeTab.TAB_DECORATIONS);
 	public static final RegistryObject<SaltTrailBlock> SALT = register("salt", () -> new SaltTrailBlock(BlockBehaviour.Properties.of(Material.DECORATION).noCollission().instabreak()), CreativeModeTab.TAB_MISC);
 

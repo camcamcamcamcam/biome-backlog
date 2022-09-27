@@ -50,6 +50,7 @@ public class ItemModelGenerator extends ItemModelProvider {
 		this.toBlock(ModBlocks.TERMITE_MOUND);
 
 		this.toBlock(ModBlocks.BAOBAB_TRUNK);
+		this.toBlock(ModBlocks.BAOBAB_BARK);
 		this.toBlock(ModBlocks.BAOBAB_LEAVES);
 		this.toBlock(ModBlocks.BAOBAB_FLOWER);
 
