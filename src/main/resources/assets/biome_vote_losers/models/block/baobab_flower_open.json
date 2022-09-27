@@ -2,8 +2,8 @@
 	"render_type": "minecraft:cutout",
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "biome_vote_losers:block/baobab_flower",
-		"particle": "biome_vote_losers:block/baobab_flower"
+		"0": "biome_vote_losers:block/baobab_flower_open",
+		"particle": "biome_vote_losers:block/baobab_flower_open"
 	},
 	"elements": [
 		{
