@@ -69,12 +69,6 @@ public class Tumbleweed extends Entity {
         }
     }
 
-    // public void initTumble() {
-    //     final var angle = Mth.TWO_PI * this.random.nextFloat();
-    //     final var wind  = new Vec3(0.05, BOUNCE_SPEED, 0.0).yRot(angle);
-    //     this.setDeltaMovement(wind);
-    // }
-
     @Override
     protected float getEyeHeight(Pose pose, EntityDimensions dimensions) {
         return dimensions.height * 0.5F;
