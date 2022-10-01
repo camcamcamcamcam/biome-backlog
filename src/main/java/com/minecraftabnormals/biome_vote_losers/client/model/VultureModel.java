@@ -12,13 +12,23 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.util.Mth;
 
 public class VultureModel<T extends Vulture> extends HierarchicalModel<T> {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
 	private final ModelPart vulture;
+	private final ModelPart right_wing;
+	private final ModelPart right_wing_but_more;
+	private final ModelPart left_wing;
+	private final ModelPart left_wing_but_more;
+
 
 	public VultureModel(ModelPart root) {
 		this.vulture = root.getChild("vulture");
+		this.right_wing = this.vulture.getChild("right_wing");
+		this.right_wing_but_more = this.right_wing.getChild("right_wing_but_more");
+		this.left_wing = this.vulture.getChild("left_wing");
+		this.left_wing_but_more = this.left_wing.getChild("left_wing_but_more");
 	}
 
 	public static LayerDefinition createBodyLayer() {
@@ -72,6 +82,19 @@ public class VultureModel<T extends Vulture> extends HierarchicalModel<T> {
 
 	@Override
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+		float f = ((float) entity.getUniqueFlapTickOffset() + ageInTicks) * 7.448451F * ((float) Math.PI / 180F);
+		float f1 = 16.0F;
+		this.left_wing.yRot = Mth.cos(f) * 16.0F * ((float) Math.PI / 180F);
+		this.left_wing_but_more.yRot = Mth.cos(f) * 16.0F * ((float) Math.PI / 180F);
+		this.right_wing.yRot = -this.left_wing.yRot;
+		this.right_wing_but_more.yRot = -this.left_wing_but_more.yRot;
+
+		this.vulture.yRot = 3.1416F;
+
+		this.right_wing.xRot = -(float) ((Math.PI / 2F) * limbSwingAmount);
+		this.left_wing.xRot = -(float) ((Math.PI / 2F) * limbSwingAmount);
+
+		this.vulture.xRot = 0.25F * limbSwingAmount;
 
 	}
 
