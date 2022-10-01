@@ -1,6 +1,7 @@
 package com.minecraftabnormals.biome_vote_losers;
 
 import com.minecraftabnormals.biome_vote_losers.client.ClientRegistrar;
+import com.minecraftabnormals.biome_vote_losers.register.ModBlockEntities;
 import com.minecraftabnormals.biome_vote_losers.register.ModBlocks;
 import com.minecraftabnormals.biome_vote_losers.register.ModEntities;
 import com.minecraftabnormals.biome_vote_losers.register.ModItems;
@@ -35,6 +36,7 @@ public class BiomeVoteLosers {
 
 		ModItems.ITEMS.register(modEventBus);
 		ModEntities.ENTITIES.register(modEventBus);
+        ModBlockEntities.BLOCK_ENTITIES.register(modEventBus);
         ModParticles.PARTICLES.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);

@@ -11,6 +11,7 @@ import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
@@ -31,6 +32,11 @@ public class ItemModelGenerator extends ItemModelProvider {
 
 		this.singleTex(ModItems.BAOBAB_FRUIT);
 		this.basicItem(ModBlocks.OSTRICH_EGG.get().asItem());
+		this.singleTex(ModItems.RAW_OSTRICH);
+		this.singleTex(ModItems.COOKED_OSTRICH);
+
+		this.toBlock(ModBlocks.DATE_BUNCH);
+		this.toBlock(ModBlocks.COCONUT_BLOCK);
 
 		this.singleTex(ModItems.DATE);
 		this.singleTex(ModItems.COCONUT);
@@ -50,14 +56,17 @@ public class ItemModelGenerator extends ItemModelProvider {
 		this.toBlock(ModBlocks.TERMITE_MOUND);
 
 		this.toBlock(ModBlocks.BAOBAB_TRUNK);
+		this.toBlock(ModBlocks.BAOBAB_BARK);
 		this.toBlock(ModBlocks.BAOBAB_LEAVES);
-		this.toBlock(ModBlocks.BAOBAB_FLOWER);
 
 		this.toBlock(ModBlocks.BURROW);
 
 		this.toBlock(ModBlocks.PALM_LOG);
 		this.toBlock(ModBlocks.PALM_LEAVES);
 		this.itemBlockFlat(ModBlocks.PALM_LEAVES_HANGING);
+		this.toBlock(ModBlocks.THATCH_BLOCK);
+		this.toBlock(ModBlocks.THATCH_STAIRS);
+
 		this.toBlock(ModBlocks.STRIPPED_PALM_LOG);
 		this.toBlock(ModBlocks.PALM_WOOD);
 		this.toBlock(ModBlocks.STRIPPED_PALM_WOOD);
@@ -78,6 +87,14 @@ public class ItemModelGenerator extends ItemModelProvider {
 		this.toBlock(ModBlocks.CHISELED_SALT_BLOCK);
 		this.toBlock(ModBlocks.SALT_LAMP);
 		this.basicItem(ModBlocks.SALT.get().asItem());
+
+		this.toBlock(ModBlocks.SALT_STAIRS);
+		this.toBlock(ModBlocks.SALT_BRICK_STAIRS);
+		this.toBlock(ModBlocks.SALT_TILE_STAIRS);
+
+		this.toBlock(ModBlocks.SALT_SLAB);
+		this.toBlock(ModBlocks.SALT_BRICK_SLAB);
+		this.toBlock(ModBlocks.SALT_TILE_SLAB);
 
 		this.itemBlockFlat(ModBlocks.SUCCULENT);
 	}

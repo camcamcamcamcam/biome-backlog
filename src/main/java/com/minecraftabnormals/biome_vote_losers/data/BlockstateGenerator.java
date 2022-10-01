@@ -28,6 +28,7 @@ public class BlockstateGenerator extends BlockStateProvider {
 
 		this.leavesTintBlock(ModBlocks.BAOBAB_LEAVES.get());
 		this.logBlock(ModBlocks.BAOBAB_TRUNK.get());
+		this.axisBlock(ModBlocks.BAOBAB_BARK.get(), texture(name(ModBlocks.BAOBAB_TRUNK.get())), texture(name(ModBlocks.BAOBAB_TRUNK.get())));
 		this.crossBlock(ModBlocks.BAOBAB_FRUIT.get());
 
 		this.simpleBlock(ModBlocks.BURROW.get());
@@ -58,7 +59,12 @@ public class BlockstateGenerator extends BlockStateProvider {
 		this.saltBlock(ModBlocks.SALT_BRICKS.get());
 		this.saltBlock(ModBlocks.SALT_TILES.get());
 		this.saltBlock(ModBlocks.CHISELED_SALT_BLOCK.get());
-		
+		this.stairs(ModBlocks.SALT_STAIRS.get(), ModBlocks.SALT_BLOCK.get());
+		this.stairs(ModBlocks.SALT_BRICK_STAIRS.get(), ModBlocks.SALT_BRICKS.get());
+		this.stairs(ModBlocks.SALT_TILE_STAIRS.get(), ModBlocks.SALT_TILES.get());
+		this.slab(ModBlocks.SALT_SLAB.get(), ModBlocks.SALT_BLOCK.get());
+		this.slab(ModBlocks.SALT_BRICK_SLAB.get(), ModBlocks.SALT_BRICKS.get());
+		this.slab(ModBlocks.SALT_TILE_SLAB.get(), ModBlocks.SALT_TILES.get());
 	}
 
 	public ModelFile cubeAll(Block block, ResourceLocation resourceLocation) {

@@ -19,6 +19,8 @@ public class ModItems {
 	public static final RegistryObject<Item> TUMBLEWEED_SEED = ITEMS.register("tumbleweed_seed", () -> new ItemNameBlockItem(ModBlocks.TUMBLEWEED.get(), new Item.Properties().tab(CreativeModeTab.TAB_MATERIALS)));
 
 	public static final RegistryObject<ItemNameBlockItem> BAOBAB_FRUIT = ITEMS.register("baobab_fruit", () -> new ItemNameBlockItem(ModBlocks.BAOBAB_FRUIT.get(), new Item.Properties().food(ModFoods.BAOBAB_FRUIT).tab(CreativeModeTab.TAB_FOOD)));
+	public static final RegistryObject<Item> RAW_OSTRICH = ITEMS.register("raw_ostrich", () -> new Item(new Item.Properties().food(ModFoods.RAW_OSTRICH).tab(CreativeModeTab.TAB_FOOD)));
+	public static final RegistryObject<Item> COOKED_OSTRICH = ITEMS.register("cooked_ostrich", () -> new Item(new Item.Properties().food(ModFoods.COOKED_OSTRICH).tab(CreativeModeTab.TAB_FOOD)));
 
 	public static final RegistryObject<Item> DATE = ITEMS.register("date", () -> new Item(new Item.Properties().food(ModFoods.DATE).tab(CreativeModeTab.TAB_FOOD)));
 	public static final RegistryObject<Item> COCONUT = ITEMS.register("coconut", () -> new Item(new Item.Properties().tab(CreativeModeTab.TAB_MATERIALS)));

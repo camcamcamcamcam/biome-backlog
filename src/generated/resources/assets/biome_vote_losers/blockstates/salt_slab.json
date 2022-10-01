@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "biome_vote_losers:block/salt_slab"
+    },
+    "type=double": {
+      "model": "biome_vote_losers:block/salt_block"
+    },
+    "type=top": {
+      "model": "biome_vote_losers:block/salt_slab_top"
+    }
+  }
+}

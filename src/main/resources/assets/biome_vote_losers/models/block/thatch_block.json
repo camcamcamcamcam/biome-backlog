@@ -1,4 +1,5 @@
 {
+	"render_type": "minecraft:cutout",
 	"credit": "Made with Blockbench",
 	"textures": {
 		"0": "biome_vote_losers:block/thatch",
