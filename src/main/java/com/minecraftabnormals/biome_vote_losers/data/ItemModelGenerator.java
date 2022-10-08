@@ -51,6 +51,7 @@ public class ItemModelGenerator extends ItemModelProvider {
 
 		this.egg(ModItems.MEERKAT_SPAWN_EGG);
 		this.egg(ModItems.OSTRICH_SPAWN_EGG);
+		this.egg(ModItems.VULTURE_SPAWN_EGG);
 
 		this.toBlock(ModBlocks.MOUND);
 		this.toBlock(ModBlocks.TERMITE_MOUND);

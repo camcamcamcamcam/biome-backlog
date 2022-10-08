@@ -38,5 +38,6 @@ public class ModItems {
 
 	public static final RegistryObject<Item> MEERKAT_SPAWN_EGG = ITEMS.register("meerkat_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.MEERKAT, 0xBC895C, 0x302B31, new Item.Properties().tab(CreativeModeTab.TAB_MATERIALS)));
 	public static final RegistryObject<Item> OSTRICH_SPAWN_EGG = ITEMS.register("ostrich_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.OSTRICH, 0xD5AA9A, 0x362A2A, new Item.Properties().tab(CreativeModeTab.TAB_MATERIALS)));
+	public static final RegistryObject<Item> VULTURE_SPAWN_EGG = ITEMS.register("vulture_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.VULTURE, 0x654225, 0xD49076, new Item.Properties().tab(CreativeModeTab.TAB_MATERIALS)));
 
 }

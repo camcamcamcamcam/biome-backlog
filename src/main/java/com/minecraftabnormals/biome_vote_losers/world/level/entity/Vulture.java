@@ -87,7 +87,7 @@ public class Vulture extends TamableAnimal {
 	}
 
 	protected boolean shouldDespawnInPeaceful() {
-		return true;
+		return false;
 	}
 
 	public void tick() {
