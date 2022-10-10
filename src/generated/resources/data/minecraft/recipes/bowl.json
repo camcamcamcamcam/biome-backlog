@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "biome_vote_losers:coconut_shell"
+    }
+  ],
+  "result": {
+    "item": "minecraft:bowl"
+  }
+}

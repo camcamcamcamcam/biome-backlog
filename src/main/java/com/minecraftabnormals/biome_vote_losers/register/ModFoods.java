@@ -1,9 +1,12 @@
 package com.minecraftabnormals.biome_vote_losers.register;
 
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
 
 public class ModFoods {
-	public static final FoodProperties PRICKLY_PEAR = (new FoodProperties.Builder()).nutrition(2).saturationMod(0.3F).fast().build();
+	public static final FoodProperties PRICKLY_PEAR = (new FoodProperties.Builder()).nutrition(2).saturationMod(0.3F).fast()
+			.effect(() -> new MobEffectInstance(MobEffects.HEAL, 100, 1), 1.0F).build();
 
 	public static final FoodProperties BAOBAB_FRUIT = new FoodProperties.Builder().nutrition(2).saturationMod(1F).build();
 	public static final FoodProperties RAW_OSTRICH = new FoodProperties.Builder().nutrition(3).saturationMod(0.3F).build();

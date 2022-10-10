@@ -5,8 +5,12 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -18,6 +22,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.pathfinder.PathComputationType;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -90,5 +95,17 @@ public class PearCactusBlock extends BushBlock implements BonemealableBlock {
 		BlockState blockstate = state.setValue(AGE, Integer.valueOf(i + 1));
 		level.setBlock(pos, blockstate, 2);
 		level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(blockstate));
+	}
+
+	@Override
+	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
+		if (player.getItemInHand(hand).getItem() instanceof AxeItem item && state.getBlock() == ModBlocks.PEAR_CACTUS.get()) {
+			item.damageItem(player.getItemInHand(hand), 1, player, p -> p.broadcastBreakEvent(hand));
+			player.swing(hand);
+			int age = state.getValue(AGE);
+			level.setBlock(pos, ModBlocks.STRIPPED_PEAR_CACTUS.get().defaultBlockState().setValue(AGE, age), 3);
+			return InteractionResult.PASS;
+		}
+		return InteractionResult.FAIL;
 	}
 }

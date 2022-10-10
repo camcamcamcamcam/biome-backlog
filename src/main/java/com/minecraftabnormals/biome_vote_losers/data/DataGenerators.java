@@ -1,6 +1,8 @@
 package com.minecraftabnormals.biome_vote_losers.data;
 
 import com.minecraftabnormals.biome_vote_losers.BiomeVoteLosers;
+import net.minecraft.data.DataGenerator;
+import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -9,11 +11,13 @@ import net.minecraftforge.fml.common.Mod;
 public class DataGenerators {
 	@SubscribeEvent
 	public static void gatherData(GatherDataEvent event) {
-		event.getGenerator().addProvider(event.includeServer(), new BlockstateGenerator(event.getGenerator(), event.getExistingFileHelper()));
-		event.getGenerator().addProvider(event.includeServer(), new ItemModelGenerator(event.getGenerator(), event.getExistingFileHelper()));
+		DataGenerator generator = event.getGenerator();
+		ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
+		generator.addProvider(event.includeServer(), new BlockstateGenerator(generator, existingFileHelper));
+		generator.addProvider(event.includeServer(), new ItemModelGenerator(generator, existingFileHelper));
 
 
-		event.getGenerator().addProvider(event.includeServer(), new LootGenerator(event.getGenerator()));
-		//event.getGenerator().addProvider(event.includeServer(), new CraftingGenerator(event.getGenerator()));
+		generator.addProvider(event.includeServer(), new LootGenerator(generator));
+		generator.addProvider(event.includeServer(), new RecipeGenerator(generator));
 	}
 }
