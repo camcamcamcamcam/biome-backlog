@@ -16,7 +16,7 @@
               "type": "minecraft:item",
               "conditions": [
                 {
-                  "block": "biome_vote_losers:pear_cactus",
+                  "block": "biome_vote_losers:stripped_pear_cactus",
                   "condition": "minecraft:block_state_property",
                   "properties": {
                     "age": "2"
@@ -38,7 +38,7 @@
       "bonus_rolls": 0.0,
       "conditions": [
         {
-          "block": "biome_vote_losers:pear_cactus",
+          "block": "biome_vote_losers:stripped_pear_cactus",
           "condition": "minecraft:block_state_property",
           "properties": {
             "age": "2"

@@ -39,7 +39,7 @@ public class BlockLootTables extends BlockLoot {
 	@Override
 	protected void addTables() {
 		this.dropSelf(ModBlocks.PEAR_CACTUS.get());
-		LootItemCondition.Builder lootitemcondition$builder1 = LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.PEAR_CACTUS.get()).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(PearCactusBlock.AGE, 2));
+		LootItemCondition.Builder lootitemcondition$builder1 = LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.STRIPPED_PEAR_CACTUS.get()).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(PearCactusBlock.AGE, 2));
 		this.add(ModBlocks.STRIPPED_PEAR_CACTUS.get(), createCropDrops(ModBlocks.STRIPPED_PEAR_CACTUS.get(), ModItems.PRICKLY_PEAR.get(), ModItems.CACTUS_PAD.get(), lootitemcondition$builder1));
 		this.dropOther(ModBlocks.TUMBLEWEED.get(), ModItems.TUMBLEWEED_SEED.get());
 
