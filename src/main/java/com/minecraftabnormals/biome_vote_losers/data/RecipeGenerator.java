@@ -1,5 +1,6 @@
 package com.minecraftabnormals.biome_vote_losers.data;
 
+import com.minecraftabnormals.biome_vote_losers.register.ModBlocks;
 import com.minecraftabnormals.biome_vote_losers.register.ModItems;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.data.DataGenerator;
@@ -40,6 +41,18 @@ public class RecipeGenerator extends RecipeProvider implements IConditionBuilder
         SimpleCookingRecipeBuilder.campfireCooking(Ingredient.of(ModItems.RAW_OSTRICH.get()), ModItems.COOKED_OSTRICH.get(), 0.45F, 300);
         SimpleCookingRecipeBuilder.smoking(Ingredient.of(ModItems.RAW_OSTRICH.get()), ModItems.COOKED_OSTRICH.get(), 0.45F, 150);
 
+
+        ShapedRecipeBuilder.shaped(ModBlocks.THATCH_BLOCK.get())
+                .define('#', ModBlocks.PALM_LEAVES.get().asItem())
+                .pattern("##")
+                .pattern("##")
+                .unlockedBy("has_palm_leaves", inventoryTrigger(ItemPredicate.Builder.item()
+                        .of(ModBlocks.PALM_LEAVES.get().asItem()).build()))
+                .save(finishedRecipeConsumer);
+
+        stairBuilder(ModBlocks.THATCH_STAIRS.get(), Ingredient.of(ModBlocks.THATCH_BLOCK.get()))
+                .unlockedBy("has_thatch_block", has(ModBlocks.THATCH_BLOCK.get().asItem()))
+                .save(finishedRecipeConsumer);
 
         ShapelessRecipeBuilder.shapeless(ModItems.VINEGAR_BOTTLE.get())
                 .requires(ModItems.DATE.get())

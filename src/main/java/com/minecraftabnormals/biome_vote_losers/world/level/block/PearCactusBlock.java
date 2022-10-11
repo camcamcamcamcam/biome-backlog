@@ -21,6 +21,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -58,6 +59,15 @@ public class PearCactusBlock extends BushBlock implements BonemealableBlock {
 		if (p_51151_.isPickable() & p_51148_.getBlock() == ModBlocks.PEAR_CACTUS.get()) {
 			p_51151_.hurt(DamageSource.CACTUS, 1.0F);
 		}
+	}
+
+	@Override
+	public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, boolean willHarvest, FluidState fluid) {
+		boolean destroyed = super.onDestroyedByPlayer(state, level, pos, player, willHarvest, fluid);
+		if (state.getBlock() == ModBlocks.PEAR_CACTUS.get()) {
+			player.hurt(DamageSource.CACTUS, 1.0F);
+		}
+		return destroyed;
 	}
 
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> p_51164_) {
