@@ -13,6 +13,7 @@ import com.minecraftabnormals.biome_vote_losers.client.render.VultureRender;
 import com.minecraftabnormals.biome_vote_losers.register.ModBlocks;
 import com.minecraftabnormals.biome_vote_losers.register.ModEntities;
 import com.minecraftabnormals.biome_vote_losers.register.ModParticles;
+import com.minecraftabnormals.biome_vote_losers.world.level.block.SucculentBlock;
 import net.minecraft.client.particle.BubblePopParticle;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.entity.NoopRenderer;
@@ -61,6 +62,9 @@ public class ClientRegistrar {
 		event.register((state, reader, pos, color) -> {
 			return reader != null && pos != null ? BiomeColors.getAverageFoliageColor(reader, pos) : FoliageColor.getDefaultColor();
 		}, ModBlocks.BAOBAB_LEAVES.get());
+		event.register((state, reader, pos, color) -> {
+			return reader != null & pos != null ? SucculentBlock.getColor(state.getValue(SucculentBlock.COLOR)) : FoliageColor.getDefaultColor();
+		}, ModBlocks.SUCCULENT.get());
 	}
 
 	@SubscribeEvent
