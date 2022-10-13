@@ -2,6 +2,7 @@ package com.minecraftabnormals.biome_vote_losers.data;
 
 import com.google.common.collect.ImmutableList;
 import com.minecraftabnormals.biome_vote_losers.data.loot.BlockLootTables;
+import com.minecraftabnormals.biome_vote_losers.data.loot.EntityLootTables;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.loot.*;
@@ -25,7 +26,8 @@ public class LootGenerator extends LootTableProvider {
 
 
 	private final List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, LootTable.Builder>>>, LootContextParamSet>> tables = ImmutableList.of(
-			Pair.of(BlockLootTables::new, LootContextParamSets.BLOCK)
+			Pair.of(BlockLootTables::new, LootContextParamSets.BLOCK),
+			Pair.of(EntityLootTables::new, LootContextParamSets.ENTITY)
 	);
 
 	@Override

@@ -1,15 +1,12 @@
 package com.minecraftabnormals.biome_vote_losers.register;
 
 import com.minecraftabnormals.biome_vote_losers.BiomeVoteLosers;
-import com.minecraftabnormals.biome_vote_losers.world.level.entity.CalcitePowderReaction;
-import com.minecraftabnormals.biome_vote_losers.world.level.entity.Meerkat;
-import com.minecraftabnormals.biome_vote_losers.world.level.entity.Ostrich;
-import com.minecraftabnormals.biome_vote_losers.world.level.entity.Tumbleweed;
-import com.minecraftabnormals.biome_vote_losers.world.level.entity.Vulture;
+import com.minecraftabnormals.biome_vote_losers.world.level.entity.*;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.projectile.Snowball;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -27,6 +24,7 @@ public class ModEntities {
 	public static final RegistryObject<EntityType<Vulture>> VULTURE = ENTITIES.register("vulture", () -> EntityType.Builder.of(Vulture::new, MobCategory.CREATURE).sized(0.85F, 0.85F).clientTrackingRange(8).build(prefix("vulture")));
 	public static final RegistryObject<EntityType<Tumbleweed>> TUMBLEWEED = ENTITIES.register("tumbleweed", () -> EntityType.Builder.of(Tumbleweed::new, MobCategory.MISC).sized(0.7F, 0.8F).clientTrackingRange(8).build(prefix("tumbleweed")));
 	public static final RegistryObject<EntityType<CalcitePowderReaction>> CALCITE_POWDER = ENTITIES.register("calcite_powder_reaction", () -> EntityType.Builder.of(CalcitePowderReaction::new, MobCategory.MISC).sized(1.0F, 0.2F).clientTrackingRange(6).build(prefix("calcite_powder_reaction")));
+	public static final RegistryObject<EntityType<CoconutProjectile>> COCONUT = ENTITIES.register("coconut", () -> EntityType.Builder.<CoconutProjectile>of(CoconutProjectile::new, MobCategory.MISC).sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10).build(prefix("coconut")));
 
 	private static String prefix(String path) {
 		return BiomeVoteLosers.MODID + "." + path;

@@ -17,6 +17,7 @@ import com.minecraftabnormals.biome_vote_losers.world.level.block.SucculentBlock
 import net.minecraft.client.particle.BubblePopParticle;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.entity.NoopRenderer;
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.world.level.FoliageColor;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -41,6 +42,7 @@ public class ClientRegistrar {
 		event.registerEntityRenderer(ModEntities.VULTURE.get(), VultureRender::new);
 		event.registerEntityRenderer(ModEntities.TUMBLEWEED.get(), TumbleweedRender::new);
 		event.registerEntityRenderer(ModEntities.CALCITE_POWDER.get(), NoopRenderer::new);
+		event.registerEntityRenderer(ModEntities.COCONUT.get(), ThrownItemRenderer::new);
 	}
 
 	@SubscribeEvent
