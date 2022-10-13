@@ -1,6 +1,6 @@
 {
 	"render_type": "minecraft:cutout",
-	"credit": "Made with Blockbench",
+	"parent": "minecraft:block/block",
 	"elements": [
 		{
 			"from": [8.3, 7, 5.125],

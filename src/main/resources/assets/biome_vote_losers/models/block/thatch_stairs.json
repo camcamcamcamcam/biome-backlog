@@ -1,6 +1,6 @@
 {
 	"render_type": "minecraft:cutout",
-	"credit": "Made with Blockbench",
+	"parent": "minecraft:block/stairs",
 	"textures": {
 		"0": "biome_vote_losers:block/thatch_out_bits",
 		"1": "biome_vote_losers:block/thatch",

@@ -95,6 +95,8 @@ public class ModBlocks {
 	public static final RegistryObject<SucculentBlock> SUCCULENT = register("succulent", () -> new SucculentBlock(BlockBehaviour.Properties.of(Material.PLANT).instabreak().noOcclusion().noCollission()), CreativeModeTab.TAB_DECORATIONS);
 	public static final RegistryObject<FlowerPotBlock> POTTED_SUCCULENT = noItemRegister("potted_succulent", () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, SUCCULENT, BlockBehaviour.Properties.of(Material.DECORATION).instabreak().noOcclusion()));
 
+	public static final RegistryObject<Block> WORMHOLE = register("wormhole", () -> new Block(BlockBehaviour.Properties.of(Material.STONE)), CreativeModeTab.TAB_DECORATIONS);
+
 	private static <T extends Block> RegistryObject<T> baseRegister(String name, Supplier<? extends T> block, Function<RegistryObject<T>, Supplier<? extends Item>> item) {
 		RegistryObject<T> register = BLOCKS.register(name, block);
 		ModItems.ITEMS.register(name, item.apply(register));

@@ -98,6 +98,8 @@ public class ItemModelGenerator extends ItemModelProvider {
 		this.toBlock(ModBlocks.SALT_TILE_SLAB);
 
 		this.itemBlockFlat(ModBlocks.SUCCULENT);
+
+		this.toBlock(ModBlocks.WORMHOLE);
 	}
 
 	private ItemModelBuilder generated(String name, ResourceLocation... layers) {

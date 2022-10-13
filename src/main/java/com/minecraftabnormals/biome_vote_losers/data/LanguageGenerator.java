@@ -78,5 +78,6 @@ public class LanguageGenerator extends LanguageProvider {
         this.add(ModItems.OSTRICH_SPAWN_EGG.get(), "Ostrich Spawn Egg");
         this.add(ModItems.VULTURE_SPAWN_EGG.get(), "Vulture Spawn Egg");
 
+        this.add(ModBlocks.WORMHOLE.get(), "Wormhole");
     }
 }
