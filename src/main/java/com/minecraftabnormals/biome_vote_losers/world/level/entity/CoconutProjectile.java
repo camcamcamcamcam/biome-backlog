@@ -3,6 +3,7 @@ package com.minecraftabnormals.biome_vote_losers.world.level.entity;
 import com.minecraftabnormals.biome_vote_losers.register.ModEntities;
 import com.minecraftabnormals.biome_vote_losers.register.ModItems;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -13,7 +14,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 
 public class CoconutProjectile extends ThrowableItemProjectile {
 
@@ -47,14 +50,17 @@ public class CoconutProjectile extends ThrowableItemProjectile {
 
     }
 
-    protected void onHit(HitResult result) {
-        super.onHit(result);
+    protected void onHit(HitResult hitResult) {
+        super.onHit(hitResult);
         if (!this.level.isClientSide) {
             this.level.broadcastEntityEvent(this, (byte)3);
-            if (result.getType() == HitResult.Type.BLOCK) {
-                BlockState blockState = level.getBlockState(new BlockPos(result.getLocation()));
+            if (hitResult instanceof BlockHitResult blockHitResult && blockHitResult.getDirection() == Direction.UP) {
+                Vec3 deltaMovement = this.getDeltaMovement();
+                Vec3 newDeltaMovement = new Vec3(deltaMovement.x(), 0.0, deltaMovement.z());
+                this.setDeltaMovement(newDeltaMovement);
+            } else {
+                this.discard();
             }
-            this.discard();
         }
 
     }
