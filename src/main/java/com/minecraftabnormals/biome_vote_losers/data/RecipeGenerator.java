@@ -1,10 +1,12 @@
 package com.minecraftabnormals.biome_vote_losers.data;
 
+import com.minecraftabnormals.biome_vote_losers.BiomeVoteLosers;
 import com.minecraftabnormals.biome_vote_losers.register.ModBlocks;
 import com.minecraftabnormals.biome_vote_losers.register.ModItems;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.*;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -37,9 +39,21 @@ public class RecipeGenerator extends RecipeProvider implements IConditionBuilder
                         .of(ModItems.CACTUS_PAD.get()).build()))
                 .save(finishedRecipeConsumer);
 
-        SimpleCookingRecipeBuilder.cooking(Ingredient.of(ModItems.RAW_OSTRICH.get()), ModItems.COOKED_OSTRICH.get(), 0.45F, 300, RecipeSerializer.SMELTING_RECIPE);
-        SimpleCookingRecipeBuilder.campfireCooking(Ingredient.of(ModItems.RAW_OSTRICH.get()), ModItems.COOKED_OSTRICH.get(), 0.45F, 300);
-        SimpleCookingRecipeBuilder.smoking(Ingredient.of(ModItems.RAW_OSTRICH.get()), ModItems.COOKED_OSTRICH.get(), 0.45F, 150);
+        SimpleCookingRecipeBuilder.cooking(Ingredient.of(ModItems.RAW_OSTRICH.get()), ModItems.COOKED_OSTRICH.get(),
+                0.45F, 300, RecipeSerializer.SMELTING_RECIPE)
+                .unlockedBy("has_raw_ostrich", inventoryTrigger(ItemPredicate.Builder.item()
+                        .of(ModItems.RAW_OSTRICH.get()).build()))
+                .save(finishedRecipeConsumer, new ResourceLocation(BiomeVoteLosers.MODID, "cooked_ostrich"));
+        SimpleCookingRecipeBuilder.campfireCooking(Ingredient.of(ModItems.RAW_OSTRICH.get()), ModItems.COOKED_OSTRICH.get(),
+                0.45F, 300)
+                .unlockedBy("has_raw_ostrich", inventoryTrigger(ItemPredicate.Builder.item()
+                        .of(ModItems.RAW_OSTRICH.get()).build()))
+                .save(finishedRecipeConsumer, new ResourceLocation(BiomeVoteLosers.MODID, "cooked_ostrich_from_campfire"));
+        SimpleCookingRecipeBuilder.smoking(Ingredient.of(ModItems.RAW_OSTRICH.get()), ModItems.COOKED_OSTRICH.get(),
+                0.45F, 150)
+                .unlockedBy("has_raw_ostrich", inventoryTrigger(ItemPredicate.Builder.item()
+                        .of(ModItems.RAW_OSTRICH.get()).build()))
+                .save(finishedRecipeConsumer, new ResourceLocation(BiomeVoteLosers.MODID, "cooked_ostrich_from_smoker"));
 
 
         ShapedRecipeBuilder.shaped(ModBlocks.THATCH_BLOCK.get())
@@ -74,7 +88,11 @@ public class RecipeGenerator extends RecipeProvider implements IConditionBuilder
                         .of(ModItems.COCONUT_SHELL.get()).build()))
                 .save(finishedRecipeConsumer);
 
-        SimpleCookingRecipeBuilder.cooking(Ingredient.of(ModItems.COCONUT_SHELL.get()), Items.CHARCOAL, 0.45F, 300, RecipeSerializer.SMELTING_RECIPE);
+        SimpleCookingRecipeBuilder.cooking(Ingredient.of(ModItems.COCONUT_SHELL.get()), Items.CHARCOAL,
+                0.45F, 300, RecipeSerializer.SMELTING_RECIPE)
+                .unlockedBy("has_coconut_shell", inventoryTrigger(ItemPredicate.Builder.item()
+                        .of(ModItems.COCONUT_SHELL.get()).build()))
+                .save(finishedRecipeConsumer, new ResourceLocation(BiomeVoteLosers.MODID, "charcoal_from_coconut_shell"));
 
     }
 }

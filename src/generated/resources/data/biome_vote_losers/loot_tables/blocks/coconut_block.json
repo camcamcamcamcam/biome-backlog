@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "biome_vote_losers:coconut_block"
+          "name": "biome_vote_losers:coconut_half"
         }
       ],
       "rolls": 1.0
