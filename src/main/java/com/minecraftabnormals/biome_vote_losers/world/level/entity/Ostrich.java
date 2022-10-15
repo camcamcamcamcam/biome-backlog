@@ -15,7 +15,6 @@ import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import org.checkerframework.checker.units.qual.A;
 import org.jetbrains.annotations.Nullable;
 
 public class Ostrich extends Animal {
@@ -35,14 +34,18 @@ public class Ostrich extends Animal {
 
     @Override
     public void tick() {
-        super.tick();
-        if (this.getSpeed() > 0 && !walkingState.isStarted() && level.isClientSide()) {
+        if (this.isMoving() && level.isClientSide()) {
             idlingState.stop();
-            walkingState.start(this.tickCount);
-        } else if (this.getSpeed() <= 0 && walkingState.isStarted() && level.isClientSide()) {
+            walkingState.startIfStopped(this.tickCount);
+        } else if (level.isClientSide()) {
             walkingState.stop();
-            idlingState.start(this.tickCount);
+            idlingState.startIfStopped(this.tickCount);
         }
+        super.tick();
+    }
+
+    private boolean isMoving() {
+        return this.getDeltaMovement().horizontalDistanceSqr() > 1.0E-6D;
     }
 
     @Override

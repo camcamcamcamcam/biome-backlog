@@ -12,8 +12,11 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
-import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.world.entity.Entity;
+import net.minecraft.client.model.geom.builders.CubeDeformation;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.model.geom.builders.PartDefinition;
 
 public class OstrichModel<T extends Ostrich> extends HierarchicalModel<T> {
 	private final ModelPart root;
@@ -58,9 +61,9 @@ public class OstrichModel<T extends Ostrich> extends HierarchicalModel<T> {
 	@Override
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		this.root().getAllParts().forEach(ModelPart::resetPose);
-
+		float f = Math.min((float) entity.getDeltaMovement().lengthSqr() * 100.0F, 8.0F);
 		this.animate(entity.idlingState, OstrichAnimation.IDLE, ageInTicks);
-		this.animate(entity.walkingState, OstrichAnimation.WALK, ageInTicks);
+		this.animate(entity.walkingState, OstrichAnimation.WALK, ageInTicks, f);
 		this.animate(entity.runningState, OstrichAnimation.RUN, ageInTicks);
 		this.animate(entity.dippingState, OstrichAnimation.DIP, ageInTicks);
 		this.animate(entity.kickingState, OstrichAnimation.KICK, ageInTicks);
