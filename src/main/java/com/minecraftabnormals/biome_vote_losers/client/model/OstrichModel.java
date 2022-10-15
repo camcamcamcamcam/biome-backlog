@@ -5,6 +5,8 @@ package com.minecraftabnormals.biome_vote_losers.client.model;
 // Paste this class into your mod and generate all required imports
 
 
+import com.minecraftabnormals.biome_vote_losers.client.animation.definitions.OstrichAnimation;
+import com.minecraftabnormals.biome_vote_losers.world.level.entity.Ostrich;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.HierarchicalModel;
@@ -13,7 +15,7 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.world.entity.Entity;
 
-public class OstrichModel<T extends Entity> extends HierarchicalModel<T> {
+public class OstrichModel<T extends Ostrich> extends HierarchicalModel<T> {
 	private final ModelPart root;
 
 	private final ModelPart body;
@@ -55,7 +57,13 @@ public class OstrichModel<T extends Entity> extends HierarchicalModel<T> {
 
 	@Override
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+		this.root().getAllParts().forEach(ModelPart::resetPose);
 
+		this.animate(entity.idlingState, OstrichAnimation.IDLE, ageInTicks);
+		this.animate(entity.walkingState, OstrichAnimation.WALK, ageInTicks);
+		this.animate(entity.runningState, OstrichAnimation.RUN, ageInTicks);
+		this.animate(entity.dippingState, OstrichAnimation.DIP, ageInTicks);
+		this.animate(entity.kickingState, OstrichAnimation.KICK, ageInTicks);
 	}
 
 	@Override

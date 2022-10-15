@@ -3,6 +3,7 @@ package com.minecraftabnormals.biome_vote_losers.world.level.entity;
 import com.minecraftabnormals.biome_vote_losers.register.ModEntities;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -14,15 +15,34 @@ import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import org.checkerframework.checker.units.qual.A;
 import org.jetbrains.annotations.Nullable;
 
 public class Ostrich extends Animal {
+    public AnimationState idlingState = new AnimationState();
+    public AnimationState walkingState = new AnimationState();
+    public AnimationState runningState = new AnimationState();
+    public AnimationState dippingState = new AnimationState();
+    public AnimationState kickingState = new AnimationState();
+
     public Ostrich(EntityType<? extends Ostrich> p_27557_, Level p_27558_) {
         super(p_27557_, p_27558_);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 24.0D).add(Attributes.MOVEMENT_SPEED, 0.25D).add(Attributes.ATTACK_DAMAGE, 5.0F).add(Attributes.FOLLOW_RANGE, 20.0F);
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (this.getSpeed() > 0 && !walkingState.isStarted() && level.isClientSide()) {
+            idlingState.stop();
+            walkingState.start(this.tickCount);
+        } else if (this.getSpeed() <= 0 && walkingState.isStarted() && level.isClientSide()) {
+            walkingState.stop();
+            idlingState.start(this.tickCount);
+        }
     }
 
     @Override
