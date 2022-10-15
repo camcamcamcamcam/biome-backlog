@@ -18,16 +18,24 @@ public class SucculentBlock extends BushBlock {
     public static IntegerProperty TYPE = IntegerProperty.create("type", 0, 3);
     public static IntegerProperty COLOR = IntegerProperty.create("color", 0, 15);
 
-    private static final Vec3[] COLORS = Util.make(new Vec3[16], (p_154319_) -> {
-        for(int i = 0; i <= 15; ++i) {
-            float f = (float)i / 15.0F;
-            float f1 = f * 0.6F + (f > 0.0F ? 0.4F : 0.3F);
-            float f2 = Mth.clamp(f * f * 0.7F - 0.5F, 0.0F, 1.0F);
-            float f3 = Mth.clamp(f * f * 0.6F - 0.7F, 0.0F, 1.0F);
-            p_154319_[i] = new Vec3((double)f1, (double)f2, (double)f3);
-        }
-
-    });
+    private static final Vec3[] COLORS =  {
+            Vec3.fromRGB24(0x764257),
+            Vec3.fromRGB24(0xC77979),
+            Vec3.fromRGB24(0xA4734F),
+            Vec3.fromRGB24(0xF1AE4F),
+            Vec3.fromRGB24(0xD4C78A),
+            Vec3.fromRGB24(0xE0EA8C),
+            Vec3.fromRGB24(0x9A946E),
+            Vec3.fromRGB24(0x8BC761),
+            Vec3.fromRGB24(0x5A8553),
+            Vec3.fromRGB24(0x626F60),
+            Vec3.fromRGB24(0x536383),
+            Vec3.fromRGB24(0x8494D2),
+            Vec3.fromRGB24(0xA7DBD7),
+            Vec3.fromRGB24(0x8A8CAB),
+            Vec3.fromRGB24(0x9A77A7),
+            Vec3.fromRGB24(0x4A3A54)
+    };
 
     public static int getColor(int p_55607_) {
         Vec3 vec3 = COLORS[p_55607_];

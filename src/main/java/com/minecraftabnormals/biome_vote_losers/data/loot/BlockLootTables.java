@@ -54,7 +54,7 @@ public class BlockLootTables extends BlockLoot {
 
 		this.dropSelf(ModBlocks.BURROW.get());
 		this.dropSelf(ModBlocks.DATE_BUNCH.get());
-		this.dropSelf(ModBlocks.COCONUT_BLOCK.get());
+		this.dropOther(ModBlocks.COCONUT_BLOCK.get(), ModItems.COCONUT_HALF.get());
 		this.dropSelf(ModBlocks.PALM_LOG.get());
 		this.dropWhenSilkTouch(ModBlocks.PALM_LEAVES.get());
 		this.dropSelf(ModBlocks.PALM_LEAVES_HANGING.get());
