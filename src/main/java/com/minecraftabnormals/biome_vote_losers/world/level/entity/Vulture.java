@@ -1,8 +1,12 @@
 package com.minecraftabnormals.biome_vote_losers.world.level.entity;
 
 import com.minecraftabnormals.biome_vote_losers.register.ModEntities;
+import com.minecraftabnormals.biome_vote_losers.world.level.entity.goal.LongTemptGoal;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
@@ -35,10 +39,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
@@ -49,9 +53,12 @@ import java.util.List;
 import java.util.UUID;
 
 public class Vulture extends TamableAnimal {
+	private static final EntityDataAccessor<Integer> DATA_REMAINING_DESPAWN_TIME = SynchedEntityData.defineId(Vulture.class, EntityDataSerializers.INT);
+
+
 	public static final float FLAP_DEGREES_PER_TICK = 7.448451F;
 	public static final int TICKS_PER_FLAP = Mth.ceil(24.166098F);
-	Vec3 moveTargetPoint = Vec3.ZERO;
+	public Vec3 moveTargetPoint = Vec3.ZERO;
 	BlockPos anchorPoint = BlockPos.ZERO;
 	Vulture.AttackPhase attackPhase = Vulture.AttackPhase.CIRCLE;
 
@@ -70,12 +77,49 @@ public class Vulture extends TamableAnimal {
 	}
 
 
+	@Override
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(DATA_REMAINING_DESPAWN_TIME, -1);
+	}
+
 	protected void registerGoals() {
 		this.goalSelector.addGoal(0, new Vulture.VultureCircleAroundDeathPointGoal());
-		this.goalSelector.addGoal(1, new Vulture.VultureAttackStrategyGoal());
-		this.goalSelector.addGoal(2, new Vulture.VultureSweepAttackGoal());
-		this.goalSelector.addGoal(3, new Vulture.VultureCircleAroundAnchorGoal());
+		this.goalSelector.addGoal(1, new LongTemptGoal(this, Ingredient.of(Items.ROTTEN_FLESH), false));
+		this.goalSelector.addGoal(2, new Vulture.VultureAttackStrategyGoal());
+		this.goalSelector.addGoal(3, new Vulture.VultureSweepAttackGoal());
+		this.goalSelector.addGoal(4, new Vulture.VultureCircleAroundAnchorGoal());
 		this.targetSelector.addGoal(1, new VultureAttackZombieTargetGoal());
+	}
+
+	public void setDespawnTime(int despawnTime) {
+		this.entityData.set(DATA_REMAINING_DESPAWN_TIME, despawnTime);
+	}
+
+	public int getDespawnTime() {
+		return this.entityData.get(DATA_REMAINING_DESPAWN_TIME);
+	}
+
+	public boolean hasDespawnTime() {
+		return getDespawnTime() > -1;
+	}
+
+	@Override
+	public void aiStep() {
+		super.aiStep();
+		if (!this.level.isClientSide) {
+			this.maybeDespawn();
+		}
+
+	}
+
+	private void maybeDespawn() {
+		if (this.hasDespawnTime() && this.getDespawnTime() == 0) {
+			this.setDespawnTime(getDespawnTime() - 1);
+		} else {
+			this.discard();
+		}
+
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {
@@ -178,6 +222,11 @@ public class Vulture extends TamableAnimal {
 		return vulture;
 	}
 
+	@Override
+	public boolean isFood(ItemStack p_27600_) {
+		return false;
+	}
+
 	public InteractionResult mobInteract(Player p_30412_, InteractionHand p_30413_) {
 		ItemStack itemstack = p_30412_.getItemInHand(p_30413_);
 		Item item = itemstack.getItem();
@@ -185,33 +234,15 @@ public class Vulture extends TamableAnimal {
 			boolean flag = this.isOwnedBy(p_30412_) || this.isTame() || itemstack.is(Items.ROTTEN_FLESH) && !this.isTame();
 			return flag ? InteractionResult.CONSUME : InteractionResult.PASS;
 		} else {
-			if (this.isTame()) {
-				if (this.isFood(itemstack) && this.getHealth() < this.getMaxHealth()) {
-					if (!p_30412_.getAbilities().instabuild) {
-						itemstack.shrink(1);
-					}
-
-					this.heal((float) itemstack.getFoodProperties(this).getNutrition());
-					this.gameEvent(GameEvent.EAT, this);
-					return InteractionResult.SUCCESS;
-				}
-
-				return super.mobInteract(p_30412_, p_30413_);
-
-
-			} else if (itemstack.is(Items.ROTTEN_FLESH)) {
+			if (itemstack.is(Items.ROTTEN_FLESH) && !this.isOwnedBy(p_30412_)) {
 				if (!p_30412_.getAbilities().instabuild) {
 					itemstack.shrink(1);
 				}
 
-				if (this.random.nextInt(3) == 0 && !net.minecraftforge.event.ForgeEventFactory.onAnimalTame(this, p_30412_)) {
-					this.tame(p_30412_);
-					this.navigation.stop();
-					this.setTarget((LivingEntity) null);
-					this.level.broadcastEntityEvent(this, (byte) 7);
-				} else {
-					this.level.broadcastEntityEvent(this, (byte) 6);
-				}
+				this.tame(p_30412_);
+				this.navigation.stop();
+				this.setTarget((LivingEntity) null);
+				this.level.broadcastEntityEvent(this, (byte) 7);
 
 				return InteractionResult.SUCCESS;
 			}
@@ -242,6 +273,38 @@ public class Vulture extends TamableAnimal {
 
 	class VultureAttackZombieTargetGoal extends Goal {
 		private final TargetingConditions attackTargeting = TargetingConditions.forCombat().range(64.0D);
+		private int nextScanTick = reducedTickDelay(20);
+
+		public boolean canUse() {
+			if (this.nextScanTick > 0) {
+				--this.nextScanTick;
+				return false;
+			} else {
+				this.nextScanTick = reducedTickDelay(60);
+				List<Zombie> list = Vulture.this.level.getNearbyEntities(Zombie.class, this.attackTargeting, Vulture.this, Vulture.this.getBoundingBox().inflate(16.0D, 64.0D, 16.0D));
+				if (!list.isEmpty()) {
+					list.sort(Comparator.<Entity, Double>comparing(Entity::getY).reversed());
+
+					for (Zombie zombie : list) {
+						if (Vulture.this.canAttack(zombie, TargetingConditions.DEFAULT)) {
+							Vulture.this.setTarget(zombie);
+							return true;
+						}
+					}
+				}
+
+				return false;
+			}
+		}
+
+		public boolean canContinueToUse() {
+			LivingEntity livingentity = Vulture.this.getTarget();
+			return livingentity != null ? Vulture.this.canAttack(livingentity, TargetingConditions.DEFAULT) : false;
+		}
+	}
+
+	class VultureTemptGoal extends Goal {
+		private final TargetingConditions attackTargeting = TargetingConditions.forNonCombat().ignoreLineOfSight().range(64.0D);
 		private int nextScanTick = reducedTickDelay(20);
 
 		public boolean canUse() {
