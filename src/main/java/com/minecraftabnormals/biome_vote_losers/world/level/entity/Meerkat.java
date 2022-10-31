@@ -1,6 +1,7 @@
 package com.minecraftabnormals.biome_vote_losers.world.level.entity;
 
 import com.minecraftabnormals.biome_vote_losers.register.ModEntities;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
@@ -8,6 +9,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.AgeableMob;
@@ -32,7 +34,9 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraftforge.common.Tags;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -171,6 +175,10 @@ public class Meerkat extends Animal {
 			meerkat.setTrustedLeaderUUID(uuid);
 		}
 		return meerkat;
+	}
+
+	public static boolean checkMeerkatSpawnRules(EntityType<? extends Animal> p_218105_, LevelAccessor p_218106_, MobSpawnType p_218107_, BlockPos p_218108_, RandomSource p_218109_) {
+		return p_218106_.getBlockState(p_218108_.below()).is(Tags.Blocks.SAND) && isBrightEnoughToSpawn(p_218106_, p_218108_);
 	}
 
 	@Override

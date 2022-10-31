@@ -44,6 +44,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.EnumSet;
 import java.util.UUID;
 
 public class Ostrich extends Animal implements NeutralMob {
@@ -230,6 +231,7 @@ public class Ostrich extends Animal implements NeutralMob {
         OstrichGoHomeGoal(Ostrich p_30253_, double p_30254_) {
             this.ostrich = p_30253_;
             this.speedModifier = p_30254_;
+            this.setFlags(EnumSet.of(Flag.MOVE));
         }
 
         public boolean canUse() {
@@ -316,7 +318,7 @@ public class Ostrich extends Animal implements NeutralMob {
         }
 
         protected boolean isValidTarget(LevelReader p_30280_, BlockPos p_30281_) {
-            return !p_30280_.isEmptyBlock(p_30281_.above()) ? false : p_30280_.canSeeSky(p_30281_);
+            return p_30280_.isEmptyBlock(p_30281_) && p_30280_.canSeeSky(p_30281_);
         }
     }
 }

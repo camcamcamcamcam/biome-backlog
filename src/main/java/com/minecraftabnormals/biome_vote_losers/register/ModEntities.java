@@ -1,12 +1,16 @@
 package com.minecraftabnormals.biome_vote_losers.register;
 
 import com.minecraftabnormals.biome_vote_losers.BiomeVoteLosers;
-import com.minecraftabnormals.biome_vote_losers.world.level.entity.*;
+import com.minecraftabnormals.biome_vote_losers.world.level.entity.CalcitePowderReaction;
+import com.minecraftabnormals.biome_vote_losers.world.level.entity.CoconutProjectile;
+import com.minecraftabnormals.biome_vote_losers.world.level.entity.Meerkat;
+import com.minecraftabnormals.biome_vote_losers.world.level.entity.Ostrich;
+import com.minecraftabnormals.biome_vote_losers.world.level.entity.Tumbleweed;
+import com.minecraftabnormals.biome_vote_losers.world.level.entity.Vulture;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.projectile.Snowball;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -31,7 +35,8 @@ public class ModEntities {
 	}
 
 	public static void spawnPlacementSetup() {
-		SpawnPlacements.register(MEERKAT.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules);
+		SpawnPlacements.register(MEERKAT.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Meerkat::checkMeerkatSpawnRules);
+		SpawnPlacements.register(OSTRICH.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules);
 	}
 
 	@SubscribeEvent
