@@ -62,9 +62,10 @@ public class OstrichModel<T extends Ostrich> extends HierarchicalModel<T> {
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		this.root().getAllParts().forEach(ModelPart::resetPose);
 		float f = Math.min((float) entity.getDeltaMovement().lengthSqr() * 100.0F, 8.0F);
+		float f2 = Math.min((float) entity.getDeltaMovement().lengthSqr() * 50.0F, 8.0F);
 		this.animate(entity.idlingState, OstrichAnimation.IDLE, ageInTicks);
 		this.animate(entity.walkingState, OstrichAnimation.WALK, ageInTicks, f);
-		this.animate(entity.runningState, OstrichAnimation.RUN, ageInTicks);
+		this.animate(entity.runningState, OstrichAnimation.RUN, ageInTicks, f2);
 		this.animate(entity.dippingState, OstrichAnimation.DIP, ageInTicks);
 		this.animate(entity.kickingState, OstrichAnimation.KICK, ageInTicks);
 	}
