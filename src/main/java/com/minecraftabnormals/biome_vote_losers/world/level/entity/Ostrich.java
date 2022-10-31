@@ -18,6 +18,7 @@ import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.AnimationState;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.Mob;
@@ -202,6 +203,21 @@ public class Ostrich extends Animal implements NeutralMob {
         this.persistentAngerTarget = p_30400_;
     }
 
+    @Override
+    public boolean doHurtTarget(Entity p_21372_) {
+        this.level.broadcastEntityEvent(this, (byte) 4);
+        return super.doHurtTarget(p_21372_);
+    }
+
+    @Override
+    public void handleEntityEvent(byte p_219360_) {
+        if (p_219360_ == 4) {
+            this.kickingState.start(this.tickCount);
+        } else {
+            super.handleEntityEvent(p_219360_);
+        }
+    }
+
     @Nullable
     @Override
     public AgeableMob getBreedOffspring(ServerLevel p_146743_, AgeableMob p_146744_) {
@@ -314,20 +330,19 @@ public class Ostrich extends Animal implements NeutralMob {
 
         public void tick() {
             super.tick();
-            BlockPos blockpos = this.ostrich.blockPosition();
             if (!this.ostrich.isInWater() && this.isReachedTarget()) {
                 Level level = this.ostrich.level;
-                level.playSound((Player) null, blockpos, SoundEvents.TURTLE_LAY_EGG, SoundSource.BLOCKS, 0.3F, 0.9F + level.random.nextFloat() * 0.2F);
+                level.playSound((Player) null, this.blockPos, SoundEvents.TURTLE_LAY_EGG, SoundSource.BLOCKS, 0.3F, 0.9F + level.random.nextFloat() * 0.2F);
                 level.setBlock(this.blockPos, ModBlocks.OSTRICH_EGG.get().defaultBlockState(), 3);
                 this.ostrich.setHasEgg(false);
                 this.ostrich.setInLoveTime(600);
-                this.ostrich.setHomeTarget(blockpos);
+                this.ostrich.setHomeTarget(this.blockPos);
             }
 
         }
 
         protected boolean isValidTarget(LevelReader p_30280_, BlockPos p_30281_) {
-            return p_30280_.isEmptyBlock(p_30281_) && !p_30280_.isEmptyBlock(p_30281_.below()) && p_30280_.getFluidState(p_30281_.below()).isEmpty() && p_30280_.canSeeSky(p_30281_);
+            return !p_30280_.isEmptyBlock(p_30281_.below()) && p_30280_.isEmptyBlock(p_30281_) && p_30280_.canSeeSky(p_30281_);
         }
     }
 }
