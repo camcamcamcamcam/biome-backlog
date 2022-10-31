@@ -30,6 +30,7 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.MoveToBlockGoal;
+import net.minecraft.world.entity.ai.goal.TemptGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
@@ -37,6 +38,8 @@ import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
 import net.minecraft.world.entity.ai.util.DefaultRandomPos;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
@@ -119,9 +122,11 @@ public class Ostrich extends Animal implements NeutralMob {
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new FloatGoal(this));
         this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1.5D, true));
-        this.goalSelector.addGoal(5, new LayEggGoal(this, 0.85D));
-        this.goalSelector.addGoal(6, new OstrichGoHomeGoal(this, 0.85D));
-        this.goalSelector.addGoal(7, new BreedGoal(this, 0.85D) {
+        this.goalSelector.addGoal(5, new TemptGoal(this, 1.25D, Ingredient.of(Items.WHEAT), false));
+
+        this.goalSelector.addGoal(6, new LayEggGoal(this, 0.85D));
+        this.goalSelector.addGoal(7, new OstrichGoHomeGoal(this, 0.85D));
+        this.goalSelector.addGoal(8, new BreedGoal(this, 0.85D) {
             @Override
             public boolean canUse() {
                 return !hasEgg() && super.canUse();
@@ -181,6 +186,10 @@ public class Ostrich extends Animal implements NeutralMob {
             if (!this.level.getBlockState(this.homeTarget).is(ModBlocks.OSTRICH_EGG.get())) {
                 this.homeTarget = null;
             }
+        }
+
+        if (!this.level.isClientSide) {
+            this.updatePersistentAnger((ServerLevel) this.level, true);
         }
     }
 
@@ -309,7 +318,7 @@ public class Ostrich extends Animal implements NeutralMob {
             if (!this.ostrich.isInWater() && this.isReachedTarget()) {
                 Level level = this.ostrich.level;
                 level.playSound((Player) null, blockpos, SoundEvents.TURTLE_LAY_EGG, SoundSource.BLOCKS, 0.3F, 0.9F + level.random.nextFloat() * 0.2F);
-                level.setBlock(this.blockPos.above(), ModBlocks.OSTRICH_EGG.get().defaultBlockState(), 3);
+                level.setBlock(this.blockPos, ModBlocks.OSTRICH_EGG.get().defaultBlockState(), 3);
                 this.ostrich.setHasEgg(false);
                 this.ostrich.setInLoveTime(600);
                 this.ostrich.setHomeTarget(blockpos);
@@ -318,7 +327,7 @@ public class Ostrich extends Animal implements NeutralMob {
         }
 
         protected boolean isValidTarget(LevelReader p_30280_, BlockPos p_30281_) {
-            return p_30280_.isEmptyBlock(p_30281_) && p_30280_.canSeeSky(p_30281_);
+            return p_30280_.isEmptyBlock(p_30281_) && p_30280_.isEmptyBlock(p_30281_.below()) && p_30280_.canSeeSky(p_30281_);
         }
     }
 }

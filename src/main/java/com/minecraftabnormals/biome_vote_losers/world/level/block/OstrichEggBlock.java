@@ -9,6 +9,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -16,6 +17,8 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+
+import java.util.List;
 
 public class OstrichEggBlock extends Block {
 
@@ -26,6 +29,22 @@ public class OstrichEggBlock extends Block {
 	public OstrichEggBlock(Properties p_57759_) {
 		super(p_57759_);
 		this.registerDefaultState(this.stateDefinition.any().setValue(HATCH, 0));
+	}
+
+	@Override
+	public void playerWillDestroy(Level p_49852_, BlockPos p_49853_, BlockState p_49854_, Player p_49855_) {
+		super.playerWillDestroy(p_49852_, p_49853_, p_49854_, p_49855_);
+		angerNearbyOstrichs(p_49855_);
+	}
+
+	public static void angerNearbyOstrichs(Player p_34874_) {
+		List<Ostrich> list = p_34874_.level.getEntitiesOfClass(Ostrich.class, p_34874_.getBoundingBox().inflate(16.0D));
+		list.stream().filter((p_34881_) -> {
+			return p_34881_.hasLineOfSight(p_34874_) && !p_34874_.isCreative();
+		}).forEach((p_34872_) -> {
+			p_34872_.setPersistentAngerTarget(p_34874_.getUUID());
+			p_34872_.startPersistentAngerTimer();
+		});
 	}
 
 	public VoxelShape getShape(BlockState p_57809_, BlockGetter p_57810_, BlockPos p_57811_, CollisionContext p_57812_) {
