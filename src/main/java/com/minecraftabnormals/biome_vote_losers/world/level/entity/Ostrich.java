@@ -327,7 +327,7 @@ public class Ostrich extends Animal implements NeutralMob {
         }
 
         protected boolean isValidTarget(LevelReader p_30280_, BlockPos p_30281_) {
-            return p_30280_.isEmptyBlock(p_30281_) && p_30280_.isEmptyBlock(p_30281_.below()) && p_30280_.canSeeSky(p_30281_);
+            return p_30280_.isEmptyBlock(p_30281_) && !p_30280_.isEmptyBlock(p_30281_.below()) && p_30280_.getFluidState(p_30281_.below()).isEmpty() && p_30280_.canSeeSky(p_30281_);
         }
     }
 }
