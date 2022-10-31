@@ -333,17 +333,17 @@ public class Ostrich extends Animal implements NeutralMob {
             super.tick();
             if (!this.ostrich.isInWater() && this.isReachedTarget()) {
                 Level level = this.ostrich.level;
-                level.playSound((Player) null, this.blockPos, SoundEvents.TURTLE_LAY_EGG, SoundSource.BLOCKS, 0.3F, 0.9F + level.random.nextFloat() * 0.2F);
-                level.setBlock(this.blockPos, ModBlocks.OSTRICH_EGG.get().defaultBlockState(), 3);
+                level.playSound((Player) null, this.blockPos.above(), SoundEvents.TURTLE_LAY_EGG, SoundSource.BLOCKS, 0.3F, 0.9F + level.random.nextFloat() * 0.2F);
+                level.setBlock(this.blockPos.above(), ModBlocks.OSTRICH_EGG.get().defaultBlockState(), 3);
                 this.ostrich.setHasEgg(false);
                 this.ostrich.setInLoveTime(600);
-                this.ostrich.setHomeTarget(this.blockPos);
+                this.ostrich.setHomeTarget(this.blockPos.above());
             }
 
         }
 
         protected boolean isValidTarget(LevelReader p_30280_, BlockPos p_30281_) {
-            return p_30280_.getBlockState(p_30281_.below()).is(BlockTags.DIRT) && p_30280_.isEmptyBlock(p_30281_);
+            return p_30280_.getBlockState(p_30281_).is(BlockTags.DIRT) && p_30280_.isEmptyBlock(p_30281_.above());
         }
     }
 }
