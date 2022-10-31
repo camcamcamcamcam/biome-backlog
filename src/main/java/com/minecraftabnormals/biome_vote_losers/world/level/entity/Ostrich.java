@@ -14,6 +14,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.entity.AgeableMob;
@@ -342,7 +343,7 @@ public class Ostrich extends Animal implements NeutralMob {
         }
 
         protected boolean isValidTarget(LevelReader p_30280_, BlockPos p_30281_) {
-            return !p_30280_.isEmptyBlock(p_30281_.below()) && p_30280_.isEmptyBlock(p_30281_) && p_30280_.canSeeSky(p_30281_);
+            return p_30280_.getBlockState(p_30281_).is(BlockTags.DIRT) && p_30280_.isEmptyBlock(p_30281_.above());
         }
     }
 }
