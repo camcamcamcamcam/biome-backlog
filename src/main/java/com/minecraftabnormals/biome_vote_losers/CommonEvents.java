@@ -16,7 +16,7 @@ import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.common.world.ForgeChunkManager;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.EntityLeaveLevelEvent;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -37,26 +37,28 @@ public class CommonEvents {
 
 
 	@SubscribeEvent
-	public static void livingDeathEvent(LivingDeathEvent event) {
+	public static void livingTickEvent(LivingEvent.LivingTickEvent event) {
 		LivingEntity livingEntity = event.getEntity();
 
 		if (livingEntity instanceof Player) {
-			if (livingEntity.level instanceof ServerLevel serverLevel) {
-
-				livingEntity.level.getCapability(BiomeVoteLosers.TRUSTED_VULTURE_CAP).ifPresent(deathTrackCapability -> {
-					for (DeathTrackRequest request : deathTrackCapability.getDeathTrackRequestsFor()) {
-						loadChunksAround(serverLevel, request.getVultureUUID(), request.getChunkPosition(), true);
-						Entity entityFromChunk = serverLevel.getEntity(request.getVultureUUID());
-						if (entityFromChunk != null) {
-							entityFromChunk.teleportToWithTicket(livingEntity.getX() + 0.5F, 110, livingEntity.getZ() + 0.5F);
-							if (entityFromChunk instanceof Vulture) {
-								((Vulture) entityFromChunk).setCircle(false);
+			if (((Player) livingEntity).getLastDeathLocation().isPresent()) {
+				if (livingEntity.level instanceof ServerLevel serverLevel) {
+					BlockPos pos = ((Player) livingEntity).getLastDeathLocation().get().pos();
+					livingEntity.level.getCapability(BiomeVoteLosers.TRUSTED_VULTURE_CAP).ifPresent(deathTrackCapability -> {
+						for (DeathTrackRequest request : deathTrackCapability.getDeathTrackRequestsFor()) {
+							loadChunksAround(serverLevel, request.getVultureUUID(), request.getChunkPosition(), true);
+							Entity entityFromChunk = serverLevel.getEntity(request.getVultureUUID());
+							if (entityFromChunk != null) {
+								entityFromChunk.teleportTo(pos.getX(), pos.getY() + 30, pos.getZ());
+								if (entityFromChunk instanceof Vulture) {
+									((Vulture) entityFromChunk).setCircle(false);
+								}
 							}
+							loadChunksAround(serverLevel, request.getVultureUUID(), request.getChunkPosition(), false);
+							deathTrackCapability.removeDeathTrackRequestAll(deathTrackCapability.getDeathTrackRequestsFor());
 						}
-						loadChunksAround(serverLevel, request.getVultureUUID(), request.getChunkPosition(), false);
-						//deathTrackCapability.removeDeathTrackRequestAll(deathTrackCapability.getDeathTrackRequestsFor());
-					}
-				});
+					});
+				}
 			}
 		}
 	}
