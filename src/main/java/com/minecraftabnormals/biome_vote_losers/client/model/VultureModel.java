@@ -94,7 +94,7 @@ public class VultureModel<T extends Vulture> extends HierarchicalModel<T> {
 		this.right_wing.xRot = -(float) ((Math.PI / 2F) * limbSwingAmount);
 		this.left_wing.xRot = -(float) ((Math.PI / 2F) * limbSwingAmount);
 
-		this.vulture.xRot = 0.25F * limbSwingAmount;
+		this.vulture.xRot = -0.25F * limbSwingAmount;
 
 	}
 

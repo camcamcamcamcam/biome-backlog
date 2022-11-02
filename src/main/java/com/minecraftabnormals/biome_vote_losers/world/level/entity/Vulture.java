@@ -53,7 +53,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class Vulture extends TamableAnimal {
-	private static final EntityDataAccessor<Integer> DATA_REMAINING_DESPAWN_TIME = SynchedEntityData.defineId(Vulture.class, EntityDataSerializers.INT);
+	private static final EntityDataAccessor<Boolean> DATA_CIRCLE = SynchedEntityData.defineId(Vulture.class, EntityDataSerializers.BOOLEAN);
 
 
 	public static final float FLAP_DEGREES_PER_TICK = 7.448451F;
@@ -80,7 +80,7 @@ public class Vulture extends TamableAnimal {
 	@Override
 	protected void defineSynchedData() {
 		super.defineSynchedData();
-		this.entityData.define(DATA_REMAINING_DESPAWN_TIME, -1);
+		this.entityData.define(DATA_CIRCLE, false);
 	}
 
 	protected void registerGoals() {
@@ -92,34 +92,13 @@ public class Vulture extends TamableAnimal {
 		this.targetSelector.addGoal(1, new VultureAttackZombieTargetGoal());
 	}
 
-	public void setDespawnTime(int despawnTime) {
-		this.entityData.set(DATA_REMAINING_DESPAWN_TIME, despawnTime);
+
+	public boolean hasCircle() {
+		return this.entityData.get(DATA_CIRCLE);
 	}
 
-	public int getDespawnTime() {
-		return this.entityData.get(DATA_REMAINING_DESPAWN_TIME);
-	}
-
-	public boolean hasDespawnTime() {
-		return getDespawnTime() > -1;
-	}
-
-	@Override
-	public void aiStep() {
-		super.aiStep();
-		if (!this.level.isClientSide) {
-			this.maybeDespawn();
-		}
-
-	}
-
-	private void maybeDespawn() {
-		if (this.hasDespawnTime() && this.getDespawnTime() == 0) {
-			this.setDespawnTime(getDespawnTime() - 1);
-		} else {
-			this.discard();
-		}
-
+	public void setCircle(boolean p_28516_) {
+		this.entityData.set(DATA_CIRCLE, p_28516_);
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {
@@ -133,7 +112,6 @@ public class Vulture extends TamableAnimal {
 	protected boolean shouldDespawnInPeaceful() {
 		return false;
 	}
-
 	public void tick() {
 		super.tick();
 		if (this.level.isClientSide) {
@@ -200,6 +178,7 @@ public class Vulture extends TamableAnimal {
 		if (p_33132_.contains("AX")) {
 			this.anchorPoint = new BlockPos(p_33132_.getInt("AX"), p_33132_.getInt("AY"), p_33132_.getInt("AZ"));
 		}
+		this.setCircle(p_33132_.getBoolean("Circle"));
 	}
 
 	public void addAdditionalSaveData(CompoundTag p_33141_) {
@@ -207,6 +186,7 @@ public class Vulture extends TamableAnimal {
 		p_33141_.putInt("AX", this.anchorPoint.getX());
 		p_33141_.putInt("AY", this.anchorPoint.getY());
 		p_33141_.putInt("AZ", this.anchorPoint.getZ());
+		p_33141_.putBoolean("Circle", this.hasCircle());
 	}
 
 	@Nullable
@@ -230,15 +210,16 @@ public class Vulture extends TamableAnimal {
 	public InteractionResult mobInteract(Player p_30412_, InteractionHand p_30413_) {
 		ItemStack itemstack = p_30412_.getItemInHand(p_30413_);
 		Item item = itemstack.getItem();
+		boolean flag = this.isTame() && this.isOwnedBy(p_30412_) && !this.hasCircle() || itemstack.is(Items.ROTTEN_FLESH) && !this.isTame() && !this.isOwnedBy(p_30412_);
+
 		if (this.level.isClientSide) {
-			boolean flag = this.isOwnedBy(p_30412_) || this.isTame() || itemstack.is(Items.ROTTEN_FLESH) && !this.isTame();
 			return flag ? InteractionResult.CONSUME : InteractionResult.PASS;
 		} else {
-			if (itemstack.is(Items.ROTTEN_FLESH) && !this.isOwnedBy(p_30412_)) {
+			if (flag) {
 				if (!p_30412_.getAbilities().instabuild) {
 					itemstack.shrink(1);
 				}
-
+				this.setCircle(true);
 				this.tame(p_30412_);
 				this.navigation.stop();
 				this.setTarget((LivingEntity) null);
