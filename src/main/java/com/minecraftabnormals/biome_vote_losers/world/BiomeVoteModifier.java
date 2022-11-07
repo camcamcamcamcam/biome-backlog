@@ -2,12 +2,14 @@ package com.minecraftabnormals.biome_vote_losers.world;
 
 import com.minecraftabnormals.biome_vote_losers.register.ModBiomeModifiers;
 import com.minecraftabnormals.biome_vote_losers.register.ModEntities;
+import com.minecraftabnormals.biome_vote_losers.world.gen.feature.ModPlacements;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.Holder;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.biome.MobSpawnSettings;
+import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.common.world.ModifiableBiomeInfo;
 
@@ -23,6 +25,10 @@ public class BiomeVoteModifier implements BiomeModifier {
 			}
 			if (biome.is(Biomes.DESERT)) {
 				builder.getMobSpawnSettings().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(ModEntities.MEERKAT.get(), 8, 4, 6));
+			}
+
+			if (biome.is(Biomes.BADLANDS)) {
+				builder.getGenerationSettings().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacements.PATCH_PEAR_CACTUS);
 			}
 		}
 	}

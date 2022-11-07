@@ -8,6 +8,8 @@ import com.minecraftabnormals.biome_vote_losers.register.ModBlocks;
 import com.minecraftabnormals.biome_vote_losers.register.ModEntities;
 import com.minecraftabnormals.biome_vote_losers.register.ModItems;
 import com.minecraftabnormals.biome_vote_losers.register.ModParticles;
+import com.minecraftabnormals.biome_vote_losers.world.gen.feature.ModConfiguredFeatures;
+import com.minecraftabnormals.biome_vote_losers.world.gen.feature.ModPlacements;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.logging.LogUtils;
 import it.unimi.dsi.fastutil.longs.LongSet;
@@ -82,8 +84,10 @@ public class BiomeVoteLosers {
 
 	private void commonSetup(final FMLCommonSetupEvent event) {
 		event.enqueueWork(() -> {
-            ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.SUCCULENT.getId(), ModBlocks.POTTED_SUCCULENT);
-        });
+			((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.SUCCULENT.getId(), ModBlocks.POTTED_SUCCULENT);
+			ModConfiguredFeatures.init();
+			ModPlacements.init();
+		});
 
 		ModEntities.spawnPlacementSetup();
 		event.enqueueWork(this::serverInit);
