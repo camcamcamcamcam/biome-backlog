@@ -12,7 +12,7 @@ apply plugin: "eclipse"
 apply plugin: "maven-publish"
 
 
-version = '1.19.2-1.3'
+version = '1.19.2-0.1.0'
 group = 'com.minecraftabnormals.biome_vote_losers' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'biome_vote_losers'
 
