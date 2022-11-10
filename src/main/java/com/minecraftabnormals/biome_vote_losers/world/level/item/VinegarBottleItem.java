@@ -63,17 +63,18 @@ public class VinegarBottleItem extends Item {
         }
 
         final @Nullable var player = context.getPlayer();
+        if (!level.isClientSide) {
+            if (player != null && !player.getAbilities().instabuild) {
+                final var item = context.getItemInHand();
+                item.shrink(1);
 
-        if (player != null && !player.getAbilities().instabuild) {
-            final var item = context.getItemInHand();
-            item.shrink(1);
+                final var emptyBottle = new ItemStack(Items.GLASS_BOTTLE);
 
-            final var emptyBottle = new ItemStack(Items.GLASS_BOTTLE);
-
-            if (item.isEmpty()) {
-                player.setItemInHand(context.getHand(), emptyBottle);
-            } else {
-                player.addItem(emptyBottle);
+                if (item.isEmpty()) {
+                    player.setItemInHand(context.getHand(), emptyBottle);
+                } else {
+                    player.addItem(emptyBottle);
+                }
             }
         }
 
