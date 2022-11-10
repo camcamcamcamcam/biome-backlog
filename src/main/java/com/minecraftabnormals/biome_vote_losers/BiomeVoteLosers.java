@@ -8,6 +8,8 @@ import com.minecraftabnormals.biome_vote_losers.register.ModBlocks;
 import com.minecraftabnormals.biome_vote_losers.register.ModEntities;
 import com.minecraftabnormals.biome_vote_losers.register.ModItems;
 import com.minecraftabnormals.biome_vote_losers.register.ModParticles;
+import com.minecraftabnormals.biome_vote_losers.register.ModRecipeSerializers;
+import com.minecraftabnormals.biome_vote_losers.register.ModRecipeTypes;
 import com.minecraftabnormals.biome_vote_losers.world.gen.feature.ModConfiguredFeatures;
 import com.minecraftabnormals.biome_vote_losers.world.gen.feature.ModPlacements;
 import com.mojang.datafixers.util.Pair;
@@ -54,6 +56,9 @@ public class BiomeVoteLosers {
 		ModBlockEntities.BLOCK_ENTITIES.register(modEventBus);
 		ModBiomeModifiers.BIOME_MODIFIER_SERIALIZERS.register(modEventBus);
 		ModParticles.PARTICLES.register(modEventBus);
+
+		ModRecipeTypes.RECIPE_TYPES.register(modEventBus);
+		ModRecipeSerializers.RECIPE_SERIALIZERS.register(modEventBus);
 
 		modEventBus.addListener(this::commonSetup);
 		MinecraftForge.EVENT_BUS.register(this);

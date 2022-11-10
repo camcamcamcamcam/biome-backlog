@@ -1,0 +1,9 @@
+{
+  "type": "biome_vote_losers:color_lose",
+  "ingredient": {
+    "tag": "biome_vote_losers:colored_concrete_powder"
+  },
+  "result": {
+    "block": "minecraft:white_concrete_powder"
+  }
+}

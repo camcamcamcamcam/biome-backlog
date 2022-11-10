@@ -1,17 +1,19 @@
 package com.minecraftabnormals.biome_vote_losers.world.level.item;
 
+import com.minecraftabnormals.biome_vote_losers.recipe.recipes.ColorLoseRecipe;
 import com.minecraftabnormals.biome_vote_losers.register.ModEntities;
+import com.minecraftabnormals.biome_vote_losers.utils.RecipeUtils;
 import com.minecraftabnormals.biome_vote_losers.world.level.entity.CalcitePowderReaction;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
@@ -25,17 +27,9 @@ public class VinegarBottleItem extends Item {
         final var pos   = context.getClickedPos();
         final var block = level.getBlockState(pos);
 
-        if (!block.is(Blocks.CALCITE) && !block.is(BlockTags.WOOL) && !block.is(BlockTags.WOOL_CARPETS)) {
-            return InteractionResult.PASS;
-        }
 
         /* Only allow using vinegar on the top face of the block. */
         if (context.getClickedFace() != Direction.UP) {
-            return InteractionResult.PASS;
-        }
-
-        /* Not Affect The white wool*/
-        if (block.is(Blocks.WHITE_WOOL) || block.is(Blocks.WHITE_CARPET)) {
             return InteractionResult.PASS;
         }
 
@@ -48,14 +42,17 @@ public class VinegarBottleItem extends Item {
 
                 level.addFreshEntity(powderEntity);
             }
-        }
+        } else {
+            ColorLoseRecipe recipe = RecipeUtils.blockColorLoose(level, pos, block);
+            if (recipe != null) {
+                BlockState state = recipe.getResultState(block);
 
-        if (block.is(BlockTags.WOOL)) {
-            level.setBlock(pos, Blocks.WHITE_WOOL.defaultBlockState(), 2);
-        }
-
-        if (block.is(BlockTags.WOOL_CARPETS)) {
-            level.setBlock(pos, Blocks.WHITE_CARPET.defaultBlockState(), 2);
+                if (state != null) {
+                    level.setBlock(pos, state, 2);
+                } else {
+                    return InteractionResult.PASS;
+                }
+            }
         }
 
         final @Nullable var player = context.getPlayer();

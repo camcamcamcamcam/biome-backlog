@@ -1,18 +1,30 @@
 package com.minecraftabnormals.biome_vote_losers.data;
 
 import com.minecraftabnormals.biome_vote_losers.BiomeVoteLosers;
+import com.minecraftabnormals.biome_vote_losers.data.recipe.ColorLoseBuilder;
+import com.minecraftabnormals.biome_vote_losers.recipe.BlockPropertyPair;
+import com.minecraftabnormals.biome_vote_losers.recipe.BlockStateIngredient;
 import com.minecraftabnormals.biome_vote_losers.register.ModBlocks;
 import com.minecraftabnormals.biome_vote_losers.register.ModItems;
+import com.minecraftabnormals.biome_vote_losers.register.ModRecipeSerializers;
+import com.minecraftabnormals.biome_vote_losers.register.ModTags;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.recipes.*;
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.ShapelessRecipeBuilder;
+import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
 
+import java.util.Map;
 import java.util.function.Consumer;
 
 public class RecipeGenerator extends RecipeProvider implements IConditionBuilder {
@@ -89,10 +101,20 @@ public class RecipeGenerator extends RecipeProvider implements IConditionBuilder
                 .save(finishedRecipeConsumer);
 
         SimpleCookingRecipeBuilder.cooking(Ingredient.of(ModItems.COCONUT_SHELL.get()), Items.CHARCOAL,
-                0.45F, 300, RecipeSerializer.SMELTING_RECIPE)
+                        0.45F, 300, RecipeSerializer.SMELTING_RECIPE)
                 .unlockedBy("has_coconut_shell", inventoryTrigger(ItemPredicate.Builder.item()
                         .of(ModItems.COCONUT_SHELL.get()).build()))
                 .save(finishedRecipeConsumer, new ResourceLocation(BiomeVoteLosers.MODID, "charcoal_from_coconut_shell"));
 
+        ColorLoseBuilder.recipe(BlockStateIngredient.of(BlockTags.WOOL), BlockPropertyPair.of(Blocks.WHITE_WOOL, Map.of()), ModRecipeSerializers.COLOR_LOSE.get()).save(finishedRecipeConsumer);
+        ColorLoseBuilder.recipe(BlockStateIngredient.of(BlockTags.WOOL_CARPETS), BlockPropertyPair.of(Blocks.WHITE_CARPET, Map.of()), ModRecipeSerializers.COLOR_LOSE.get()).save(finishedRecipeConsumer);
+        ColorLoseBuilder.recipe(BlockStateIngredient.of(BlockTags.CANDLES), BlockPropertyPair.of(Blocks.CANDLE, Map.of()), ModRecipeSerializers.COLOR_LOSE.get()).save(finishedRecipeConsumer);
+        ColorLoseBuilder.recipe(BlockStateIngredient.of(BlockTags.BANNERS), BlockPropertyPair.of(Blocks.WHITE_BANNER, Map.of()), ModRecipeSerializers.COLOR_LOSE.get()).save(finishedRecipeConsumer);
+        ColorLoseBuilder.recipe(BlockStateIngredient.of(ModTags.COLORED_BEDS), BlockPropertyPair.of(Blocks.WHITE_BED, Map.of()), ModRecipeSerializers.COLOR_LOSE.get()).save(finishedRecipeConsumer);
+        ColorLoseBuilder.recipe(BlockStateIngredient.of(ModTags.COLORED_CONCRETE), BlockPropertyPair.of(Blocks.WHITE_CONCRETE, Map.of()), ModRecipeSerializers.COLOR_LOSE.get()).save(finishedRecipeConsumer);
+        ColorLoseBuilder.recipe(BlockStateIngredient.of(ModTags.COLORED_CONCRETE_POWDER), BlockPropertyPair.of(Blocks.WHITE_CONCRETE_POWDER, Map.of()), ModRecipeSerializers.COLOR_LOSE.get()).save(finishedRecipeConsumer);
+        ColorLoseBuilder.recipe(BlockStateIngredient.of(ModTags.COLORED_SHULKER_BOXS), BlockPropertyPair.of(Blocks.SHULKER_BOX, Map.of()), ModRecipeSerializers.COLOR_LOSE.get()).save(finishedRecipeConsumer);
+        ColorLoseBuilder.recipe(BlockStateIngredient.of(Tags.Blocks.STAINED_GLASS), BlockPropertyPair.of(Blocks.GLASS, Map.of()), ModRecipeSerializers.COLOR_LOSE.get()).save(finishedRecipeConsumer);
+        ColorLoseBuilder.recipe(BlockStateIngredient.of(Tags.Blocks.STAINED_GLASS_PANES), BlockPropertyPair.of(Blocks.GLASS_PANE, Map.of()), ModRecipeSerializers.COLOR_LOSE.get()).save(finishedRecipeConsumer);
     }
 }

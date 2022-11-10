@@ -1,0 +1,9 @@
+{
+  "type": "biome_vote_losers:color_lose",
+  "ingredient": {
+    "tag": "biome_vote_losers:colored_beds"
+  },
+  "result": {
+    "block": "minecraft:white_bed"
+  }
+}

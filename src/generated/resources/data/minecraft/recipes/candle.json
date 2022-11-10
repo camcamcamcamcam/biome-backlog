@@ -1,0 +1,9 @@
+{
+  "type": "biome_vote_losers:color_lose",
+  "ingredient": {
+    "tag": "minecraft:candles"
+  },
+  "result": {
+    "block": "minecraft:candle"
+  }
+}
