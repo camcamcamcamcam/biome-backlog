@@ -1,0 +1,9 @@
+{
+  "type": "biome_vote_losers:color_lose",
+  "ingredient": {
+    "tag": "forge:stained_glass"
+  },
+  "result": {
+    "block": "minecraft:glass"
+  }
+}
