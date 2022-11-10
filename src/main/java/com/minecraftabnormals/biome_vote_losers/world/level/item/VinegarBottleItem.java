@@ -33,9 +33,10 @@ public class VinegarBottleItem extends Item {
             return InteractionResult.PASS;
         }
 
-        level.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);
 
         if (block.is(Blocks.CALCITE)) {
+            level.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);
+
             if (!level.isClientSide) {
                 final var powderEntity = new CalcitePowderReaction(ModEntities.CALCITE_POWDER.get(), level);
                 powderEntity.setPos(Vec3.upFromBottomCenterOf(pos, 1.0));
@@ -46,12 +47,16 @@ public class VinegarBottleItem extends Item {
             ColorLoseRecipe recipe = RecipeUtils.blockColorLoose(level, pos, block);
             if (recipe != null) {
                 BlockState state = recipe.getResultState(block);
+                //check is using block same as result
+                if (state.getBlock() != block.getBlock()) {
+                    level.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);
 
-                if (state != null) {
                     level.setBlock(pos, state, 2);
                 } else {
                     return InteractionResult.PASS;
                 }
+            } else {
+                return InteractionResult.PASS;
             }
         }
 
