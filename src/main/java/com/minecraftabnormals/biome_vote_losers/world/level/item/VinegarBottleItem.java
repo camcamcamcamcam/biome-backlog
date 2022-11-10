@@ -44,19 +44,21 @@ public class VinegarBottleItem extends Item {
                 level.addFreshEntity(powderEntity);
             }
         } else {
-            ColorLoseRecipe recipe = RecipeUtils.blockColorLoose(level, pos, block);
-            if (recipe != null) {
-                BlockState state = recipe.getResultState(block);
-                //check is using block same as result
-                if (state.getBlock() != block.getBlock()) {
-                    level.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);
+            if (!level.isClientSide) {
+                ColorLoseRecipe recipe = RecipeUtils.blockColorLoose(level, pos, block);
+                if (recipe != null) {
+                    BlockState state = recipe.getResultState(block);
+                    //check is using block same as result
+                    if (state.getBlock() != block.getBlock()) {
+                        level.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);
 
-                    level.setBlock(pos, state, 2);
+                        level.setBlock(pos, state, 2);
+                    } else {
+                        return InteractionResult.PASS;
+                    }
                 } else {
                     return InteractionResult.PASS;
                 }
-            } else {
-                return InteractionResult.PASS;
             }
         }
 
