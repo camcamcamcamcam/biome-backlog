@@ -4,6 +4,7 @@ import com.minecraftabnormals.biome_vote_losers.recipe.recipes.ColorLoseRecipe;
 import com.minecraftabnormals.biome_vote_losers.register.ModEntities;
 import com.minecraftabnormals.biome_vote_losers.utils.RecipeUtils;
 import com.minecraftabnormals.biome_vote_losers.world.level.entity.CalcitePowderReaction;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -12,10 +13,14 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
+
+import static net.minecraft.world.level.block.BedBlock.PART;
 
 public class VinegarBottleItem extends Item {
     public VinegarBottleItem(Properties properties) {
@@ -48,11 +53,18 @@ public class VinegarBottleItem extends Item {
                 ColorLoseRecipe recipe = RecipeUtils.blockColorLoose(level, pos, block);
                 if (recipe != null) {
                     BlockState state = recipe.getResultState(block);
+
                     //check is using block same as result
                     if (state.getBlock() != block.getBlock()) {
-                        level.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);
 
-                        level.setBlock(pos, state, 2);
+                        level.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);
+                        level.setBlock(pos, state, 11);
+                        if (state.getBlock() instanceof BedBlock) {
+                            BlockPos nearPos = pos.relative(getNeighbourDirection(block.getValue(PART), block.getValue(BedBlock.FACING)));
+
+                            BlockState state2 = recipe.getResultState(level.getBlockState(nearPos));
+                            level.setBlock(nearPos, state2, 11);
+                        }
                     } else {
                         return InteractionResult.PASS;
                     }
@@ -79,5 +91,9 @@ public class VinegarBottleItem extends Item {
         }
 
         return InteractionResult.sidedSuccess(level.isClientSide);
+    }
+
+    private static Direction getNeighbourDirection(BedPart p_49534_, Direction p_49535_) {
+        return p_49534_ == BedPart.FOOT ? p_49535_ : p_49535_.getOpposite();
     }
 }
