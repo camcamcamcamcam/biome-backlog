@@ -22,6 +22,7 @@ import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ExperienceOrb;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -39,6 +40,7 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
 import net.minecraft.world.entity.ai.util.DefaultRandomPos;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -137,8 +139,9 @@ public class Ostrich extends Animal implements NeutralMob {
         this.goalSelector.addGoal(9, new WaterAvoidingRandomStrollGoal(this, 1.0D));
         this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, Player.class, 8.0F));
         this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)).setAlertOthers());
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, this::isAngryAt));
-        this.targetSelector.addGoal(3, new ResetUniversalAngerTargetGoal<>(this, true));
+        this.targetSelector.addGoal(2, new OstrichAttackEnemyGoal());
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, this::isAngryAt));
+        this.targetSelector.addGoal(4, new ResetUniversalAngerTargetGoal<>(this, true));
     }
 
     @Override
@@ -344,6 +347,52 @@ public class Ostrich extends Animal implements NeutralMob {
 
         protected boolean isValidTarget(LevelReader p_30280_, BlockPos p_30281_) {
             return p_30280_.getBlockState(p_30281_).is(BlockTags.DIRT) && p_30280_.isEmptyBlock(p_30281_.above());
+        }
+    }
+
+    private class OstrichAttackEnemyGoal extends NearestAttackableTargetGoal<LivingEntity> {
+        public OstrichAttackEnemyGoal() {
+            super(Ostrich.this, LivingEntity.class, 140, true, true, (livingEntity -> {
+                return livingEntity instanceof Enemy;
+            }));
+        }
+
+        public boolean canUse() {
+            if (Ostrich.this.isBaby()) {
+                return false;
+            } else {
+                if (super.canUse()) {
+                    if (canFindEgg()) {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+        }
+
+        private boolean canFindEgg() {
+            BlockPos blockpos = Ostrich.this.blockPosition();
+            BlockPos.MutableBlockPos blockpos$mutable = new BlockPos.MutableBlockPos();
+
+            for (int i = 0; i < 8; ++i) {
+                for (int j = 0; j < 8; ++j) {
+                    for (int k = 0; k <= j; k = k > 0 ? -k : 1 - k) {
+                        for (int l = k < j && k > -j ? j : 0; l <= j; l = l > 0 ? -l : 1 - l) {
+                            blockpos$mutable.setWithOffset(blockpos, k, i, l);
+                            if (level.getBlockState(blockpos$mutable).is(ModBlocks.OSTRICH_EGG.get())) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        protected double getFollowDistance() {
+            return super.getFollowDistance() * 0.5D;
         }
     }
 }
