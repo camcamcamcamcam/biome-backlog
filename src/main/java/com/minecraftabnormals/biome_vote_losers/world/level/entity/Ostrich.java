@@ -17,6 +17,7 @@ import net.minecraft.stats.Stats;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.Entity;
@@ -59,6 +60,8 @@ public class Ostrich extends Animal implements NeutralMob {
 
     private static final EntityDataAccessor<Integer> DATA_REMAINING_ANGER_TIME = SynchedEntityData.defineId(Ostrich.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> HAS_EGG = SynchedEntityData.defineId(Ostrich.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> DIP = SynchedEntityData.defineId(Ostrich.class, EntityDataSerializers.BOOLEAN);
+
     public AnimationState idlingState = new AnimationState();
     public AnimationState walkingState = new AnimationState();
     public AnimationState runningState = new AnimationState();
@@ -86,11 +89,27 @@ public class Ostrich extends Animal implements NeutralMob {
         super.defineSynchedData();
         this.entityData.define(DATA_REMAINING_ANGER_TIME, 0);
         this.entityData.define(HAS_EGG, false);
+        this.entityData.define(DIP, false);
+    }
+
+    public void onSyncedDataUpdated(EntityDataAccessor<?> p_29615_) {
+        if (DIP.equals(p_29615_)) {
+            if (this.isDip()) {
+                idlingState.stop();
+                walkingState.stop();
+                runningState.stop();
+                this.dippingState.start(this.tickCount);
+            } else {
+                this.dippingState.stop();
+            }
+        }
+
+        super.onSyncedDataUpdated(p_29615_);
     }
 
     @Override
     public void tick() {
-        if (this.isMoving() && level.isClientSide()) {
+        if ((this.isDip() || this.isMoving()) && level.isClientSide()) {
             if (isDashing()) {
                 idlingState.stop();
                 walkingState.stop();
@@ -117,6 +136,14 @@ public class Ostrich extends Animal implements NeutralMob {
         return this.homeTarget;
     }
 
+    public boolean isDip() {
+        return this.entityData.get(DIP);
+    }
+
+    public void setDip(boolean dip) {
+        this.entityData.set(DIP, dip);
+    }
+
     private boolean isDashing() {
         return this.getDeltaMovement().horizontalDistanceSqr() > 0.0075D;
     }
@@ -128,19 +155,21 @@ public class Ostrich extends Animal implements NeutralMob {
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new FloatGoal(this));
+        this.goalSelector.addGoal(2, new OstrichDipGoal());
         this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1.5D, true));
         this.goalSelector.addGoal(5, new TemptGoal(this, 1.25D, Ingredient.of(Items.WHEAT), false));
 
         this.goalSelector.addGoal(6, new LayEggGoal(this, 0.85D));
-        this.goalSelector.addGoal(7, new OstrichGoHomeGoal(this, 0.85D));
-        this.goalSelector.addGoal(8, new BreedGoal(this, 0.85D) {
+
+        this.goalSelector.addGoal(8, new OstrichGoHomeGoal(this, 0.85D));
+        this.goalSelector.addGoal(9, new BreedGoal(this, 0.85D) {
             @Override
             public boolean canUse() {
                 return !hasEgg() && super.canUse();
             }
         });
-        this.goalSelector.addGoal(9, new WaterAvoidingRandomStrollGoal(this, 1.0D));
-        this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, Player.class, 8.0F));
+        this.goalSelector.addGoal(10, new WaterAvoidingRandomStrollGoal(this, 1.0D));
+        this.goalSelector.addGoal(11, new LookAtPlayerGoal(this, Player.class, 8.0F));
         this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)).setAlertOthers());
         this.targetSelector.addGoal(2, new OstrichAttackEnemyGoal());
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, this::isAngryAt));
@@ -265,6 +294,59 @@ public class Ostrich extends Animal implements NeutralMob {
         }
     }
 
+    @Override
+    public boolean hurt(DamageSource p_27567_, float p_27568_) {
+        this.setDip(false);
+        return super.hurt(p_27567_, p_27568_);
+    }
+
+    class OstrichDipGoal extends Goal {
+
+        public int tick;
+
+        OstrichDipGoal() {
+            this.setFlags(EnumSet.of(Flag.MOVE, Flag.JUMP, Flag.LOOK));
+        }
+
+        @Override
+        public boolean canUse() {
+            if (Ostrich.this.getHomeTarget() != null) {
+                if (!Ostrich.this.isDip() && Ostrich.this.getTarget() == null && Ostrich.this.homeTarget.distSqr(Ostrich.this.blockPosition()) < 64) {
+                    if (Ostrich.this.isOnGround() && Ostrich.this.level.getBlockState(Ostrich.this.blockPosition().below()).is(BlockTags.SAND) && Ostrich.this.random.nextInt(240) == 0) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        @Override
+        public boolean canContinueToUse() {
+            return this.tick < 100;
+        }
+
+        @Override
+        public void start() {
+            super.start();
+            setDip(true);
+            this.tick = 0;
+
+        }
+
+        @Override
+        public void tick() {
+            super.tick();
+            this.tick++;
+        }
+
+        @Override
+        public void stop() {
+            super.stop();
+            setDip(false);
+            this.tick = 0;
+        }
+    }
+
     static class OstrichGoHomeGoal extends Goal {
         private final Ostrich ostrich;
         private final double speedModifier;
@@ -281,9 +363,9 @@ public class Ostrich extends Animal implements NeutralMob {
             if (this.ostrich.isBaby()) {
                 return false;
             } else if (this.ostrich.hasEgg()) {
-                return true;
+                return false;
             } else {
-                return this.ostrich.getHomeTarget() != null && !this.ostrich.getHomeTarget().closerToCenterThan(this.ostrich.position(), 64.0D);
+                return this.ostrich.getHomeTarget() != null && !this.ostrich.getHomeTarget().closerToCenterThan(this.ostrich.position(), 32.0D);
             }
         }
 
@@ -360,7 +442,7 @@ public class Ostrich extends Animal implements NeutralMob {
         }
 
         protected boolean isValidTarget(LevelReader p_30280_, BlockPos p_30281_) {
-            return p_30280_.getBlockState(p_30281_).is(BlockTags.DIRT) && p_30280_.isEmptyBlock(p_30281_.above());
+            return (p_30280_.getBlockState(p_30281_).is(BlockTags.DIRT) || p_30280_.getBlockState(p_30281_).is(BlockTags.SAND)) && p_30280_.isEmptyBlock(p_30281_.above());
         }
     }
 
