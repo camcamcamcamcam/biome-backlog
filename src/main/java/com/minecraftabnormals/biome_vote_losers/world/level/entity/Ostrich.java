@@ -48,6 +48,7 @@ import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
@@ -70,6 +71,8 @@ public class Ostrich extends Animal implements NeutralMob {
 
     @Nullable
     private BlockPos homeTarget;
+
+    public int featherTime = this.random.nextInt(6000) + 6000;
 
     public Ostrich(EntityType<? extends Ostrich> p_27557_, Level p_27558_) {
         super(p_27557_, p_27558_);
@@ -150,6 +153,7 @@ public class Ostrich extends Animal implements NeutralMob {
         if (this.homeTarget != null) {
             compoundTag.put("HomeTarget", NbtUtils.writeBlockPos(this.homeTarget));
         }
+        compoundTag.putInt("FeatherTime", this.featherTime);
         compoundTag.putBoolean("HasEgg", this.hasEgg());
         this.addPersistentAngerSaveData(compoundTag);
     }
@@ -159,6 +163,9 @@ public class Ostrich extends Animal implements NeutralMob {
         super.readAdditionalSaveData(compoundTag);
         if (compoundTag.contains("HomeTarget")) {
             this.homeTarget = NbtUtils.readBlockPos(compoundTag.getCompound("HomeTarget"));
+        }
+        if (compoundTag.contains("FeatherTime")) {
+            this.featherTime = compoundTag.getInt("FeatherTime");
         }
         this.setHasEgg(compoundTag.getBoolean("HasEgg"));
         this.readPersistentAngerSaveData(this.level, compoundTag);
@@ -195,6 +202,13 @@ public class Ostrich extends Animal implements NeutralMob {
 
         if (!this.level.isClientSide) {
             this.updatePersistentAnger((ServerLevel) this.level, true);
+        }
+
+        if (!this.level.isClientSide && this.isAlive() && !this.isBaby() && --this.featherTime <= 0) {
+            this.playSound(SoundEvents.BAT_TAKEOFF, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+            this.spawnAtLocation(Items.FEATHER);
+            this.gameEvent(GameEvent.ENTITY_INTERACT);
+            this.featherTime = this.random.nextInt(6000) + 6000;
         }
     }
 
