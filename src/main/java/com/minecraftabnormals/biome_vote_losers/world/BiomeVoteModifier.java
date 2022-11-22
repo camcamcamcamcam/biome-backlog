@@ -29,6 +29,7 @@ public class BiomeVoteModifier implements BiomeModifier {
 
 			if (biome.is(Biomes.BADLANDS)) {
 				builder.getGenerationSettings().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacements.PATCH_PEAR_CACTUS);
+				builder.getGenerationSettings().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacements.PATCH_TUMBLEWEED);
 			}
 		}
 	}

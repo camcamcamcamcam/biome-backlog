@@ -12,6 +12,7 @@ import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvi
 
 public class ModConfiguredFeatures {
 	public static final Holder<ConfiguredFeature<RandomPatchConfiguration, ?>> PATCH_PEAR_CACTUS = FeatureUtils.register(BiomeVoteLosers.MODID + ":patch_pear_cactus", Feature.RANDOM_PATCH, FeatureUtils.simplePatchConfiguration(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(ModBlocks.PEAR_CACTUS.get()))));
+	public static final Holder<ConfiguredFeature<RandomPatchConfiguration, ?>> PATCH_TUMBLEWEED = FeatureUtils.register(BiomeVoteLosers.MODID + ":patch_tumbleweed", Feature.RANDOM_PATCH, FeatureUtils.simplePatchConfiguration(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(ModBlocks.TUMBLEWEED.get()))));
 
 	public static void init() {
 
