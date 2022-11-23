@@ -1,6 +1,7 @@
 package com.minecraftabnormals.biome_vote_losers.data;
 
 import com.minecraftabnormals.biome_vote_losers.BiomeVoteLosers;
+import com.minecraftabnormals.biome_vote_losers.register.ModBlocks;
 import com.minecraftabnormals.biome_vote_losers.register.ModTags;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.BlockTagsProvider;
@@ -32,6 +33,6 @@ public class ModBlockTagProvider extends BlockTagsProvider {
 						Blocks.LIGHT_GRAY_CONCRETE_POWDER, Blocks.CYAN_CONCRETE_POWDER, Blocks.PURPLE_CONCRETE_POWDER, Blocks.BLUE_CONCRETE_POWDER,
 						Blocks.BROWN_CONCRETE_POWDER, Blocks.GREEN_CONCRETE_POWDER, Blocks.RED_CONCRETE_POWDER, Blocks.BLACK_CONCRETE_POWDER)
 				.addOptionalTag(new ResourceLocation("tinted:concrete_powder"));
-
+		this.tag(ModTags.BURROW).add(ModBlocks.BURROW.get());
 	}
 }

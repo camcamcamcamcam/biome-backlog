@@ -1,7 +1,13 @@
 package com.minecraftabnormals.biome_vote_losers.world.level.entity;
 
+import com.google.common.collect.Lists;
+import com.minecraftabnormals.biome_vote_losers.register.ModBlocks;
 import com.minecraftabnormals.biome_vote_losers.register.ModEntities;
+import com.minecraftabnormals.biome_vote_losers.register.ModTags;
+import com.minecraftabnormals.biome_vote_losers.world.level.block.entity.BurrowBlockEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.BlockParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
@@ -9,9 +15,12 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.util.VisibleForDebug;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.EntityDimensions;
@@ -31,14 +40,24 @@ import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.util.AirRandomPos;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.pathfinder.Path;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.Tags;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.EnumSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -50,9 +69,54 @@ public class Meerkat extends Animal {
 
 	public final AnimationState standingAnimationState = new AnimationState();
 	public final AnimationState stopStandingAnimationState = new AnimationState();
+	public AnimationState diggingAnimationState = new AnimationState();
+	public AnimationState digUpAnimationState = new AnimationState();
+
+
+	@javax.annotation.Nullable
+	BlockPos burrowPos;
 
 	public Meerkat(EntityType<? extends Meerkat> p_27557_, Level p_27558_) {
 		super(p_27557_, p_27558_);
+	}
+
+	@Override
+	protected void registerGoals() {
+		this.goalSelector.addGoal(1, new FloatGoal(this));
+		this.goalSelector.addGoal(2, new MeerkatEnterBurrowGoal());
+		this.goalSelector.addGoal(2, new MeerkatDiggingUpGoal());
+		this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1.275D, true));
+		this.goalSelector.addGoal(5, new BreedGoal(this, 0.85D));
+		this.goalSelector.addGoal(7, new MeerkatMakeBurrowGoal(this));
+		this.goalSelector.addGoal(8, new MeerkatGoToBurrowGoal());
+		this.goalSelector.addGoal(9, new StandGoal(this));
+		this.goalSelector.addGoal(10, new StopStandGoal(this));
+		this.goalSelector.addGoal(11, new WaterAvoidingRandomStrollGoal(this, 1.0D) {
+			@Override
+			public boolean canUse() {
+				return !isStanding() && super.canUse();
+			}
+
+			@Override
+			public boolean canContinueToUse() {
+				return !isStanding() && super.canContinueToUse();
+			}
+		});
+		this.goalSelector.addGoal(12, new LookAtPlayerGoal(this, Player.class, 8.0F));
+		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)).setAlertOthers());
+		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Meerkat.class, true));
+
+	}
+
+	public static AttributeSupplier.Builder createAttributes() {
+		return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 12.0D).add(Attributes.MOVEMENT_SPEED, 0.26D).add(Attributes.ATTACK_DAMAGE, 2.0F).add(Attributes.FOLLOW_RANGE, 24.0F);
+	}
+
+	@Override
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(DATA_TRUSTED_ID_0, Optional.empty());
+		this.entityData.define(DATA_STANDING, false);
 	}
 
 	public void onSyncedDataUpdated(EntityDataAccessor<?> p_29615_) {
@@ -67,42 +131,59 @@ public class Meerkat extends Animal {
 			}
 		}
 
+		if (DATA_POSE.equals(p_29615_)) {
+			switch (this.getPose()) {
+				case DIGGING:
+					this.diggingAnimationState.start(this.tickCount);
+					break;
+				case EMERGING:
+					this.digUpAnimationState.start(this.tickCount);
+					break;
+				default:
+					diggingAnimationState.stop();
+					digUpAnimationState.stop();
+					break;
+			}
+		}
+
 		super.onSyncedDataUpdated(p_29615_);
 	}
 
-	@Override
-	protected void defineSynchedData() {
-		super.defineSynchedData();
-		this.entityData.define(DATA_TRUSTED_ID_0, Optional.empty());
-		this.entityData.define(DATA_STANDING, false);
-	}
+	public void tick() {
+		super.tick();
+		if (this.level.isClientSide()) {
 
-	@Override
-	protected void registerGoals() {
-		this.goalSelector.addGoal(1, new FloatGoal(this));
-		this.goalSelector.addGoal(5, new MeleeAttackGoal(this, 1.275D, true));
-		this.goalSelector.addGoal(6, new BreedGoal(this, 0.85D));
-		this.goalSelector.addGoal(7, new StandGoal(this));
-		this.goalSelector.addGoal(8, new StopStandGoal(this));
-		this.goalSelector.addGoal(9, new WaterAvoidingRandomStrollGoal(this, 1.0D) {
-			@Override
-			public boolean canUse() {
-				return !isStanding() && super.canUse();
+			switch (this.getPose()) {
+				case DIGGING:
+					this.clientDiggingParticles(this.diggingAnimationState);
+				case EMERGING:
+					this.clientDiggingParticles(this.diggingAnimationState);
 			}
-
-			@Override
-			public boolean canContinueToUse() {
-				return !isStanding() && super.canContinueToUse();
-			}
-		});
-		this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, Player.class, 8.0F));
-		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)).setAlertOthers());
-		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Meerkat.class, true));
+		}
 
 	}
 
-	public static AttributeSupplier.Builder createAttributes() {
-		return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 12.0D).add(Attributes.MOVEMENT_SPEED, 0.26D).add(Attributes.ATTACK_DAMAGE, 2.0F).add(Attributes.FOLLOW_RANGE, 24.0F);
+	private void clientDiggingParticles(AnimationState p_219384_) {
+		if ((float) p_219384_.getAccumulatedTime() < 4500.0F) {
+			RandomSource randomsource = this.getRandom();
+			BlockState blockstate = this.getBlockStateOn();
+			if (blockstate.getRenderShape() != RenderShape.INVISIBLE) {
+				for (int i = 0; i < 30; ++i) {
+					double d0 = this.getX() + (double) Mth.randomBetween(randomsource, -0.3F, 0.3F);
+					double d1 = this.getY();
+					double d2 = this.getZ() + (double) Mth.randomBetween(randomsource, -0.3F, 0.3F);
+					this.level.addParticle(new BlockParticleOption(ParticleTypes.BLOCK, blockstate), d0, d1, d2, 0.0D, 0.0D, 0.0D);
+				}
+			}
+		}
+	}
+
+	public boolean isInvulnerableTo(DamageSource p_219427_) {
+		return this.isDiggingOrEmerging() && !p_219427_.isBypassInvul() ? true : super.isInvulnerableTo(p_219427_);
+	}
+
+	private boolean isDiggingOrEmerging() {
+		return this.hasPose(Pose.DIGGING) || this.hasPose(Pose.EMERGING);
 	}
 
 	@Override
@@ -131,6 +212,20 @@ public class Meerkat extends Animal {
 		this.entityData.set(DATA_TRUSTED_ID_0, Optional.ofNullable(p_28516_));
 	}
 
+	public void setBurrowPos(@javax.annotation.Nullable BlockPos burrowPos) {
+		this.burrowPos = burrowPos;
+	}
+
+	@javax.annotation.Nullable
+	public BlockPos getBurrowPos() {
+		return burrowPos;
+	}
+
+	@VisibleForDebug
+	public boolean hasBurrow() {
+		return this.burrowPos != null;
+	}
+
 	//This thing write save datas(called nbt(CompoundTag) I guess)
 	@Override
 	public void addAdditionalSaveData(CompoundTag p_28518_) {
@@ -140,6 +235,10 @@ public class Meerkat extends Animal {
 		UUID uuid = this.getTrustedLeaderUUID();
 		if (uuid != null) {
 			listtag.add(NbtUtils.createUUID(uuid));
+		}
+
+		if (this.hasBurrow()) {
+			p_28518_.put("BurrowPos", NbtUtils.writeBlockPos(this.getBurrowPos()));
 		}
 
 		p_28518_.put("TrustedLeader", listtag);
@@ -155,6 +254,11 @@ public class Meerkat extends Animal {
 
 		for (int i = 0; i < listtag.size(); ++i) {
 			this.setTrustedLeaderUUID(NbtUtils.loadUUID(listtag.get(i)));
+		}
+
+		this.burrowPos = null;
+		if (p_28493_.contains("BurrowPos")) {
+			this.burrowPos = NbtUtils.readBlockPos(p_28493_.getCompound("BurrowPos"));
 		}
 
 		this.setStanding(p_28493_.getBoolean("Standing"));
@@ -204,6 +308,261 @@ public class Meerkat extends Animal {
 		}
 
 		return super.finalizeSpawn(p_146746_, p_146747_, p_146748_, p_146749_, p_146750_);
+	}
+
+	boolean closerThan(BlockPos p_27817_, int p_27818_) {
+		return p_27817_.closerThan(this.blockPosition(), (double) p_27818_);
+	}
+
+	boolean isTooFarAway(BlockPos p_27890_) {
+		return !this.closerThan(p_27890_, 128);
+	}
+
+	void pathfindRandomlyTowards(BlockPos p_27881_) {
+		Vec3 vec3 = Vec3.atBottomCenterOf(p_27881_);
+		int i = 0;
+		BlockPos blockpos = this.blockPosition();
+		int j = (int) vec3.y - blockpos.getY();
+		if (j > 2) {
+			i = 4;
+		} else if (j < -2) {
+			i = -4;
+		}
+
+		int k = 6;
+		int l = 8;
+		int i1 = blockpos.distManhattan(p_27881_);
+		if (i1 < 15) {
+			k = i1 / 2;
+			l = i1 / 2;
+		}
+
+		Vec3 vec31 = AirRandomPos.getPosTowards(this, k, l, i, vec3, (double) ((float) Math.PI / 10F));
+		if (vec31 != null) {
+			this.navigation.setMaxVisitedNodesMultiplier(0.5F);
+			this.navigation.moveTo(vec31.x, vec31.y, vec31.z, 1.0D);
+		}
+	}
+
+	public void shareTheBurrow() {
+
+	}
+
+	boolean wantsToEnterBurrow() {
+		if (this.getTarget() == null && this.getPose() != Pose.EMERGING && this.getPose() != Pose.DIGGING) {
+			boolean flag = Meerkat.this.random.nextInt(400) == 0 || this.level.isRaining() || this.level.isNight();
+			return flag;
+		} else {
+			return false;
+		}
+	}
+
+	public class MeerkatDiggingUpGoal extends Goal {
+		public int tick;
+
+		public MeerkatDiggingUpGoal() {
+			this.setFlags(EnumSet.of(Flag.MOVE, Flag.JUMP, Flag.LOOK));
+		}
+
+		public boolean canUse() {
+			return Meerkat.this.getPose() == Pose.EMERGING;
+		}
+
+		public void start() {
+			this.tick = 0;
+		}
+
+		@Override
+		public void tick() {
+			super.tick();
+			++this.tick;
+		}
+
+		@Override
+		public void stop() {
+			super.stop();
+			Meerkat.this.setPose(Pose.STANDING);
+		}
+	}
+
+	public class MeerkatMakeBurrowGoal extends Goal {
+
+		public boolean burrowMade;
+
+		public int tick;
+
+		public final Meerkat meerkat;
+
+		public MeerkatMakeBurrowGoal(Meerkat meerkat) {
+			this.meerkat = meerkat;
+			this.setFlags(EnumSet.of(Flag.MOVE, Flag.JUMP, Flag.LOOK));
+		}
+
+		public boolean canUse() {
+			if (!this.meerkat.hasBurrow() && wantsToEnterBurrow() && this.meerkat.getTrustedLeaderUUID() == this.meerkat.getUUID()) {
+				return this.meerkat.level.getBlockState(this.meerkat.blockPosition().below()).is(Blocks.SAND);
+			}
+
+			return false;
+		}
+
+		public boolean canContinueToUse() {
+			return this.tick < 40 && !burrowMade;
+		}
+
+		public void start() {
+			this.tick = 0;
+			burrowMade = false;
+
+		}
+
+		@Override
+		public void tick() {
+			super.tick();
+			++this.tick;
+			if (this.tick % 5 == 0) {
+				if (this.meerkat.level.getBlockState(this.meerkat.blockPosition().below()).is(Blocks.SAND)) {
+					this.meerkat.level.levelEvent(2001, this.meerkat.blockPosition().below(), Block.getId(this.meerkat.level.getBlockState(this.meerkat.blockPosition().below())));
+				}
+			}
+		}
+
+		@Override
+		public void stop() {
+			super.stop();
+			if (this.meerkat.level.getBlockState(this.meerkat.blockPosition().below()).is(Blocks.SAND)) {
+				this.meerkat.level.setBlock(this.meerkat.blockPosition().below(), ModBlocks.BURROW.get().defaultBlockState(), 2);
+			}
+		}
+	}
+
+	public class MeerkatEnterBurrowGoal extends Goal {
+		public int tick;
+
+		public MeerkatEnterBurrowGoal() {
+			this.setFlags(EnumSet.of(Flag.MOVE, Flag.JUMP, Flag.LOOK));
+		}
+
+		public boolean canUse() {
+			if (Meerkat.this.hasBurrow() && wantsToEnterBurrow() && Meerkat.this.burrowPos.closerToCenterThan(Meerkat.this.position(), 2.0D)) {
+				BlockEntity blockentity = Meerkat.this.level.getBlockEntity(Meerkat.this.burrowPos);
+				if (blockentity instanceof BurrowBlockEntity) {
+					BurrowBlockEntity burrow = (BurrowBlockEntity) blockentity;
+					if (!burrow.isFull()) {
+						return true;
+					}
+				}
+			}
+
+			return false;
+		}
+
+		public boolean canContinueToUse() {
+			return this.tick < 240;
+		}
+
+		public void start() {
+			this.tick = 0;
+			Meerkat.this.setPose(Pose.DIGGING);
+		}
+
+		@Override
+		public void tick() {
+			super.tick();
+			++this.tick;
+		}
+
+		@Override
+		public void stop() {
+			super.stop();
+			BlockEntity blockentity = Meerkat.this.level.getBlockEntity(Meerkat.this.burrowPos);
+			if (blockentity instanceof BurrowBlockEntity burrow) {
+				burrow.addOccupant(Meerkat.this);
+			} else {
+				Meerkat.this.setPose(Pose.EMERGING);
+			}
+		}
+	}
+
+
+	@VisibleForDebug
+	public class MeerkatGoToBurrowGoal extends Goal {
+		public static final int MAX_TRAVELLING_TICKS = 600;
+		int travellingTicks = Meerkat.this.level.random.nextInt(10);
+		private static final int MAX_BLACKLISTED_TARGETS = 3;
+		final List<BlockPos> blacklistedTargets = Lists.newArrayList();
+		@javax.annotation.Nullable
+		private Path lastPath;
+		private static final int TICKS_BEFORE_HIVE_DROP = 60;
+		private int ticksStuck;
+
+		public MeerkatGoToBurrowGoal() {
+			this.setFlags(EnumSet.of(Goal.Flag.MOVE));
+		}
+
+		public boolean canUse() {
+			return Meerkat.this.burrowPos != null && !Meerkat.this.hasRestriction() && !this.hasReachedTarget(Meerkat.this.burrowPos) && Meerkat.this.level.getBlockState(Meerkat.this.burrowPos).is(ModTags.BURROW);
+		}
+
+		public boolean canContinueToUse() {
+			return this.canUse();
+		}
+
+		public void start() {
+			this.travellingTicks = 0;
+			this.ticksStuck = 0;
+			super.start();
+		}
+
+		public void stop() {
+			this.travellingTicks = 0;
+			this.ticksStuck = 0;
+			Meerkat.this.navigation.stop();
+			Meerkat.this.navigation.resetMaxVisitedNodesMultiplier();
+		}
+
+		public void tick() {
+			if (Meerkat.this.burrowPos != null) {
+				++this.travellingTicks;
+				if (!Meerkat.this.navigation.isInProgress()) {
+					if (!Meerkat.this.closerThan(Meerkat.this.burrowPos, 16)) {
+						Meerkat.this.pathfindRandomlyTowards(Meerkat.this.burrowPos);
+					} else {
+						boolean flag = this.pathfindDirectlyTowards(Meerkat.this.burrowPos);
+						if (flag) {
+							this.dropHive();
+						} else if (this.lastPath != null && Meerkat.this.navigation.getPath().sameAs(this.lastPath)) {
+							++this.ticksStuck;
+							if (this.ticksStuck > 60) {
+								this.ticksStuck = 0;
+							}
+						} else {
+							this.lastPath = Meerkat.this.navigation.getPath();
+						}
+
+					}
+				}
+			}
+		}
+
+		private boolean pathfindDirectlyTowards(BlockPos p_27991_) {
+			Meerkat.this.navigation.setMaxVisitedNodesMultiplier(10.0F);
+			Meerkat.this.navigation.moveTo((double) p_27991_.getX(), (double) p_27991_.getY(), (double) p_27991_.getZ(), 1.0D);
+			return Meerkat.this.navigation.getPath() != null && Meerkat.this.navigation.getPath().canReach();
+		}
+
+		private void dropHive() {
+			Meerkat.this.burrowPos = null;
+		}
+
+		private boolean hasReachedTarget(BlockPos p_28002_) {
+			if (Meerkat.this.closerThan(p_28002_, 2)) {
+				return true;
+			} else {
+				Path path = Meerkat.this.navigation.getPath();
+				return path != null && path.getTarget().equals(p_28002_) && path.canReach() && path.isDone();
+			}
+		}
 	}
 
 	/*

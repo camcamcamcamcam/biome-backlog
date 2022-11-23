@@ -24,7 +24,7 @@ public class BiomeVoteModifier implements BiomeModifier {
 				builder.getMobSpawnSettings().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(ModEntities.OSTRICH.get(), 8, 2, 3));
 			}
 			if (biome.is(Biomes.DESERT)) {
-				builder.getMobSpawnSettings().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(ModEntities.MEERKAT.get(), 8, 4, 6));
+				builder.getMobSpawnSettings().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(ModEntities.MEERKAT.get(), 8, 5, 6));
 			}
 
 			if (biome.is(Biomes.BADLANDS)) {

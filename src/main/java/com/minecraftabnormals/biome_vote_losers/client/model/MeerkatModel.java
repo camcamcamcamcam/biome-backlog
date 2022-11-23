@@ -79,6 +79,8 @@ public class MeerkatModel<T extends Meerkat> extends HierarchicalModel<T> {
 
 		this.animate(entity.standingAnimationState, MeerkatAnimation.STAND_UP, ageInTicks);
 		this.animate(entity.stopStandingAnimationState, MeerkatAnimation.STOP_STAND, ageInTicks);
+		this.animate(entity.diggingAnimationState, MeerkatAnimation.DIG, ageInTicks);
+		this.animate(entity.digUpAnimationState, MeerkatAnimation.DIGUP, ageInTicks);
 	}
 
 	@Override

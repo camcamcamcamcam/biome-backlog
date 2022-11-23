@@ -1,17 +1,41 @@
 package com.minecraftabnormals.biome_vote_losers.register;
 
 import com.minecraftabnormals.biome_vote_losers.BiomeVoteLosers;
-import com.minecraftabnormals.biome_vote_losers.world.level.block.*;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.EntityType;
+import com.minecraftabnormals.biome_vote_losers.world.level.block.BaobabFlowerBlock;
+import com.minecraftabnormals.biome_vote_losers.world.level.block.BurrowBlock;
+import com.minecraftabnormals.biome_vote_losers.world.level.block.CoconutBlock;
+import com.minecraftabnormals.biome_vote_losers.world.level.block.DateBlock;
+import com.minecraftabnormals.biome_vote_losers.world.level.block.HangingLeavesBlock;
+import com.minecraftabnormals.biome_vote_losers.world.level.block.MoundBlock;
+import com.minecraftabnormals.biome_vote_losers.world.level.block.OstrichEggBlock;
+import com.minecraftabnormals.biome_vote_losers.world.level.block.PearCactusBlock;
+import com.minecraftabnormals.biome_vote_losers.world.level.block.SaltBlock;
+import com.minecraftabnormals.biome_vote_losers.world.level.block.SaltLampBlock;
+import com.minecraftabnormals.biome_vote_losers.world.level.block.SaltSlabBlock;
+import com.minecraftabnormals.biome_vote_losers.world.level.block.SaltStairBlock;
+import com.minecraftabnormals.biome_vote_losers.world.level.block.SaltTrailBlock;
+import com.minecraftabnormals.biome_vote_losers.world.level.block.SucculentBlock;
+import com.minecraftabnormals.biome_vote_losers.world.level.block.TumbleWeedBlock;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DoorBlock;
+import net.minecraft.world.level.block.FenceBlock;
+import net.minecraft.world.level.block.FenceGateBlock;
+import net.minecraft.world.level.block.FlowerPotBlock;
+import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.block.PressurePlateBlock;
+import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.SaplingBlock;
+import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.StairBlock;
+import net.minecraft.world.level.block.TrapDoorBlock;
+import net.minecraft.world.level.block.WoodButtonBlock;
 import net.minecraft.world.level.block.grower.OakTreeGrower;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -49,7 +73,7 @@ public class ModBlocks {
 
 	// DESERT
 
-	public static final RegistryObject<Block> BURROW = register("burrow", () -> new Block(BlockBehaviour.Properties.of(Material.SAND)));
+	public static final RegistryObject<Block> BURROW = register("burrow", () -> new BurrowBlock(BlockBehaviour.Properties.of(Material.SAND)));
 
 	public static final BlockBehaviour.Properties PALM = BlockBehaviour.Properties.of(Material.WOOD).explosionResistance(9.0F);
 
