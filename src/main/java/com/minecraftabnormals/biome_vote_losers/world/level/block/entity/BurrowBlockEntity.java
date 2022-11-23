@@ -12,12 +12,11 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.VisibleForDebug;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.BeehiveBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
@@ -29,7 +28,7 @@ import java.util.List;
 
 public class BurrowBlockEntity extends BlockEntity {
 
-    private static final List<String> IGNORED_TAGS = Arrays.asList("Air", "ArmorDropChances", "ArmorItems", "Brain", "CanPickUpLoot", "DeathTime", "FallDistance", "FallFlying", "Fire", "HandDropChances", "HandItems", "HurtByTimestamp", "HurtTime", "LeftHanded", "Motion", "NoGravity", "OnGround", "PortalCooldown", "Pos", "Rotation", "Passengers", "Leash");
+    private static final List<String> IGNORED_TAGS = Arrays.asList("Air", "ArmorDropChances", "ArmorItems", "Brain", "CanPickUpLoot", "DeathTime", "FallDistance", "FallFlying", "Fire", "HandDropChances", "HandItems", "HurtByTimestamp", "HurtTime", "LeftHanded", "Motion", "NoGravity", "OnGround", "PortalCooldown", "Pos", "Rotation", "Passengers", "Leash", "CannotEnterBurrowTicks");
     private final List<BurrowData> stored = Lists.newArrayList();
 
     public BurrowBlockEntity(BlockPos pos, BlockState state) {
@@ -105,15 +104,6 @@ public class BurrowBlockEntity extends BlockEntity {
         return this.stored.size();
     }
 
-    public static int getHoneyLevel(BlockState p_58753_) {
-        return p_58753_.getValue(BeehiveBlock.HONEY_LEVEL);
-    }
-
-    @VisibleForDebug
-    public boolean isSedated() {
-        return CampfireBlock.isSmokeyPos(this.level, this.getBlockPos());
-    }
-
     public void addOccupantWithPresetTicks(Entity p_58745_, int p_58747_) {
         if (this.stored.size() < 3) {
             p_58745_.stopRiding();
@@ -154,6 +144,7 @@ public class BurrowBlockEntity extends BlockEntity {
                     if (p_58749_.position().distanceToSqr(entity.position()) <= 16.0D) {
                         meerkat.setTarget(p_58749_);
                     }
+                    meerkat.stayOutOfBurrowCountdown = 400;
                 }
             }
         }
@@ -191,11 +182,13 @@ public class BurrowBlockEntity extends BlockEntity {
                 if (entity != null) {
 
                     if (entity instanceof Meerkat) {
-                        Meerkat bee = (Meerkat) entity;
+                        Meerkat meerkat = (Meerkat) entity;
 
-                        setReleaseData(p_155140_.ticksInBurrow, bee);
+                        meerkat.stayOutOfBurrowCountdown = 400;
+                        meerkat.setPose(Pose.EMERGING);
+                        setReleaseData(p_155140_.ticksInBurrow, meerkat);
                         if (p_155141_ != null) {
-                            p_155141_.add(bee);
+                            p_155141_.add(meerkat);
                         }
 
                         float f = entity.getBbWidth();

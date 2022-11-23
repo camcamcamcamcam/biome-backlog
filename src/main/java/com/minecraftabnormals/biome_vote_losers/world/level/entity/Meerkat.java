@@ -76,6 +76,7 @@ public class Meerkat extends Animal {
 
 	@javax.annotation.Nullable
 	BlockPos burrowPos;
+	public int stayOutOfBurrowCountdown;
 
 	public Meerkat(EntityType<? extends Meerkat> p_27557_, Level p_27558_) {
 		super(p_27557_, p_27558_);
@@ -88,7 +89,7 @@ public class Meerkat extends Animal {
 		this.goalSelector.addGoal(2, new MeerkatDiggingUpGoal());
 		this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1.275D, true));
 		this.goalSelector.addGoal(5, new BreedGoal(this, 0.85D));
-		this.goalSelector.addGoal(7, new MeerkatMakeBurrowGoal(this));
+		this.goalSelector.addGoal(7, new MeerkatMakeBurrowOrFindGoal(this));
 		this.goalSelector.addGoal(8, new MeerkatGoToBurrowGoal());
 		this.goalSelector.addGoal(9, new StandGoal(this));
 		this.goalSelector.addGoal(10, new StopStandGoal(this));
@@ -148,6 +149,16 @@ public class Meerkat extends Animal {
 		}
 
 		super.onSyncedDataUpdated(p_29615_);
+	}
+
+	@Override
+	public void aiStep() {
+		super.aiStep();
+		if (!this.level.isClientSide) {
+			if (this.stayOutOfBurrowCountdown > 0) {
+				--this.stayOutOfBurrowCountdown;
+			}
+		}
 	}
 
 	public void tick() {
@@ -244,6 +255,7 @@ public class Meerkat extends Animal {
 
 		p_28518_.put("TrustedLeader", listtag);
 
+		p_28518_.putInt("CannotEnterBurrowTicks", this.stayOutOfBurrowCountdown);
 		p_28518_.putBoolean("Standing", this.isStanding());
 	}
 
@@ -262,6 +274,7 @@ public class Meerkat extends Animal {
 			this.burrowPos = NbtUtils.readBlockPos(p_28493_.getCompound("BurrowPos"));
 		}
 
+		this.stayOutOfBurrowCountdown = p_28493_.getInt("CannotEnterBurrowTicks");
 		this.setStanding(p_28493_.getBoolean("Standing"));
 	}
 
@@ -353,9 +366,18 @@ public class Meerkat extends Animal {
 		}
 	}
 
-	boolean wantsToEnterBurrow() {
+	public boolean wantsToEnterBurrow() {
 		if (this.getTarget() == null && this.getPose() != Pose.EMERGING && this.getPose() != Pose.DIGGING) {
-			boolean flag = Meerkat.this.random.nextInt(400) == 0 || this.level.isRaining() || this.level.isNight();
+			boolean flag = this.stayOutOfBurrowCountdown <= 0 || this.level.isRaining() || this.level.isNight();
+			return flag;
+		} else {
+			return false;
+		}
+	}
+
+	public boolean wantsToMakeBurrow() {
+		if (this.getTarget() == null && this.getPose() != Pose.EMERGING && this.getPose() != Pose.DIGGING && Meerkat.this.random.nextInt(240) == 0) {
+			boolean flag = this.level.isRaining() || this.level.isNight();
 			return flag;
 		} else {
 			return false;
@@ -390,7 +412,7 @@ public class Meerkat extends Animal {
 		}
 	}
 
-	public class MeerkatMakeBurrowGoal extends Goal {
+	public class MeerkatMakeBurrowOrFindGoal extends Goal {
 
 		public boolean burrowMade;
 
@@ -398,14 +420,20 @@ public class Meerkat extends Animal {
 
 		public final Meerkat meerkat;
 
-		public MeerkatMakeBurrowGoal(Meerkat meerkat) {
+		public MeerkatMakeBurrowOrFindGoal(Meerkat meerkat) {
 			this.meerkat = meerkat;
 			this.setFlags(EnumSet.of(Flag.MOVE, Flag.JUMP, Flag.LOOK));
 		}
 
 		public boolean canUse() {
-			if (!this.meerkat.hasBurrow() && wantsToEnterBurrow() && this.meerkat.getTrustedLeaderUUID() == this.meerkat.getUUID()) {
-				return this.meerkat.level.getBlockState(this.meerkat.blockPosition().below()).is(Blocks.SAND);
+			if (this.meerkat.getTrustedLeaderUUID() == this.meerkat.getUUID()) {
+				if (!this.meerkat.hasBurrow() && wantsToMakeBurrow()) {
+					if (canFindBurrow()) {
+						return false;
+					} else {
+						return this.meerkat.level.getBlockState(this.meerkat.blockPosition().below()).is(Blocks.SAND);
+					}
+				}
 			}
 
 			return false;
@@ -413,6 +441,28 @@ public class Meerkat extends Animal {
 
 		public boolean canContinueToUse() {
 			return this.tick < 40 && !burrowMade;
+		}
+
+		private boolean canFindBurrow() {
+			BlockPos blockpos = Meerkat.this.blockPosition();
+			BlockPos.MutableBlockPos blockpos$mutable = new BlockPos.MutableBlockPos();
+
+			for (int i = 0; i < 16; ++i) {
+				for (int j = 0; j < 16; ++j) {
+					for (int k = 0; k <= j; k = k > 0 ? -k : 1 - k) {
+						for (int l = k < j && k > -j ? j : 0; l <= j; l = l > 0 ? -l : 1 - l) {
+							blockpos$mutable.setWithOffset(blockpos, k, i, l);
+							if (level.getBlockState(blockpos$mutable).is(ModBlocks.BURROW.get())) {
+								Meerkat.this.setBurrowPos(blockpos$mutable);
+								Meerkat.this.shareTheBurrow(blockpos$mutable);
+								return true;
+							}
+						}
+					}
+				}
+			}
+
+			return false;
 		}
 
 		public void start() {
@@ -510,7 +560,7 @@ public class Meerkat extends Animal {
 		}
 
 		public boolean canUse() {
-			return Meerkat.this.burrowPos != null && !Meerkat.this.hasRestriction() && !this.hasReachedTarget(Meerkat.this.burrowPos) && Meerkat.this.level.getBlockState(Meerkat.this.burrowPos).is(ModTags.BURROW);
+			return Meerkat.this.burrowPos != null && Meerkat.this.wantsToEnterBurrow() && !Meerkat.this.hasRestriction() && !this.hasReachedTarget(Meerkat.this.burrowPos) && Meerkat.this.level.getBlockState(Meerkat.this.burrowPos).is(ModTags.BURROW);
 		}
 
 		public boolean canContinueToUse() {
