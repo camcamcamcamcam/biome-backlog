@@ -51,6 +51,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.entity.EntityTypeTest;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.Tags;
@@ -344,8 +345,12 @@ public class Meerkat extends Animal {
 		}
 	}
 
-	public void shareTheBurrow() {
-
+	public void shareTheBurrow(@javax.annotation.Nullable BlockPos burrowPos) {
+		for (Meerkat meerkat : this.level.getEntities(EntityTypeTest.forClass(Meerkat.class), this.getBoundingBox().inflate(16D), (meerkat) -> {
+			return meerkat.getTrustedLeaderUUID() == this.getUUID();
+		})) {
+			meerkat.setBurrowPos(burrowPos);
+		}
 	}
 
 	boolean wantsToEnterBurrow() {
@@ -432,6 +437,8 @@ public class Meerkat extends Animal {
 			super.stop();
 			if (this.meerkat.level.getBlockState(this.meerkat.blockPosition().below()).is(Blocks.SAND)) {
 				this.meerkat.level.setBlock(this.meerkat.blockPosition().below(), ModBlocks.BURROW.get().defaultBlockState(), 2);
+				this.meerkat.setBurrowPos(this.meerkat.blockPosition().below());
+				Meerkat.this.shareTheBurrow(this.meerkat.blockPosition().below());
 			}
 		}
 	}
@@ -480,6 +487,8 @@ public class Meerkat extends Animal {
 				burrow.addOccupant(Meerkat.this);
 			} else {
 				Meerkat.this.setPose(Pose.EMERGING);
+				Meerkat.this.setBurrowPos(null);
+				Meerkat.this.shareTheBurrow(null);
 			}
 		}
 	}
