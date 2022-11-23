@@ -199,9 +199,10 @@ public class BurrowBlockEntity extends BlockEntity {
                         entity.moveTo(d0, d1, d2, entity.getYRot(), entity.getXRot());
                     }
 
-                    p_155137_.playSound((Player) null, p_155138_, SoundEvents.BEEHIVE_EXIT, SoundSource.BLOCKS, 1.0F, 1.0F);
+                    p_155137_.playSound((Player) null, p_155138_, SoundEvents.SAND_BREAK, SoundSource.BLOCKS, 1.0F, 1.0F);
                     p_155137_.gameEvent(GameEvent.BLOCK_CHANGE, p_155138_, GameEvent.Context.of(entity, p_155137_.getBlockState(p_155138_)));
-                    return p_155137_.addFreshEntity(entity);
+                    p_155137_.addFreshEntity(entity);
+                    return true;
                 }
             }
         }
