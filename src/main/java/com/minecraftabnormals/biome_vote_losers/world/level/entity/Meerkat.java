@@ -36,6 +36,7 @@ import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.world.entity.ai.goal.PanicGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
@@ -85,6 +86,12 @@ public class Meerkat extends Animal {
 		this.goalSelector.addGoal(1, new FloatGoal(this));
 		this.goalSelector.addGoal(2, new MeerkatEnterBurrowGoal());
 		this.goalSelector.addGoal(2, new MeerkatDiggingUpGoal());
+		this.goalSelector.addGoal(4, new PanicGoal(this, 1.35D) {
+			@Override
+			public boolean canUse() {
+				return isBaby() && super.canUse();
+			}
+		});
 		this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1.275D, true));
 		this.goalSelector.addGoal(5, new BreedGoal(this, 0.85D));
 		this.goalSelector.addGoal(7, new MeerkatMakeBurrowOrFindGoal(this));
@@ -178,7 +185,7 @@ public class Meerkat extends Animal {
 			RandomSource randomsource = this.getRandom();
 			BlockState blockstate = this.getBlockStateOn();
 			if (blockstate.getRenderShape() != RenderShape.INVISIBLE) {
-				for (int i = 0; i < 30; ++i) {
+				for (int i = 0; i < 5; ++i) {
 					double d0 = this.getX() + (double) Mth.randomBetween(randomsource, -0.3F, 0.3F);
 					double d1 = this.getY();
 					double d2 = this.getZ() + (double) Mth.randomBetween(randomsource, -0.3F, 0.3F);
@@ -415,6 +422,11 @@ public class Meerkat extends Animal {
 			super.stop();
 			Meerkat.this.setPose(Pose.STANDING);
 		}
+
+		@Override
+		public boolean requiresUpdateEveryTick() {
+			return true;
+		}
 	}
 
 	public class MeerkatMakeBurrowOrFindGoal extends Goal {
@@ -445,7 +457,12 @@ public class Meerkat extends Animal {
 		}
 
 		public boolean canContinueToUse() {
-			return this.tick < 40 && !burrowMade;
+			return this.tick < 120 && !burrowMade;
+		}
+
+		@Override
+		public boolean requiresUpdateEveryTick() {
+			return true;
 		}
 
 		private boolean canFindBurrow() {
@@ -520,7 +537,7 @@ public class Meerkat extends Animal {
 		}
 
 		public boolean canContinueToUse() {
-			return this.tick < 80;
+			return this.tick < 100;
 		}
 
 		public void start() {
@@ -545,6 +562,11 @@ public class Meerkat extends Animal {
 				Meerkat.this.setBurrowPos(null);
 				Meerkat.this.shareTheBurrow(null);
 			}
+		}
+
+		@Override
+		public boolean requiresUpdateEveryTick() {
+			return true;
 		}
 	}
 
