@@ -316,6 +316,8 @@ public class Meerkat extends Animal {
 		//when group found. add leader
 		if (uuid != null) {
 			this.setTrustedLeaderUUID(uuid);
+		} else {
+			this.setTrustedLeaderUUID(this.getUUID());
 		}
 		if (flag) {
 			this.setAge(-24000);
@@ -377,8 +379,7 @@ public class Meerkat extends Animal {
 
 	public boolean wantsToMakeBurrow() {
 		if (this.getTarget() == null && this.getPose() != Pose.EMERGING && this.getPose() != Pose.DIGGING && Meerkat.this.random.nextInt(240) == 0) {
-			boolean flag = this.level.isRaining() || this.level.isNight();
-			return flag;
+			return true;
 		} else {
 			return false;
 		}

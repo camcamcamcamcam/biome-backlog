@@ -9,6 +9,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -21,6 +22,10 @@ import java.util.List;
 public class BurrowBlock extends BaseEntityBlock {
 	public BurrowBlock(Properties properties) {
 		super(properties);
+	}
+
+	public RenderShape getRenderShape(BlockState p_48727_) {
+		return RenderShape.MODEL;
 	}
 
 	public void onRemove(BlockState p_48713_, Level p_48714_, BlockPos p_48715_, BlockState p_48716_, boolean p_48717_) {
