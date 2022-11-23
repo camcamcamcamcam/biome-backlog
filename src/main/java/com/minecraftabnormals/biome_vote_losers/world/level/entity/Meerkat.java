@@ -94,7 +94,7 @@ public class Meerkat extends Animal {
 		});
 		this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1.275D, true));
 		this.goalSelector.addGoal(5, new BreedGoal(this, 0.85D));
-		this.goalSelector.addGoal(7, new MeerkatMakeBurrowOrFindGoal(this));
+		this.goalSelector.addGoal(7, new MeerkatMakeBurrowGoal(this));
 		this.goalSelector.addGoal(8, new MeerkatGoToBurrowGoal());
 		this.goalSelector.addGoal(9, new StandGoal(this));
 		this.goalSelector.addGoal(10, new StopStandGoal(this));
@@ -431,7 +431,7 @@ public class Meerkat extends Animal {
 		}
 	}
 
-	public class MeerkatMakeBurrowOrFindGoal extends Goal {
+	public class MeerkatMakeBurrowGoal extends Goal {
 
 		public boolean burrowMade;
 
@@ -439,13 +439,13 @@ public class Meerkat extends Animal {
 
 		public final Meerkat meerkat;
 
-		public MeerkatMakeBurrowOrFindGoal(Meerkat meerkat) {
+		public MeerkatMakeBurrowGoal(Meerkat meerkat) {
 			this.meerkat = meerkat;
 			this.setFlags(EnumSet.of(Flag.MOVE, Flag.JUMP, Flag.LOOK));
 		}
 
 		public boolean canUse() {
-			if (this.meerkat.getTrustedLeaderUUID() == this.meerkat.getUUID()) {
+			if (this.meerkat.getTrustedLeaderUUID() == this.meerkat.getUUID() || this.meerkat.getTrustedLeaderUUID() == null) {
 				if (!this.meerkat.hasBurrow() && wantsToMakeBurrow()) {
 					return this.meerkat.level.getBlockState(this.meerkat.blockPosition().below()).is(Blocks.SAND);
 				}

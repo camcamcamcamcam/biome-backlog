@@ -92,6 +92,7 @@ public class BurrowBlockEntity extends BlockEntity {
         tickOccupants(p_155145_, p_155146_, p_155147_, p_155148_.stored);
         if (!p_155148_.stored.isEmpty() && p_155145_.getRandom().nextDouble() < 0.005D) {
             p_155145_.levelEvent(2001, p_155146_, Block.getId(Blocks.SAND.defaultBlockState()));
+            //p_155145_.gameEvent(GameEvent.BLOCK_ACTIVATE, p_155146_, GameEvent.Context.of(p_155147_));
         }
     }
 
