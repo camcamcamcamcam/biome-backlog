@@ -306,7 +306,7 @@ public class Meerkat extends Animal {
 
 	@Override
 	public SpawnGroupData finalizeSpawn(ServerLevelAccessor p_146746_, DifficultyInstance p_146747_, MobSpawnType p_146748_, @Nullable SpawnGroupData p_146749_, @Nullable CompoundTag p_146750_) {
-		if (p_146748_ != MobSpawnType.STRUCTURE) {
+		if (p_146748_ != MobSpawnType.STRUCTURE && p_146748_ != MobSpawnType.SPAWN_EGG) {
 			boolean flag = false;
 			UUID uuid = null;
 
@@ -327,6 +327,8 @@ public class Meerkat extends Animal {
 			if (flag) {
 				this.setAge(-24000);
 			}
+		} else {
+			this.setTrustedLeaderUUID(null);
 		}
 
 		return super.finalizeSpawn(p_146746_, p_146747_, p_146748_, p_146749_, p_146750_);
@@ -367,7 +369,7 @@ public class Meerkat extends Animal {
 	}
 
 	public void shareTheBurrow(@javax.annotation.Nullable BlockPos burrowPos) {
-		for (Meerkat meerkat : this.level.getEntities(EntityTypeTest.forClass(Meerkat.class), this.getBoundingBox().inflate(16D), (meerkat) -> {
+		for (Meerkat meerkat : this.level.getEntities(EntityTypeTest.forClass(Meerkat.class), this.getBoundingBox().inflate(32D), (meerkat) -> {
 			return meerkat.getTrustedLeaderUUID() == this.getUUID();
 		})) {
 			meerkat.setBurrowPos(burrowPos);
@@ -445,11 +447,7 @@ public class Meerkat extends Animal {
 		public boolean canUse() {
 			if (this.meerkat.getTrustedLeaderUUID() == this.meerkat.getUUID()) {
 				if (!this.meerkat.hasBurrow() && wantsToMakeBurrow()) {
-					if (canFindBurrow()) {
-						return false;
-					} else {
-						return this.meerkat.level.getBlockState(this.meerkat.blockPosition().below()).is(Blocks.SAND);
-					}
+					return this.meerkat.level.getBlockState(this.meerkat.blockPosition().below()).is(Blocks.SAND);
 				}
 			}
 
@@ -463,28 +461,6 @@ public class Meerkat extends Animal {
 		@Override
 		public boolean requiresUpdateEveryTick() {
 			return true;
-		}
-
-		private boolean canFindBurrow() {
-			BlockPos blockpos = Meerkat.this.blockPosition();
-			BlockPos.MutableBlockPos blockpos$mutable = new BlockPos.MutableBlockPos();
-
-			for (int i = 0; i < 16; ++i) {
-				for (int j = 0; j < 16; ++j) {
-					for (int k = 0; k <= j; k = k > 0 ? -k : 1 - k) {
-						for (int l = k < j && k > -j ? j : 0; l <= j; l = l > 0 ? -l : 1 - l) {
-							blockpos$mutable.setWithOffset(blockpos, k, i, l);
-							if (level.getBlockState(blockpos$mutable).is(ModBlocks.BURROW.get())) {
-								Meerkat.this.setBurrowPos(blockpos$mutable);
-								Meerkat.this.shareTheBurrow(blockpos$mutable);
-								return true;
-							}
-						}
-					}
-				}
-			}
-
-			return false;
 		}
 
 		public void start() {
