@@ -17,6 +17,7 @@ import net.minecraft.util.Mth;
 
 public class MeerkatModel<T extends Meerkat> extends HierarchicalModel<T> {
 	private final ModelPart root;
+	private final ModelPart realRoot;
 
 	protected final ModelPart head;
 	protected final ModelPart body;
@@ -26,6 +27,7 @@ public class MeerkatModel<T extends Meerkat> extends HierarchicalModel<T> {
 	protected final ModelPart leftArm;
 
 	public MeerkatModel(ModelPart root) {
+		this.realRoot = root;
 		this.root = root.getChild("root");
 		this.body = this.root.getChild("body");
 		this.rightLeg = this.root.getChild("rightLeg");
@@ -85,6 +87,6 @@ public class MeerkatModel<T extends Meerkat> extends HierarchicalModel<T> {
 
 	@Override
 	public ModelPart root() {
-		return this.root;
+		return this.realRoot;
 	}
 }

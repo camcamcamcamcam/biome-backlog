@@ -28,7 +28,7 @@ import java.util.List;
 
 public class BurrowBlockEntity extends BlockEntity {
 
-    private static final List<String> IGNORED_TAGS = Arrays.asList("Air", "ArmorDropChances", "ArmorItems", "Brain", "CanPickUpLoot", "DeathTime", "FallDistance", "FallFlying", "Fire", "HandDropChances", "HandItems", "HurtByTimestamp", "HurtTime", "LeftHanded", "Motion", "NoGravity", "OnGround", "PortalCooldown", "Pos", "Rotation", "Passengers", "Leash", "CannotEnterBurrowTicks");
+    private static final List<String> IGNORED_TAGS = Arrays.asList("Air", "ArmorDropChances", "ArmorItems", "Brain", "CanPickUpLoot", "DeathTime", "FallDistance", "FallFlying", "Fire", "HandDropChances", "HandItems", "HurtByTimestamp", "HurtTime", "LeftHanded", "Motion", "PortalCooldown", "Pos", "Rotation", "Passengers", "Leash", "CannotEnterBurrowTicks");
     private final List<BurrowData> stored = Lists.newArrayList();
 
     public BurrowBlockEntity(BlockPos pos, BlockState state) {
@@ -114,12 +114,14 @@ public class BurrowBlockEntity extends BlockEntity {
             if (this.level != null) {
 
                 BlockPos blockpos = this.getBlockPos();
-                this.level.playSound((Player) null, (double) blockpos.getX(), (double) blockpos.getY(), (double) blockpos.getZ(), SoundEvents.BEEHIVE_ENTER, SoundSource.BLOCKS, 1.0F, 1.0F);
+                this.level.playSound((Player) null, (double) blockpos.getX(), (double) blockpos.getY(), (double) blockpos.getZ(), SoundEvents.SAND_BREAK, SoundSource.BLOCKS, 1.0F, 1.0F);
                 this.level.gameEvent(GameEvent.BLOCK_CHANGE, blockpos, GameEvent.Context.of(p_58745_, this.getBlockState()));
             }
 
             p_58745_.discard();
             super.setChanged();
+        } else {
+            p_58745_.setPose(Pose.EMERGING);
         }
     }
 
@@ -169,7 +171,6 @@ public class BurrowBlockEntity extends BlockEntity {
         } else {
             CompoundTag compoundtag = p_155140_.entityData.copy();
             removeIgnoredTags(compoundtag);
-            compoundtag.putBoolean("NoGravity", true);
             Direction direction = Direction.UP;
             BlockPos blockpos = p_155138_.relative(direction);
             boolean flag = !p_155137_.getBlockState(blockpos).getCollisionShape(p_155137_, blockpos).isEmpty();
@@ -192,10 +193,9 @@ public class BurrowBlockEntity extends BlockEntity {
                         }
 
                         float f = entity.getBbWidth();
-                        double d3 = flag ? 0.0D : 0.55D + (double) (f / 2.0F);
-                        double d0 = (double) p_155138_.getX() + 0.5D + d3 * (double) direction.getStepX();
-                        double d1 = (double) p_155138_.getY() + 0.5D - (double) (entity.getBbHeight() / 2.0F);
-                        double d2 = (double) p_155138_.getZ() + 0.5D + d3 * (double) direction.getStepZ();
+                        double d0 = (double) p_155138_.getX() + 0.5D + (double) direction.getStepX();
+                        double d1 = (double) p_155138_.getY() + 0.5D + (double) direction.getStepY();
+                        double d2 = (double) p_155138_.getZ() + 0.5D + (double) direction.getStepZ();
                         entity.moveTo(d0, d1, d2, entity.getYRot(), entity.getXRot());
                     }
 

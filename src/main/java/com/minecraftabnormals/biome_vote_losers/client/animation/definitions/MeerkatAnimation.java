@@ -14,15 +14,15 @@ public class MeerkatAnimation {
 
 
 	public static final AnimationDefinition DIG = AnimationDefinition.Builder.withLength(3.16f)
-			.addAnimation("normal",
+			.addAnimation("root",
 					new AnimationChannel(AnimationChannel.Targets.POSITION,
 							new Keyframe(0f, KeyframeAnimations.posVec(0f, 0f, 0f),
-									AnimationChannel.Interpolations.CATMULLROM),
+									AnimationChannel.Interpolations.LINEAR),
 							new Keyframe(0.32f, KeyframeAnimations.posVec(0f, 0f, 0f),
-									AnimationChannel.Interpolations.CATMULLROM),
+									AnimationChannel.Interpolations.LINEAR),
 							new Keyframe(2.04f, KeyframeAnimations.posVec(0f, -15f, 0f),
-									AnimationChannel.Interpolations.CATMULLROM)))
-			.addAnimation("normal",
+									AnimationChannel.Interpolations.LINEAR)))
+			.addAnimation("root",
 					new AnimationChannel(AnimationChannel.Targets.ROTATION,
 							new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
 									AnimationChannel.Interpolations.LINEAR),
@@ -113,13 +113,13 @@ public class MeerkatAnimation {
 							new Keyframe(3.12f, KeyframeAnimations.degreeVec(35f, 0f, 0f),
 									AnimationChannel.Interpolations.LINEAR))).build();
 	public static final AnimationDefinition DIGUP = AnimationDefinition.Builder.withLength(0.8f)
-			.addAnimation("normal",
+			.addAnimation("root",
 					new AnimationChannel(AnimationChannel.Targets.POSITION,
 							new Keyframe(0f, KeyframeAnimations.posVec(0f, -8f, 0f),
 									AnimationChannel.Interpolations.LINEAR),
 							new Keyframe(0.56f, KeyframeAnimations.posVec(0f, 0f, 0f),
 									AnimationChannel.Interpolations.LINEAR)))
-			.addAnimation("normal",
+			.addAnimation("root",
 					new AnimationChannel(AnimationChannel.Targets.ROTATION,
 							new Keyframe(0f, KeyframeAnimations.degreeVec(-87.5f, 0f, 0f),
 									AnimationChannel.Interpolations.LINEAR),

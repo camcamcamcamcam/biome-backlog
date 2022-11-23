@@ -1,6 +1,5 @@
 package com.minecraftabnormals.biome_vote_losers.world.level.entity;
 
-import com.google.common.collect.Lists;
 import com.minecraftabnormals.biome_vote_losers.register.ModBlocks;
 import com.minecraftabnormals.biome_vote_losers.register.ModEntities;
 import com.minecraftabnormals.biome_vote_losers.register.ModTags;
@@ -58,7 +57,6 @@ import net.minecraftforge.common.Tags;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumSet;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -301,25 +299,27 @@ public class Meerkat extends Animal {
 
 	@Override
 	public SpawnGroupData finalizeSpawn(ServerLevelAccessor p_146746_, DifficultyInstance p_146747_, MobSpawnType p_146748_, @Nullable SpawnGroupData p_146749_, @Nullable CompoundTag p_146750_) {
-		boolean flag = false;
-		UUID uuid = null;
+		if (p_146748_ != MobSpawnType.STRUCTURE) {
+			boolean flag = false;
+			UUID uuid = null;
 
-		if (p_146749_ instanceof MeerkatGroupData meerkat$group) {
-			uuid = meerkat$group.uuid;
-			//when random success and group size is many. child is spawn
-			if (meerkat$group.getGroupSize() >= 2 && p_146746_.getRandom().nextFloat() < 0.25F) {
-				flag = true;
+			if (p_146749_ instanceof MeerkatGroupData meerkat$group) {
+				uuid = meerkat$group.uuid;
+				//when random success and group size is many. child is spawn
+				if (meerkat$group.getGroupSize() >= 2 && p_146746_.getRandom().nextFloat() < 0.25F) {
+					flag = true;
+				}
+			} else {
+				p_146749_ = new MeerkatGroupData(this.getUUID());
+				uuid = this.getUUID();
 			}
-		} else {
-			p_146749_ = new MeerkatGroupData(this.getUUID());
-			uuid = this.getUUID();
-		}
-		//when group found. add leader
-		if (uuid != null) {
-			this.setTrustedLeaderUUID(uuid);
-		}
-		if (flag) {
-			this.setAge(-24000);
+			//when group found. add leader
+			if (uuid != null) {
+				this.setTrustedLeaderUUID(uuid);
+			}
+			if (flag) {
+				this.setAge(-24000);
+			}
 		}
 
 		return super.finalizeSpawn(p_146746_, p_146747_, p_146748_, p_146749_, p_146750_);
@@ -393,6 +393,11 @@ public class Meerkat extends Animal {
 
 		public boolean canUse() {
 			return Meerkat.this.getPose() == Pose.EMERGING;
+		}
+
+		@Override
+		public boolean canContinueToUse() {
+			return Meerkat.this.getPose() == Pose.EMERGING && this.tick < 60;
 		}
 
 		public void start() {
@@ -515,7 +520,7 @@ public class Meerkat extends Animal {
 		}
 
 		public boolean canContinueToUse() {
-			return this.tick < 240;
+			return this.tick < 80;
 		}
 
 		public void start() {
@@ -546,15 +551,7 @@ public class Meerkat extends Animal {
 
 	@VisibleForDebug
 	public class MeerkatGoToBurrowGoal extends Goal {
-		public static final int MAX_TRAVELLING_TICKS = 600;
 		int travellingTicks = Meerkat.this.level.random.nextInt(10);
-		private static final int MAX_BLACKLISTED_TARGETS = 3;
-		final List<BlockPos> blacklistedTargets = Lists.newArrayList();
-		@javax.annotation.Nullable
-		private Path lastPath;
-		private static final int TICKS_BEFORE_HIVE_DROP = 60;
-		private int ticksStuck;
-
 		public MeerkatGoToBurrowGoal() {
 			this.setFlags(EnumSet.of(Goal.Flag.MOVE));
 		}
@@ -569,13 +566,11 @@ public class Meerkat extends Animal {
 
 		public void start() {
 			this.travellingTicks = 0;
-			this.ticksStuck = 0;
 			super.start();
 		}
 
 		public void stop() {
 			this.travellingTicks = 0;
-			this.ticksStuck = 0;
 			Meerkat.this.navigation.stop();
 			Meerkat.this.navigation.resetMaxVisitedNodesMultiplier();
 		}
@@ -588,15 +583,8 @@ public class Meerkat extends Animal {
 						Meerkat.this.pathfindRandomlyTowards(Meerkat.this.burrowPos);
 					} else {
 						boolean flag = this.pathfindDirectlyTowards(Meerkat.this.burrowPos);
-						if (flag) {
+						if (!flag) {
 							this.dropHive();
-						} else if (this.lastPath != null && Meerkat.this.navigation.getPath().sameAs(this.lastPath)) {
-							++this.ticksStuck;
-							if (this.ticksStuck > 60) {
-								this.ticksStuck = 0;
-							}
-						} else {
-							this.lastPath = Meerkat.this.navigation.getPath();
 						}
 
 					}
