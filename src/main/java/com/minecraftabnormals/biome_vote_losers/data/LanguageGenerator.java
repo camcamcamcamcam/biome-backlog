@@ -62,7 +62,7 @@ public class LanguageGenerator extends LanguageProvider {
         this.add(ModBlocks.SALT_BRICK_STAIRS.get(), "Salt Brick Stairs");
         this.add(ModBlocks.SALT_TILE_STAIRS.get(), "Salt Tile Stairs");
         this.add(ModBlocks.SALT_LAMP.get(), "Salt Lamp");
-        this.add(ModBlocks.SALT.get(), "Salt");
+        this.add(ModBlocks.SALT_TRAIL.get(), "Salt");
         this.add(ModBlocks.SUCCULENT.get(), "Succulent");
 
         this.add(ModItems.DATE.get(), "Date");

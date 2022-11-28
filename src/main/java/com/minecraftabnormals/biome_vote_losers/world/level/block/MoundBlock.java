@@ -32,6 +32,9 @@ public class MoundBlock extends RotatedPillarBlock {
                     level.setBlock(adjacent, stripped, 3);
                     break;
                 }
+            } else if (unstripped.getBlock() == ModBlocks.MOUND.get()) {
+                level.setBlock(adjacent, ModBlocks.TERMITE_MOUND.get().defaultBlockState().setValue(AXIS, unstripped.getValue(AXIS)), 3);
+
             }
         }
     }
@@ -39,13 +42,16 @@ public class MoundBlock extends RotatedPillarBlock {
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
         InteractionResult interactionResult = super.use(state, level, pos, player, hand, result);
-        if (player.getItemInHand(hand).getItem() == Items.PAPER) {
+        if (player.getItemInHand(hand).getItem() == Items.PAPER && state.getBlock() == ModBlocks.TERMITE_MOUND.get()) {
             for (Direction direction : Direction.values()) {
                 BlockPos adjacent = pos.offset(direction.getStepX(), direction.getStepY(), direction.getStepZ());
                 BlockState blockState = level.getBlockState(adjacent);
                 if (blockState.is(BlockTags.LOGS)) {
-                    level.setBlock(adjacent, ModBlocks.TERMITE_MOUND.get().defaultBlockState().setValue(AXIS, blockState.getValue(AXIS)), 3);
-                    player.getItemInHand(hand).shrink(1);
+                    level.setBlock(adjacent, ModBlocks.MOUND.get().defaultBlockState().setValue(AXIS, blockState.getValue(AXIS)), 3);
+                    player.swing(hand);
+                    if (!player.isCreative()) {
+                        player.getItemInHand(hand).shrink(1);
+                    }
                     break;
                 }
             }

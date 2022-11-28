@@ -270,7 +270,7 @@ public class SaltTrailBlock extends Block {
     }
 
     protected static boolean shouldConnectTo(BlockState p_55595_, @Nullable Direction p_55596_) {
-        return p_55595_.is(ModBlocks.SALT.get());
+        return p_55595_.is(ModBlocks.SALT_TRAIL.get());
     }
 
     public BlockState rotate(BlockState p_55592_, Rotation p_55593_) {

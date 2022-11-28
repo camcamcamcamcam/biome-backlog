@@ -11,7 +11,6 @@ import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
@@ -87,7 +86,7 @@ public class ItemModelGenerator extends ItemModelProvider {
 		this.toBlock(ModBlocks.SALT_TILES);
 		this.toBlock(ModBlocks.CHISELED_SALT_BLOCK);
 		this.toBlock(ModBlocks.SALT_LAMP);
-		this.basicItem(ModBlocks.SALT.get().asItem());
+		this.basicItem(ModBlocks.SALT_TRAIL.get().asItem());
 
 		this.toBlock(ModBlocks.SALT_STAIRS);
 		this.toBlock(ModBlocks.SALT_BRICK_STAIRS);

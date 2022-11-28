@@ -9,7 +9,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
@@ -85,7 +84,7 @@ public class BlockLootTables extends BlockLoot {
 		this.dropSelf(ModBlocks.SALT_BRICK_STAIRS.get());
 		this.dropSelf(ModBlocks.SALT_TILE_STAIRS.get());
 		this.dropSelf(ModBlocks.SALT_LAMP.get());
-		this.dropSelf(ModBlocks.SALT.get());
+		this.dropSelf(ModBlocks.SALT_TRAIL.get());
 		this.dropSelf(ModBlocks.SUCCULENT.get());
 		this.add(ModBlocks.POTTED_SUCCULENT.get(), BlockLoot::createPotFlowerItemTable);
 
