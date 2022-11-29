@@ -32,7 +32,7 @@ public class LanguageGenerator extends LanguageProvider {
 
         this.add(ModBlocks.BURROW.get(), "Burrow");
         this.add(ModBlocks.DATE_BUNCH.get(), "Date Bunch");
-        this.add(ModBlocks.COCONUT_BLOCK.get(), "Coconut");
+        this.add(ModBlocks.COCONUT.get(), "Coconut");
         this.add(ModBlocks.PALM_LOG.get(), "Palm Log");
         this.add(ModBlocks.PALM_LEAVES.get(), "Palm Leaves");
         this.add(ModBlocks.PALM_LEAVES_HANGING.get(), "Hanging Palm Leaves");
@@ -66,7 +66,7 @@ public class LanguageGenerator extends LanguageProvider {
         this.add(ModBlocks.SUCCULENT.get(), "Succulent");
 
         this.add(ModItems.DATE.get(), "Date");
-        this.add(ModItems.COCONUT.get(), "Coconut");
+        // this.add(ModItems.COCONUT.get(), "Coconut");
         this.add(ModItems.COCONUT_HALF.get(), "Coconut Half");
         this.add(ModItems.COCONUT_CHUNK.get(), "Coconut Chunk");
         this.add(ModItems.DESICCATED_COCONUT.get(), "Desiccated Coconut");
@@ -78,6 +78,6 @@ public class LanguageGenerator extends LanguageProvider {
         this.add(ModItems.OSTRICH_SPAWN_EGG.get(), "Ostrich Spawn Egg");
         this.add(ModItems.VULTURE_SPAWN_EGG.get(), "Vulture Spawn Egg");
 
-        this.add(ModBlocks.WORMHOLE.get(), "Wormhole");
+        // this.add(ModBlocks.WORMHOLE.get(), "Wormhole");
     }
 }

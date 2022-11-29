@@ -1,7 +1,7 @@
 package com.minecraftabnormals.biome_vote_losers.world.level.entity;
 
+import com.minecraftabnormals.biome_vote_losers.register.ModBlocks;
 import com.minecraftabnormals.biome_vote_losers.register.ModEntities;
-import com.minecraftabnormals.biome_vote_losers.register.ModItems;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
@@ -34,7 +34,7 @@ public class CoconutProjectile extends ThrowableItemProjectile {
 
     @Override
     protected Item getDefaultItem() {
-        return ModItems.COCONUT.get();
+        return ModBlocks.COCONUT.get().asItem();
     }
 
     public void handleEntityEvent(byte p_37402_) {

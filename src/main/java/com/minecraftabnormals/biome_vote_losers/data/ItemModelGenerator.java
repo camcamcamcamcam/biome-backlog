@@ -35,10 +35,10 @@ public class ItemModelGenerator extends ItemModelProvider {
 		this.singleTex(ModItems.COOKED_OSTRICH);
 
 		this.toBlock(ModBlocks.DATE_BUNCH);
-		this.toBlock(ModBlocks.COCONUT_BLOCK);
+		this.basicItem(ModBlocks.COCONUT.get().asItem());
 
 		this.singleTex(ModItems.DATE);
-		this.singleTex(ModItems.COCONUT);
+		// this.singleTex(ModItems.COCONUT);
 		this.singleTex(ModItems.COCONUT_HALF);
 		this.singleTex(ModItems.COCONUT_CHUNK);
 		this.singleTex(ModItems.DESICCATED_COCONUT);
@@ -98,7 +98,7 @@ public class ItemModelGenerator extends ItemModelProvider {
 
 		this.itemBlockFlat(ModBlocks.SUCCULENT);
 
-		this.toBlock(ModBlocks.WORMHOLE);
+		// this.toBlock(ModBlocks.WORMHOLE);
 	}
 
 	private ItemModelBuilder generated(String name, ResourceLocation... layers) {

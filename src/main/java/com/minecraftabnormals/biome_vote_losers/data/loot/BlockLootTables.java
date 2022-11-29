@@ -9,9 +9,13 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.storage.loot.IntRange;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
+import net.minecraft.world.level.storage.loot.functions.LimitCount;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.BonusLevelTableCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
@@ -53,7 +57,12 @@ public class BlockLootTables extends BlockLoot {
 
 		this.dropSelf(ModBlocks.BURROW.get());
 		this.dropSelf(ModBlocks.DATE_BUNCH.get());
-		this.dropOther(ModBlocks.COCONUT_BLOCK.get(), ModItems.COCONUT_HALF.get());
+
+		this.add(ModBlocks.COCONUT.get(), (p_176069_) ->
+				createSilkTouchDispatchTable(p_176069_, applyExplosionDecay(p_176069_,
+				LootItem.lootTableItem(ModItems.COCONUT_HALF.get())
+						.apply(SetItemCountFunction.setCount(ConstantValue.exactly(2))))));
+
 		this.dropSelf(ModBlocks.PALM_LOG.get());
 		this.dropWhenSilkTouch(ModBlocks.PALM_LEAVES.get());
 		this.dropSelf(ModBlocks.PALM_LEAVES_HANGING.get());

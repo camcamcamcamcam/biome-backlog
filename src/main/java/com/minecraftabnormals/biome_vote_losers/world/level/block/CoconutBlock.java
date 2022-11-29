@@ -1,5 +1,6 @@
 package com.minecraftabnormals.biome_vote_losers.world.level.block;
 
+import com.minecraftabnormals.biome_vote_losers.register.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -13,9 +14,11 @@ import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.Fallable;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -25,8 +28,9 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
 
-public class CoconutBlock extends HorizontalDirectionalBlock implements Fallable {
+public class CoconutBlock extends HorizontalDirectionalBlock implements Fallable, BonemealableBlock {
 
     public static final BooleanProperty GREEN = BooleanProperty.create("green");
 
@@ -47,6 +51,25 @@ public class CoconutBlock extends HorizontalDirectionalBlock implements Fallable
 
     }
 
+    @Nullable
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        BlockState state = super.getStateForPlacement(context).setValue(GREEN, context.getClickedFace().getAxis().isHorizontal());
+        if (!state.getValue(GREEN)) {
+            for (Direction direction : context.getNearestLookingDirections()) {
+                System.out.println(direction.getName() + " " + direction.getAxis().isHorizontal());
+                if (direction.getAxis().isHorizontal()) {
+                    state = state.setValue(FACING, direction);
+                    break;
+                }
+            }
+            System.out.println(state.getValue(FACING).getName());
+        } else {
+            state = state.setValue(FACING, context.getClickedFace().getOpposite());
+        }
+        return state;
+    }
+
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
         InteractionResult use = super.use(state, level, pos, player, hand, result);
@@ -54,6 +77,7 @@ public class CoconutBlock extends HorizontalDirectionalBlock implements Fallable
         if (item instanceof AxeItem && state.getValue(GREEN)) {
             player.swing(hand);
             item.damageItem(player.getItemInHand(hand), 1, player, p -> p.broadcastBreakEvent(hand));
+            level.setBlock(pos, state.setValue(GREEN, false), 3);
             level.scheduleTick(pos, this, this.getDelayAfterPlace());
         } else if (item instanceof BucketItem && !state.getValue(GREEN)) {
             // todo make this work with multiple buckets
@@ -64,9 +88,9 @@ public class CoconutBlock extends HorizontalDirectionalBlock implements Fallable
     }
 
     public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource source) {
-        state.setValue(GREEN, false);
+
         if (isFree(level.getBlockState(pos.below())) && pos.getY() >= level.getMinBuildHeight()) {
-            FallingBlockEntity fallingblockentity = FallingBlockEntity.fall(level, pos, state.setValue(GREEN, false));
+            FallingBlockEntity fallingblockentity = FallingBlockEntity.fall(level, pos, state);
             this.falling(fallingblockentity);
         }
     }
@@ -112,5 +136,31 @@ public class CoconutBlock extends HorizontalDirectionalBlock implements Fallable
     }
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> p_57799_) {
         p_57799_.add(FACING, GREEN);
+    }
+
+    @Override
+    public boolean isValidBonemealTarget(BlockGetter blockGetter, BlockPos pos, BlockState state, boolean isClientSide) {
+        return !state.getValue(GREEN);
+    }
+
+    @Override
+    public boolean isBonemealSuccess(Level level, RandomSource randomSource, BlockPos pos, BlockState state) {
+        return true;
+    }
+
+    @Override
+    public void performBonemeal(ServerLevel level, RandomSource randomSource, BlockPos pos, BlockState state) {
+        for (Direction direction : Direction.values()) {
+            BlockPos offset = pos.offset(direction.getStepX(), direction.getStepY(), direction.getStepZ());
+            if (direction.getAxis().isHorizontal() && level.getBlockState(offset).is(BlockTags.LOGS)) {
+                level.setBlock(pos, state.setValue(GREEN, true).setValue(FACING, direction), 3);
+                return;
+            }
+        }
+        level.setBlock(pos, ModBlocks.PALM_SAPLING.get().defaultBlockState(), 3);
+
+        if (!level.getBlockState(pos.below()).is(BlockTags.SAND)) {
+            level.destroyBlock(pos, true);
+        }
     }
 }

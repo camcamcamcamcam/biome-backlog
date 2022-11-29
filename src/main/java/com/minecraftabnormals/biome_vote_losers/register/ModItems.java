@@ -1,7 +1,6 @@
 package com.minecraftabnormals.biome_vote_losers.register;
 
 import com.minecraftabnormals.biome_vote_losers.BiomeVoteLosers;
-import com.minecraftabnormals.biome_vote_losers.world.level.item.CoconutItem;
 import com.minecraftabnormals.biome_vote_losers.world.level.item.VinegarBottleItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -24,11 +23,11 @@ public class ModItems {
 	public static final RegistryObject<Item> COOKED_OSTRICH = ITEMS.register("cooked_ostrich", () -> new Item(new Item.Properties().food(ModFoods.COOKED_OSTRICH).tab(CreativeModeTab.TAB_FOOD)));
 
 	public static final RegistryObject<Item> DATE = ITEMS.register("date", () -> new Item(new Item.Properties().food(ModFoods.DATE).tab(CreativeModeTab.TAB_FOOD)));
-	public static final RegistryObject<CoconutItem> COCONUT = ITEMS.register("coconut", () -> new CoconutItem(new Item.Properties().tab(CreativeModeTab.TAB_MATERIALS)));
-	public static final RegistryObject<Item> COCONUT_HALF = ITEMS.register("coconut_half", () -> new Item(new Item.Properties().tab(CreativeModeTab.TAB_MATERIALS)));
+	// public static final RegistryObject<CoconutItem> COCONUT = ITEMS.register("coconut", () -> new CoconutItem(new Item.Properties().tab(CreativeModeTab.TAB_MATERIALS)));
+	public static final RegistryObject<Item> COCONUT_SHELL = ITEMS.register("coconut_shell", () -> new Item(new Item.Properties().tab(CreativeModeTab.TAB_MATERIALS)));
+	public static final RegistryObject<Item> COCONUT_HALF = ITEMS.register("coconut_half", () -> new Item(new Item.Properties().tab(CreativeModeTab.TAB_MATERIALS).craftRemainder(ModItems.COCONUT_SHELL.get())));
 	public static final RegistryObject<Item> COCONUT_CHUNK = ITEMS.register("coconut_chunk", () -> new Item(new Item.Properties().food(ModFoods.COCONUT_CHUNK).tab(CreativeModeTab.TAB_FOOD)));
 	public static final RegistryObject<Item> DESICCATED_COCONUT = ITEMS.register("desiccated_coconut", () -> new Item(new Item.Properties().food(ModFoods.DESICCATED_COCONUT).tab(CreativeModeTab.TAB_FOOD)));
-	public static final RegistryObject<Item> COCONUT_SHELL = ITEMS.register("coconut_shell", () -> new Item(new Item.Properties().tab(CreativeModeTab.TAB_MATERIALS)));
 	public static final RegistryObject<VinegarBottleItem> VINEGAR_BOTTLE = ITEMS.register("vinegar_bottle", () -> new VinegarBottleItem(new Item.Properties().tab(CreativeModeTab.TAB_MATERIALS)));
 	public static final RegistryObject<Item> CALCITE_POWDER_BOTTLE = ITEMS.register("calcite_powder_bottle", () -> new Item((new Item.Properties()).craftRemainder(Items.GLASS_BOTTLE).tab(CreativeModeTab.TAB_MISC)));
 

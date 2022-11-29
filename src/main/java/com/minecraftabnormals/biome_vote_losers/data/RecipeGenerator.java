@@ -87,6 +87,12 @@ public class RecipeGenerator extends RecipeProvider implements IConditionBuilder
                         .of(ModItems.DATE.get()).build()))
                 .save(finishedRecipeConsumer);
 
+        ShapelessRecipeBuilder.shapeless(ModItems.COCONUT_CHUNK.get(), 4)
+                .requires(ModItems.COCONUT_HALF.get())
+                .unlockedBy("has_coconut_half", inventoryTrigger(ItemPredicate.Builder.item()
+                .of(ModItems.COCONUT_HALF.get()).build()))
+                .save(finishedRecipeConsumer);
+
         ShapelessRecipeBuilder.shapeless(ModItems.DESICCATED_COCONUT.get())
                 .requires(ModItems.COCONUT_CHUNK.get())
                 .requires(Items.SUGAR)

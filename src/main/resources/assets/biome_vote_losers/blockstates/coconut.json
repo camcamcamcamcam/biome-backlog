@@ -1,18 +1,18 @@
 {
   "variants": {
     "green=false,facing=east": {
-      "model": "biome_vote_losers:block/coconut_block",
+      "model": "biome_vote_losers:block/coconut",
       "y": 270
     },
     "green=false,facing=north": {
-      "model": "biome_vote_losers:block/coconut_block",
+      "model": "biome_vote_losers:block/coconut",
       "y": 180
     },
     "green=false,facing=south": {
-      "model": "biome_vote_losers:block/coconut_block"
+      "model": "biome_vote_losers:block/coconut"
     },
     "green=false,facing=west": {
-      "model": "biome_vote_losers:block/coconut_block",
+      "model": "biome_vote_losers:block/coconut",
       "y": 90
     },
     "green=true,facing=east": {

@@ -50,7 +50,7 @@ public class ModBlocks {
 	public static final BlockBehaviour.Properties PALM = BlockBehaviour.Properties.of(Material.WOOD).explosionResistance(9.0F).sound(SoundType.WOOD);
 
 	public static final RegistryObject<DateBlock> DATE_BUNCH = register("date_bunch", () -> new DateBlock(BlockBehaviour.Properties.of(Material.PLANT)), CreativeModeTab.TAB_DECORATIONS);
-	public static final RegistryObject<CoconutBlock> COCONUT_BLOCK = register("coconut_block", () -> new CoconutBlock(BlockBehaviour.Properties.of(Material.PLANT)), CreativeModeTab.TAB_DECORATIONS);
+	public static final RegistryObject<CoconutBlock> COCONUT = register("coconut", () -> new CoconutBlock(BlockBehaviour.Properties.of(Material.PLANT)), CreativeModeTab.TAB_DECORATIONS);
 
 	public static final RegistryObject<RotatedPillarBlock> PALM_LOG = register("palm_log", () -> new RotatedPillarBlock(PALM));
 	public static final RegistryObject<LeavesBlock> PALM_LEAVES = register("palm_leaves", () -> new LeavesBlock(BlockBehaviour.Properties.of(Material.LEAVES).sound(SoundType.GRASS).noOcclusion()), CreativeModeTab.TAB_DECORATIONS);
@@ -62,7 +62,7 @@ public class ModBlocks {
 	public static final RegistryObject<RotatedPillarBlock> PALM_WOOD = register("palm_wood", () -> new RotatedPillarBlock(PALM));
 	public static final RegistryObject<RotatedPillarBlock> STRIPPED_PALM_WOOD = register("stripped_palm_wood", () -> new RotatedPillarBlock(PALM));
 	public static final RegistryObject<Block> PALM_PLANKS = register("palm_planks", () -> new Block(PALM));
-	public static final RegistryObject<Block> PALM_SAPLING = register("palm_sapling", () -> new SaplingBlock(new OakTreeGrower(), BlockBehaviour.Properties.of(Material.PLANT).sound(SoundType.GRASS).noCollission()), CreativeModeTab.TAB_DECORATIONS);
+	public static final RegistryObject<Block> PALM_SAPLING = register("palm_sapling", () -> new PalmSaplingBlock(new OakTreeGrower(), BlockBehaviour.Properties.of(Material.PLANT).sound(SoundType.GRASS).noCollission()), CreativeModeTab.TAB_DECORATIONS);
 	public static final RegistryObject<DoorBlock> PALM_DOOR = register("palm_door", () -> new DoorBlock(PALM.noOcclusion()), CreativeModeTab.TAB_REDSTONE);
 	public static final RegistryObject<TrapDoorBlock> PALM_TRAPDOOR = register("palm_trapdoor", () -> new TrapDoorBlock(PALM.noOcclusion()), CreativeModeTab.TAB_REDSTONE);
 	// todo public static final RegistryObject<StandingSignBlock> PALM_SIGN = register("palm_sign", () -> new StandingSignBlock(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD), WoodType.OAK), CreativeModeTab.TAB_DECORATIONS);
