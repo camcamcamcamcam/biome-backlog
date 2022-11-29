@@ -59,7 +59,7 @@ public class CoconutBlock extends HorizontalDirectionalBlock implements Fallable
             for (Direction direction : context.getNearestLookingDirections()) {
                 System.out.println(direction.getName() + " " + direction.getAxis().isHorizontal());
                 if (direction.getAxis().isHorizontal()) {
-                    state = state.setValue(FACING, direction);
+                    state = state.setValue(FACING, direction.getOpposite());
                     break;
                 }
             }
@@ -157,7 +157,7 @@ public class CoconutBlock extends HorizontalDirectionalBlock implements Fallable
                 return;
             }
         }
-        level.setBlock(pos, ModBlocks.PALM_SAPLING.get().defaultBlockState(), 3);
+        level.setBlock(pos, ModBlocks.COCONUT_SAPLING.get().defaultBlockState(), 3);
 
         if (!level.getBlockState(pos.below()).is(BlockTags.SAND)) {
             level.destroyBlock(pos, true);

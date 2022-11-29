@@ -42,7 +42,8 @@ public class BlockstateGenerator extends BlockStateProvider {
 		this.simpleBlock(ModBlocks.PALM_PLANKS.get());
 		this.stairs(ModBlocks.PALM_STAIRS.get(), ModBlocks.PALM_PLANKS.get());
 		this.slab(ModBlocks.PALM_SLAB.get(), ModBlocks.PALM_PLANKS.get());
-		this.crossBlock(ModBlocks.PALM_SAPLING.get());
+		this.crossBlock(ModBlocks.COCONUT_SAPLING.get());
+		this.crossBlock(ModBlocks.DATE_SAPLING.get());
 
 		this.doorBlockWithRenderType(ModBlocks.PALM_DOOR.get(), texture(name(ModBlocks.PALM_DOOR.get()) + "_bottom"), texture(name(ModBlocks.PALM_DOOR.get()) + "_top"), "cutout");
 		this.trapdoorBlockWithRenderType(ModBlocks.PALM_TRAPDOOR.get(), texture(name(ModBlocks.PALM_TRAPDOOR.get())), true, "cutout");

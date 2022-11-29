@@ -71,7 +71,9 @@ public class ItemModelGenerator extends ItemModelProvider {
 		this.toBlock(ModBlocks.PALM_WOOD);
 		this.toBlock(ModBlocks.STRIPPED_PALM_WOOD);
 		this.toBlock(ModBlocks.PALM_PLANKS);
-		this.itemBlockFlat(ModBlocks.PALM_SAPLING);
+		this.itemBlockFlat(ModBlocks.COCONUT_SAPLING);
+		this.itemBlockFlat(ModBlocks.DATE_SAPLING);
+
 		this.basicItem(ModBlocks.PALM_DOOR.get().asItem());
 		this.toBlockModel(ModBlocks.PALM_TRAPDOOR.get(), "palm_trapdoor_bottom");
 		this.woodenFence(ModBlocks.PALM_FENCE, ModBlocks.PALM_PLANKS);

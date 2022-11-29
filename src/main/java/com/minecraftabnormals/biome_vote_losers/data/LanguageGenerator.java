@@ -42,7 +42,8 @@ public class LanguageGenerator extends LanguageProvider {
         this.add(ModBlocks.PALM_WOOD.get(), "Palm Wood");
         this.add(ModBlocks.STRIPPED_PALM_WOOD.get(), "Stripped Palm Wood");
         this.add(ModBlocks.PALM_PLANKS.get(), "Palm Planks");
-        this.add(ModBlocks.PALM_SAPLING.get(), "Palm Sapling");
+        this.add(ModBlocks.COCONUT_SAPLING.get(), "Coconut Sapling");
+        this.add(ModBlocks.DATE_SAPLING.get(), "Date Sapling");
         this.add(ModBlocks.PALM_DOOR.get(), "Palm Door");
         this.add(ModBlocks.PALM_TRAPDOOR.get(), "Palm Trapdoor");
         this.add(ModBlocks.PALM_FENCE.get(), "Palm Fence");

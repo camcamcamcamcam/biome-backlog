@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "biome_vote_losers:block/palm_sapling"
+    "layer0": "biome_vote_losers:block/date_sapling"
   }
 }

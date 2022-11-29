@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "stage=0": {
+      "model": "biome_vote_losers:block/date_sapling"
+    },
+    "stage=1": {
+      "model": "biome_vote_losers:block/date_sapling"
+    }
+  }
+}

@@ -56,7 +56,11 @@ public class BlockLootTables extends BlockLoot {
 		this.dropOther(ModBlocks.BAOBAB_FRUIT.get(), ModItems.BAOBAB_FRUIT.get());
 
 		this.dropSelf(ModBlocks.BURROW.get());
-		this.dropSelf(ModBlocks.DATE_BUNCH.get());
+
+		this.add(ModBlocks.DATE_BUNCH.get(), (p_176069_) ->
+				createSilkTouchDispatchTable(p_176069_, applyExplosionDecay(p_176069_,
+						LootItem.lootTableItem(ModItems.DATE.get())
+								.apply(SetItemCountFunction.setCount(ConstantValue.exactly(4))))));
 
 		this.add(ModBlocks.COCONUT.get(), (p_176069_) ->
 				createSilkTouchDispatchTable(p_176069_, applyExplosionDecay(p_176069_,
@@ -72,7 +76,8 @@ public class BlockLootTables extends BlockLoot {
 		this.dropSelf(ModBlocks.PALM_WOOD.get());
 		this.dropSelf(ModBlocks.STRIPPED_PALM_WOOD.get());
 		this.dropSelf(ModBlocks.PALM_PLANKS.get());
-		this.dropSelf(ModBlocks.PALM_SAPLING.get());
+		this.dropSelf(ModBlocks.COCONUT_SAPLING.get());
+		this.dropSelf(ModBlocks.DATE_SAPLING.get());
 		this.add(ModBlocks.PALM_DOOR.get(), BlockLoot::createDoorTable);
 		this.dropSelf(ModBlocks.PALM_TRAPDOOR.get());
 		this.dropSelf(ModBlocks.PALM_FENCE.get());

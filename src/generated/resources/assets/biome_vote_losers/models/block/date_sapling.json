@@ -2,6 +2,6 @@
   "parent": "minecraft:block/cross",
   "render_type": "minecraft:cutout",
   "textures": {
-    "cross": "biome_vote_losers:block/palm_sapling"
+    "cross": "biome_vote_losers:block/date_sapling"
   }
 }

@@ -1,6 +1,9 @@
 {
   "variants": {
-    "": {
+    "hanging=true": {
+      "model": "biome_vote_losers:block/date_bunch_hanging"
+    },
+	"hanging=false": {
       "model": "biome_vote_losers:block/date_bunch"
     }
   }
