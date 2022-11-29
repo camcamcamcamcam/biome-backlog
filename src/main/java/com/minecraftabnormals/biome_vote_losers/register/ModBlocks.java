@@ -88,7 +88,7 @@ public class ModBlocks {
 	public static final RegistryObject<SaltStairBlock> SALT_BRICK_STAIRS = register("salt_brick_stairs", () -> new SaltStairBlock(SALT));
 	public static final RegistryObject<SaltStairBlock> SALT_TILE_STAIRS = register("salt_tile_stairs", () -> new SaltStairBlock(SALT));
 
-	public static final RegistryObject<SaltLampBlock> SALT_LAMP = register("salt_lamp", () -> new SaltLampBlock(SALT), CreativeModeTab.TAB_DECORATIONS);
+	public static final RegistryObject<SaltLampBlock> SALT_LAMP = register("salt_lamp", () -> new SaltLampBlock(SALT.lightLevel((state) -> 8)), CreativeModeTab.TAB_DECORATIONS);
 	public static final RegistryObject<SaltTrailBlock> SALT_TRAIL = register("salt", () -> new SaltTrailBlock(BlockBehaviour.Properties.of(Material.DECORATION).sound(SoundType.STONE).noCollission().instabreak()), CreativeModeTab.TAB_MISC);
 
 	public static final RegistryObject<SucculentBlock> SUCCULENT = register("succulent", () -> new SucculentBlock(BlockBehaviour.Properties.of(Material.PLANT).sound(SoundType.GRASS).instabreak().noOcclusion().noCollission()), CreativeModeTab.TAB_DECORATIONS);

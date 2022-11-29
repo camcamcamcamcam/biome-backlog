@@ -12,8 +12,13 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class SucculentBlock extends BushBlock {
+
+    private static final VoxelShape SHAPE = Block.box(2.0, 0.0, 2.0, 14.0, 8.0, 14.0);
+
 
     public static IntegerProperty TYPE = IntegerProperty.create("type", 0, 3);
     public static IntegerProperty COLOR = IntegerProperty.create("color", 0, 15);
@@ -54,6 +59,10 @@ public class SucculentBlock extends BushBlock {
 
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> p_57799_) {
         p_57799_.add(TYPE, COLOR);
+    }
+
+    public VoxelShape getShape(BlockState p_153342_, BlockGetter p_153343_, BlockPos p_153344_, CollisionContext p_153345_) {
+        return SHAPE;
     }
 
 }

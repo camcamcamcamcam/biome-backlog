@@ -2,7 +2,10 @@ package com.minecraftabnormals.biome_vote_losers.world.level.block;
 
 import com.minecraftabnormals.biome_vote_losers.register.ModBlocks;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
@@ -11,6 +14,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -19,6 +23,8 @@ import net.minecraft.world.level.block.BushBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.FluidState;
@@ -26,19 +32,35 @@ import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
 
 public class PearCactusBlock extends BushBlock implements BonemealableBlock {
 	public static final IntegerProperty AGE = IntegerProperty.create("age", 0, 2);
+	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 
-	private static final VoxelShape MID_GROWTH_SHAPE = Block.box(1.0D, 0.0D, 1.0D, 15.0D, 16.0D, 15.0D);
+	private static final VoxelShape SHAPE_X = Block.box(5.0D, 0.0D, 4.0D, 11.0D, 10.0D, 12.0D);
+	private static final VoxelShape SHAPE_Z = Block.box(4.0D, 0.0D, 5.0D, 12.0D, 10.0D, 11.0D);
 
 	public PearCactusBlock(BlockBehaviour.Properties properties) {
 		super(properties);
-		this.registerDefaultState(this.stateDefinition.any().setValue(AGE, Integer.valueOf(0)));
+		this.registerDefaultState(this.stateDefinition.any().setValue(AGE, 0));
 	}
 
-	public VoxelShape getShape(BlockState p_57291_, BlockGetter p_57292_, BlockPos p_57293_, CollisionContext p_57294_) {
-		return MID_GROWTH_SHAPE;
+	@Nullable
+	@Override
+	public BlockState getStateForPlacement(BlockPlaceContext context) {
+		BlockState state = this.defaultBlockState();
+		for (Direction direction : context.getNearestLookingDirections()) {
+			if (direction.getAxis().isHorizontal()) {
+				state = state.setValue(FACING, direction.getOpposite());
+				break;
+			}
+		}
+		return state;
+	}
+
+	public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos, CollisionContext context) {
+		return state.getValue(FACING).getAxis() == Direction.Axis.X ? SHAPE_X : SHAPE_Z;
 	}
 
 	public boolean isRandomlyTicking(BlockState p_57284_) {
@@ -71,7 +93,7 @@ public class PearCactusBlock extends BushBlock implements BonemealableBlock {
 	}
 
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> p_51164_) {
-		p_51164_.add(AGE);
+		p_51164_.add(AGE, FACING);
 	}
 
 	public boolean isPathfindable(BlockState p_51143_, BlockGetter p_51144_, BlockPos p_51145_, PathComputationType p_51146_) {
@@ -102,7 +124,7 @@ public class PearCactusBlock extends BushBlock implements BonemealableBlock {
 	@Override
 	public void performBonemeal(ServerLevel level, RandomSource randomSource, BlockPos pos, BlockState state) {
 		int i = state.getValue(AGE);
-		BlockState blockstate = state.setValue(AGE, Integer.valueOf(i + 1));
+		BlockState blockstate = state.setValue(AGE, i + 1);
 		level.setBlock(pos, blockstate, 2);
 		level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(blockstate));
 	}
@@ -113,7 +135,9 @@ public class PearCactusBlock extends BushBlock implements BonemealableBlock {
 			item.damageItem(player.getItemInHand(hand), 1, player, p -> p.broadcastBreakEvent(hand));
 			player.swing(hand);
 			int age = state.getValue(AGE);
-			level.setBlock(pos, ModBlocks.STRIPPED_PEAR_CACTUS.get().defaultBlockState().setValue(AGE, age), 3);
+			Direction facing = state.getValue(FACING);
+			level.setBlock(pos, ModBlocks.STRIPPED_PEAR_CACTUS.get().defaultBlockState().setValue(AGE, age).setValue(FACING, facing), 3);
+			level.playSound(player, pos, SoundEvents.AXE_STRIP, SoundSource.BLOCKS, 1.0F, 1.0F);
 			return InteractionResult.PASS;
 		}
 		return InteractionResult.FAIL;

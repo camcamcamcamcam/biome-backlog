@@ -23,7 +23,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 public class BaobabFlowerBlock extends HangingLeavesBlock implements EntityBlock {
     private static final BooleanProperty OPEN = BooleanProperty.create("open");
 
-    private static final VoxelShape SHAPE = Block.box(5.0, 7.0, 5.0, 11.0, 16.0, 11.0);
+    private static final VoxelShape SHAPE = Block.box(6.0, 7.0, 6.0, 10.0, 16.0, 10.0);
 
     public BaobabFlowerBlock(BlockBehaviour.Properties p_153337_) {
         super(p_153337_);

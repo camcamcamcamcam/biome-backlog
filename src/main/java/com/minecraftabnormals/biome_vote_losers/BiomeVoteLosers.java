@@ -17,6 +17,8 @@ import com.mojang.logging.LogUtils;
 import it.unimi.dsi.fastutil.longs.LongSet;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraftforge.api.distmarker.Dist;
@@ -32,6 +34,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
 
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
@@ -96,5 +99,13 @@ public class BiomeVoteLosers {
 
 		ModEntities.spawnPlacementSetup();
 		event.enqueueWork(this::serverInit);
+		event.enqueueWork(this::afterCommonSetup);
     }
+
+    private void afterCommonSetup() {
+		Map<Block, Block> stripMap = new HashMap<>(AxeItem.STRIPPABLES);
+		stripMap.put(ModBlocks.PALM_LOG.get(), ModBlocks.STRIPPED_PALM_LOG.get());
+		stripMap.put(ModBlocks.PALM_WOOD.get(), ModBlocks.STRIPPED_PALM_WOOD.get());
+		AxeItem.STRIPPABLES = stripMap;
+	}
 }

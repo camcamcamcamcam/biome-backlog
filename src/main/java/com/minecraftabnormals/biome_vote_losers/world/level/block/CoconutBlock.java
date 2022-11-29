@@ -57,13 +57,11 @@ public class CoconutBlock extends HorizontalDirectionalBlock implements Fallable
         BlockState state = super.getStateForPlacement(context).setValue(GREEN, context.getClickedFace().getAxis().isHorizontal());
         if (!state.getValue(GREEN)) {
             for (Direction direction : context.getNearestLookingDirections()) {
-                System.out.println(direction.getName() + " " + direction.getAxis().isHorizontal());
                 if (direction.getAxis().isHorizontal()) {
                     state = state.setValue(FACING, direction.getOpposite());
                     break;
                 }
             }
-            System.out.println(state.getValue(FACING).getName());
         } else {
             state = state.setValue(FACING, context.getClickedFace().getOpposite());
         }
