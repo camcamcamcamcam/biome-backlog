@@ -10,12 +10,16 @@ import com.minecraftabnormals.biome_vote_losers.client.render.MeerkatRender;
 import com.minecraftabnormals.biome_vote_losers.client.render.OstrichRender;
 import com.minecraftabnormals.biome_vote_losers.client.render.TumbleweedRender;
 import com.minecraftabnormals.biome_vote_losers.client.render.VultureRender;
+import com.minecraftabnormals.biome_vote_losers.register.ModBlockEntities;
 import com.minecraftabnormals.biome_vote_losers.register.ModBlocks;
 import com.minecraftabnormals.biome_vote_losers.register.ModEntities;
 import com.minecraftabnormals.biome_vote_losers.register.ModParticles;
 import com.minecraftabnormals.biome_vote_losers.world.level.block.SucculentBlock;
 import net.minecraft.client.particle.BubblePopParticle;
 import net.minecraft.client.renderer.BiomeColors;
+import net.minecraft.client.renderer.Sheets;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
+import net.minecraft.client.renderer.blockentity.SignRenderer;
 import net.minecraft.client.renderer.entity.NoopRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.world.level.FoliageColor;
@@ -26,6 +30,7 @@ import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 @OnlyIn(Dist.CLIENT)
@@ -33,6 +38,18 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 public class ClientRegistrar {
 	public static void setup(FMLCommonSetupEvent event) {
 
+	}
+
+	@SubscribeEvent
+	public static void clientSetup(FMLClientSetupEvent evt) {
+		evt.enqueueWork(() -> {
+			renderTileEntity();
+			Sheets.addWoodType(ModBlocks.PALM_TYPE);
+		});
+	}
+
+	public static void renderTileEntity() {
+		BlockEntityRenderers.register(ModBlockEntities.MOD_SIGN.get(), SignRenderer::new);
 	}
 
 	@SubscribeEvent

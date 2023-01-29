@@ -1,13 +1,45 @@
 package com.minecraftabnormals.biome_vote_losers.register;
 
 import com.minecraftabnormals.biome_vote_losers.BiomeVoteLosers;
-import com.minecraftabnormals.biome_vote_losers.world.level.block.*;
+import com.minecraftabnormals.biome_vote_losers.world.level.block.BaobabFlowerBlock;
+import com.minecraftabnormals.biome_vote_losers.world.level.block.BurrowBlock;
+import com.minecraftabnormals.biome_vote_losers.world.level.block.CoconutBlock;
+import com.minecraftabnormals.biome_vote_losers.world.level.block.DateBlock;
+import com.minecraftabnormals.biome_vote_losers.world.level.block.HangingLeavesBlock;
+import com.minecraftabnormals.biome_vote_losers.world.level.block.ModStandingSignBlock;
+import com.minecraftabnormals.biome_vote_losers.world.level.block.ModWallSignBlock;
+import com.minecraftabnormals.biome_vote_losers.world.level.block.MoundBlock;
+import com.minecraftabnormals.biome_vote_losers.world.level.block.OstrichEggBlock;
+import com.minecraftabnormals.biome_vote_losers.world.level.block.PalmSaplingBlock;
+import com.minecraftabnormals.biome_vote_losers.world.level.block.PearCactusBlock;
+import com.minecraftabnormals.biome_vote_losers.world.level.block.SaltBlock;
+import com.minecraftabnormals.biome_vote_losers.world.level.block.SaltLampBlock;
+import com.minecraftabnormals.biome_vote_losers.world.level.block.SaltSlabBlock;
+import com.minecraftabnormals.biome_vote_losers.world.level.block.SaltStairBlock;
+import com.minecraftabnormals.biome_vote_losers.world.level.block.SaltTrailBlock;
+import com.minecraftabnormals.biome_vote_losers.world.level.block.SucculentBlock;
+import com.minecraftabnormals.biome_vote_losers.world.level.block.TumbleWeedBlock;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.item.SignItem;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DoorBlock;
+import net.minecraft.world.level.block.FenceBlock;
+import net.minecraft.world.level.block.FenceGateBlock;
+import net.minecraft.world.level.block.FlowerPotBlock;
+import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.block.PressurePlateBlock;
+import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.StairBlock;
+import net.minecraft.world.level.block.TrapDoorBlock;
+import net.minecraft.world.level.block.WoodButtonBlock;
 import net.minecraft.world.level.block.grower.OakTreeGrower;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.material.Material;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -19,6 +51,8 @@ import java.util.function.Supplier;
 
 public class ModBlocks {
 	public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, BiomeVoteLosers.MODID);
+
+	public static final WoodType PALM_TYPE = WoodType.create(BiomeVoteLosers.prefix("palm").toString());
 
 	// BADLANDS
 
@@ -45,7 +79,7 @@ public class ModBlocks {
 
 	// DESERT
 
-	public static final RegistryObject<Block> BURROW = register("burrow", () -> new Block(BlockBehaviour.Properties.of(Material.SAND).sound(SoundType.SAND)));
+	public static final RegistryObject<Block> BURROW = register("burrow", () -> new BurrowBlock(BlockBehaviour.Properties.of(Material.SAND).sound(SoundType.SAND)));
 
 	public static final BlockBehaviour.Properties PALM = BlockBehaviour.Properties.of(Material.WOOD).explosionResistance(9.0F).sound(SoundType.WOOD);
 
@@ -66,8 +100,8 @@ public class ModBlocks {
 	public static final RegistryObject<Block> DATE_SAPLING = register("date_sapling", () -> new PalmSaplingBlock(new OakTreeGrower(), BlockBehaviour.Properties.of(Material.PLANT).sound(SoundType.GRASS).noCollission()), CreativeModeTab.TAB_DECORATIONS);
 	public static final RegistryObject<DoorBlock> PALM_DOOR = register("palm_door", () -> new DoorBlock(PALM.noOcclusion()), CreativeModeTab.TAB_REDSTONE);
 	public static final RegistryObject<TrapDoorBlock> PALM_TRAPDOOR = register("palm_trapdoor", () -> new TrapDoorBlock(PALM.noOcclusion()), CreativeModeTab.TAB_REDSTONE);
-	// todo public static final RegistryObject<StandingSignBlock> PALM_SIGN = register("palm_sign", () -> new StandingSignBlock(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD), WoodType.OAK), CreativeModeTab.TAB_DECORATIONS);
-	// todo public static final RegistryObject<WallSignBlock> PALM_WALL_SIGN = register("palm_wall_sign", () -> new WallSignBlock(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD), WoodType.OAK), CreativeModeTab.TAB_DECORATIONS);
+	public static final RegistryObject<ModStandingSignBlock> PALM_SIGN = register("palm_sign", () -> new ModStandingSignBlock(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD), WoodType.OAK), CreativeModeTab.TAB_DECORATIONS);
+	public static final RegistryObject<ModWallSignBlock> PALM_WALL_SIGN = noItemRegister("palm_wall_sign", () -> new ModWallSignBlock(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD), WoodType.OAK));
 	public static final RegistryObject<FenceBlock> PALM_FENCE = register("palm_fence", () -> new FenceBlock(PALM), CreativeModeTab.TAB_DECORATIONS);
 	public static final RegistryObject<FenceGateBlock> PALM_FENCE_GATE = register("palm_fence_gate", () -> new FenceGateBlock(PALM), CreativeModeTab.TAB_REDSTONE);
 	public static final RegistryObject<StairBlock> PALM_STAIRS = register("palm_stairs", () -> new StairBlock(() -> PALM_PLANKS.get().defaultBlockState(), PALM));
@@ -117,7 +151,13 @@ public class ModBlocks {
 
 	private static <T extends Block> Supplier<BlockItem> registerBlockItem(final RegistryObject<T> block, CreativeModeTab tab) {
 		return () -> {
-			return new BlockItem(Objects.requireNonNull(block.get()), new Item.Properties().tab(tab));
+			if (Objects.requireNonNull(block.get()) == PALM_SIGN.get()) {
+
+				return new SignItem(new Item.Properties().tab(tab), block.get(), PALM_WALL_SIGN.get());
+
+			} else {
+				return new BlockItem(Objects.requireNonNull(block.get()), new Item.Properties().tab(tab));
+			}
 		};
 	}
 }

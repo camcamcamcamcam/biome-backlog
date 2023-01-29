@@ -21,6 +21,7 @@ import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
+import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
@@ -92,6 +93,7 @@ public class BiomeVoteLosers {
 
 	private void commonSetup(final FMLCommonSetupEvent event) {
 		event.enqueueWork(() -> {
+			WoodType.register(ModBlocks.PALM_TYPE);
 			((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.SUCCULENT.getId(), ModBlocks.POTTED_SUCCULENT);
 			ModConfiguredFeatures.init();
 			ModPlacements.init();
@@ -108,4 +110,5 @@ public class BiomeVoteLosers {
 		stripMap.put(ModBlocks.PALM_WOOD.get(), ModBlocks.STRIPPED_PALM_WOOD.get());
 		AxeItem.STRIPPABLES = stripMap;
 	}
+
 }
