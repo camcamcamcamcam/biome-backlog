@@ -80,6 +80,81 @@ public class RecipeGenerator extends RecipeProvider implements IConditionBuilder
                 .unlockedBy("has_thatch_block", has(ModBlocks.THATCH_BLOCK.get().asItem()))
                 .save(finishedRecipeConsumer);
 
+        ShapelessRecipeBuilder.shapeless(ModBlocks.PALM_PLANKS.get(), 4)
+                .requires(ModBlocks.PALM_LOG.get())
+                .unlockedBy("has_item", inventoryTrigger(ItemPredicate.Builder.item()
+                        .of(ModBlocks.PALM_LOG.get()).build()))
+                .save(finishedRecipeConsumer);
+        ShapelessRecipeBuilder.shapeless(ModBlocks.PALM_PLANKS.get(), 4)
+                .requires(ModBlocks.PALM_WOOD.get())
+                .unlockedBy("has_item", inventoryTrigger(ItemPredicate.Builder.item()
+                        .of(ModBlocks.PALM_WOOD.get()).build()))
+                .save(finishedRecipeConsumer, BiomeVoteLosers.prefix("palm_planks_from_wood"));
+
+        ShapedRecipeBuilder.shaped(ModBlocks.PALM_FENCE.get(), 3)
+                .define('#', ModBlocks.PALM_PLANKS.get())
+                .define('S', Tags.Items.RODS_WOODEN)
+                .pattern("#S#")
+                .pattern("#S#")
+                .unlockedBy("has_item", inventoryTrigger(ItemPredicate.Builder.item()
+                        .of(ModBlocks.PALM_PLANKS.get()).build()))
+                .save(finishedRecipeConsumer);
+        ShapedRecipeBuilder.shaped(ModBlocks.PALM_FENCE_GATE.get(), 1)
+                .define('#', ModBlocks.PALM_PLANKS.get())
+                .define('S', Tags.Items.RODS_WOODEN)
+                .pattern("S#S")
+                .pattern("S#S")
+                .unlockedBy("has_item", inventoryTrigger(ItemPredicate.Builder.item()
+                        .of(ModBlocks.PALM_PLANKS.get()).build()))
+                .save(finishedRecipeConsumer);
+        ShapedRecipeBuilder.shaped(ModBlocks.PALM_DOOR.get(), 3)
+                .define('#', ModBlocks.PALM_PLANKS.get())
+                .pattern("##")
+                .pattern("##")
+                .pattern("##")
+                .unlockedBy("has_item", inventoryTrigger(ItemPredicate.Builder.item()
+                        .of(ModBlocks.PALM_PLANKS.get()).build()));
+        ShapedRecipeBuilder.shaped(ModBlocks.PALM_TRAPDOOR.get(), 2)
+                .define('#', ModBlocks.PALM_PLANKS.get())
+                .pattern("###")
+                .pattern("###")
+                .unlockedBy("has_item", inventoryTrigger(ItemPredicate.Builder.item()
+                        .of(ModBlocks.PALM_PLANKS.get()).build()))
+                .save(finishedRecipeConsumer);
+        ShapedRecipeBuilder.shaped(ModBlocks.PALM_SIGN.get(), 3)
+                .define('#', ModBlocks.PALM_PLANKS.get())
+                .define('S', Tags.Items.RODS_WOODEN)
+                .pattern("###")
+                .pattern("###")
+                .pattern(" S ")
+                .unlockedBy("has_item", inventoryTrigger(ItemPredicate.Builder.item()
+                        .of(ModBlocks.PALM_PLANKS.get()).build()))
+                .save(finishedRecipeConsumer);
+        ShapedRecipeBuilder.shaped(ModBlocks.PALM_PRESSURE_PLATE.get())
+                .define('#', ModBlocks.PALM_PLANKS.get())
+                .pattern("##")
+                .unlockedBy("has_item", inventoryTrigger(ItemPredicate.Builder.item()
+                        .of(ModBlocks.PALM_PLANKS.get()).build()))
+                .save(finishedRecipeConsumer);
+        ShapelessRecipeBuilder.shapeless(ModBlocks.PALM_BUTTON.get())
+                .requires(ModBlocks.PALM_PLANKS.get())
+                .unlockedBy("has_item", inventoryTrigger(ItemPredicate.Builder.item()
+                        .of(ModBlocks.PALM_PLANKS.get()).build()))
+                .save(finishedRecipeConsumer);
+        ShapedRecipeBuilder.shaped(ModItems.PALM_BOAT.get())
+                .define('#', ModBlocks.PALM_PLANKS.get())
+                .pattern("# #")
+                .pattern("###")
+                .unlockedBy("has_item", inventoryTrigger(ItemPredicate.Builder.item()
+                        .of(ModBlocks.PALM_PLANKS.get()).build()))
+                .save(finishedRecipeConsumer);
+        ShapelessRecipeBuilder.shapeless(ModItems.PALM_BOAT_CHEST.get())
+                .requires(ModItems.PALM_BOAT.get())
+                .requires(Items.CHEST)
+                .unlockedBy("has_item", inventoryTrigger(ItemPredicate.Builder.item()
+                        .of(ModItems.PALM_BOAT.get()).build()))
+                .save(finishedRecipeConsumer);
+
         ShapelessRecipeBuilder.shapeless(ModItems.VINEGAR_BOTTLE.get())
                 .requires(ModItems.DATE.get())
                 .requires(Items.GLASS_BOTTLE)
