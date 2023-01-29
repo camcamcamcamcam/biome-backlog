@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/door_top_left",
-  "render_type": "minecraft:cutout",
-  "textures": {
-    "bottom": "biome_vote_losers:block/palm_door_bottom",
-    "top": "biome_vote_losers:block/palm_door_top"
-  }
-}

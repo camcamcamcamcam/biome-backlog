@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "open=true": {
+      "model": "biome_backlog:block/baobab_flower_open"
+    },
+    "open=false": {
+      "model": "biome_backlog:block/baobab_flower_closed"
+    }
+  }
+}

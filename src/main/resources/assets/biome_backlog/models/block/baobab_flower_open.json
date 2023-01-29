@@ -1,0 +1,7 @@
+{
+  "parent": "biome_backlog:block/baobab_flower_template",
+  "textures": {
+    "0": "biome_backlog:block/baobab_flower_open",
+    "particle": "biome_backlog:block/baobab_flower_open"
+  }
+}

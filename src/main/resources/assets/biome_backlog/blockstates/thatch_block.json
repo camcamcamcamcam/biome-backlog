@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "biome_backlog:block/thatch_block"
+    }
+  }
+}

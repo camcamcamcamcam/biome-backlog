@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/cube_column",
-  "textures": {
-    "end": "biome_vote_losers:block/stripped_palm_log_top",
-    "side": "biome_vote_losers:block/stripped_palm_log"
-  }
-}

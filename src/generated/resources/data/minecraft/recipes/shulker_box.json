@@ -1,7 +1,7 @@
 {
-  "type": "biome_vote_losers:color_lose",
+  "type": "biome_backlog:color_lose",
   "ingredient": {
-    "tag": "biome_vote_losers:colored_shulker_boxs"
+    "tag": "biome_backlog:colored_shulker_boxs"
   },
   "result": {
     "block": "minecraft:shulker_box"

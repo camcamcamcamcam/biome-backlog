@@ -1,7 +1,7 @@
 {
-  "type": "biome_vote_losers:color_lose",
+  "type": "biome_backlog:color_lose",
   "ingredient": {
-    "tag": "biome_vote_losers:colored_concrete"
+    "tag": "biome_backlog:colored_concrete"
   },
   "result": {
     "block": "minecraft:white_concrete"

@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "type=0": {
+      "model": "biome_backlog:block/succulent1"
+    },
+	"type=1": {
+      "model": "biome_backlog:block/succulent2"
+    },
+	"type=2": {
+      "model": "biome_backlog:block/succulent3"
+    },
+	"type=3": {
+      "model": "biome_backlog:block/succulent4"
+    }
+  }
+}

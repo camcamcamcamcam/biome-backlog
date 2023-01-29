@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/cube_all",
-  "textures": {
-    "all": "biome_vote_losers:block/chiseled_salt_block"
-  }
-}

@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:smelting",
-  "cookingtime": 300,
-  "experience": 0.45,
-  "ingredient": {
-    "item": "biome_vote_losers:coconut_shell"
-  },
-  "result": "minecraft:charcoal"
-}

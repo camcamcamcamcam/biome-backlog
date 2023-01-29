@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/leaves",
-  "render_type": "minecraft:cutout_mipped",
-  "textures": {
-    "all": "biome_vote_losers:block/baobab_leaves"
-  }
-}

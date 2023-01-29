@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "hanging=true": {
+      "model": "biome_backlog:block/date_bunch_hanging"
+    },
+	"hanging=false": {
+      "model": "biome_backlog:block/date_bunch"
+    }
+  }
+}

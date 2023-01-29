@@ -1,5 +1,5 @@
 {
-  "type": "biome_vote_losers:color_lose",
+  "type": "biome_backlog:color_lose",
   "ingredient": {
     "tag": "minecraft:wool"
   },

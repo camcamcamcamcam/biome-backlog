@@ -13,8 +13,8 @@ apply plugin: "maven-publish"
 
 
 version = '1.19.2-0.3.0'
-group = 'com.minecraftabnormals.biome_vote_losers' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = 'biome_vote_losers'
+group = 'com.minecraftabnormals.biome_backlog' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = 'biome_backlog'
 
 // Mojang ships Java 17 to end users in 1.18+, so your mod should target Java 17.
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
@@ -57,10 +57,10 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
-            property 'forge.enabledGameTestNamespaces', 'biome_vote_losers'
+            property 'forge.enabledGameTestNamespaces', 'biome_backlog'
 
             mods {
-                biome_vote_losers {
+                biome_backlog {
                     source sourceSets.main
                 }
             }
@@ -73,10 +73,10 @@ minecraft {
 
             property 'forge.logging.console.level', 'debug'
 
-            property 'forge.enabledGameTestNamespaces', 'biome_vote_losers'
+            property 'forge.enabledGameTestNamespaces', 'biome_backlog'
 
             mods {
-                biome_vote_losers {
+                biome_backlog {
                     source sourceSets.main
                 }
             }
@@ -92,10 +92,10 @@ minecraft {
 
             property 'forge.logging.console.level', 'debug'
 
-            property 'forge.enabledGameTestNamespaces', 'biome_vote_losers'
+            property 'forge.enabledGameTestNamespaces', 'biome_backlog'
 
             mods {
-                biome_vote_losers {
+                biome_backlog {
                     source sourceSets.main
                 }
             }
@@ -109,10 +109,10 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
-            args '--mod', 'biome_vote_losers', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            args '--mod', 'biome_backlog', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
 
             mods {
-                biome_vote_losers {
+                biome_backlog {
                     source sourceSets.main
                 }
             }
@@ -156,12 +156,12 @@ dependencies {
 jar {
     manifest {
         attributes([
-                "Specification-Title"     : "biome_vote_losers",
-                "Specification-Vendor"    : "Team Abnormals",
+                "Specification-Title"     : "biome_backlog",
+                "Specification-Vendor"    : "Cameron",
                 "Specification-Version"   : "1", // We are version 1 of ourselves
                 "Implementation-Title"    : project.name,
                 "Implementation-Version"  : project.jar.archiveVersion,
-                "Implementation-Vendor"   : "Team Abnormals",
+                "Implementation-Vendor"   : "Cameron",
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }
