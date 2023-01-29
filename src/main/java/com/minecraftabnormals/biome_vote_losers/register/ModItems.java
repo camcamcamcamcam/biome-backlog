@@ -34,8 +34,8 @@ public class ModItems {
 	public static final RegistryObject<Item> CALCITE_POWDER_BOTTLE = ITEMS.register("calcite_powder_bottle", () -> new Item((new Item.Properties()).craftRemainder(Items.GLASS_BOTTLE).tab(CreativeModeTab.TAB_MISC)));
 
 	// todo palm boat and chest boat
-	public static final RegistryObject<Item> PALM_BOAT = ITEMS.register("palm_boat", () -> new ModBoatItem(false, ModBoat.BoatType.PALM, (new Item.Properties()).tab(CreativeModeTab.TAB_TRANSPORTATION)));
-	public static final RegistryObject<Item> PALM_BOAT_CHEST = ITEMS.register("palm_boat_chest", () -> new ModBoatItem(true, ModBoat.BoatType.PALM, (new Item.Properties()).tab(CreativeModeTab.TAB_TRANSPORTATION)));
+	public static final RegistryObject<Item> PALM_BOAT = ITEMS.register("palm_boat", () -> new ModBoatItem(false, ModBoat.BoatType.PALM, (new Item.Properties()).stacksTo(1).tab(CreativeModeTab.TAB_TRANSPORTATION)));
+	public static final RegistryObject<Item> PALM_BOAT_CHEST = ITEMS.register("palm_boat_chest", () -> new ModBoatItem(true, ModBoat.BoatType.PALM, (new Item.Properties()).stacksTo(1).tab(CreativeModeTab.TAB_TRANSPORTATION)));
 
 	public static final RegistryObject<Item> SUCCULENT_CUTTING = ITEMS.register("succulent_cutting", () -> new Item(new Item.Properties().tab(CreativeModeTab.TAB_MATERIALS)));
 

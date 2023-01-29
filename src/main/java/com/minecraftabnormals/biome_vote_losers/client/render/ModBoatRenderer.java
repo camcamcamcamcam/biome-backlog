@@ -3,6 +3,7 @@ package com.minecraftabnormals.biome_vote_losers.client.render;
 import com.google.common.collect.ImmutableMap;
 import com.minecraftabnormals.biome_vote_losers.BiomeVoteLosers;
 import com.minecraftabnormals.biome_vote_losers.world.level.entity.ModBoat;
+import com.minecraftabnormals.biome_vote_losers.world.level.entity.ModBoatType;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.client.model.BoatModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -48,6 +49,9 @@ public class ModBoatRenderer extends BoatRenderer {
 	}
 
 	public Pair<ResourceLocation, BoatModel> getModelWithLocation(Boat boat) {
-		return this.boatResources.get(boat.getBoatType());
+		if (boat instanceof ModBoatType boatType) {
+			return this.boatResources.get(boatType.getModBoatType());
+		}
+		return super.getModelWithLocation(boat);
 	}
 }
