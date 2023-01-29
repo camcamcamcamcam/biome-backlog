@@ -113,7 +113,8 @@ public class RecipeGenerator extends RecipeProvider implements IConditionBuilder
                 .pattern("##")
                 .pattern("##")
                 .unlockedBy("has_item", inventoryTrigger(ItemPredicate.Builder.item()
-                        .of(ModBlocks.PALM_PLANKS.get()).build()));
+                        .of(ModBlocks.PALM_PLANKS.get()).build()))
+                .save(finishedRecipeConsumer);
         ShapedRecipeBuilder.shaped(ModBlocks.PALM_TRAPDOOR.get(), 2)
                 .define('#', ModBlocks.PALM_PLANKS.get())
                 .pattern("###")
