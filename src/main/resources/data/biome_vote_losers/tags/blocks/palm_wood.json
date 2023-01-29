@@ -12,6 +12,8 @@
     "biome_vote_losers:palm_stairs",
     "biome_vote_losers:palm_slab",
     "biome_vote_losers:palm_button",
-    "biome_vote_losers:palm_pressure_plate"
+    "biome_vote_losers:palm_pressure_plate",
+    "biome_vote_losers:palm_sign",
+    "biome_vote_losers:palm_wall_sign"
   ]
 }

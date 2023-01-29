@@ -1,6 +1,8 @@
 package com.minecraftabnormals.biome_vote_losers.register;
 
 import com.minecraftabnormals.biome_vote_losers.BiomeVoteLosers;
+import com.minecraftabnormals.biome_vote_losers.world.level.entity.ModBoat;
+import com.minecraftabnormals.biome_vote_losers.world.level.item.ModBoatItem;
 import com.minecraftabnormals.biome_vote_losers.world.level.item.VinegarBottleItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -32,6 +34,8 @@ public class ModItems {
 	public static final RegistryObject<Item> CALCITE_POWDER_BOTTLE = ITEMS.register("calcite_powder_bottle", () -> new Item((new Item.Properties()).craftRemainder(Items.GLASS_BOTTLE).tab(CreativeModeTab.TAB_MISC)));
 
 	// todo palm boat and chest boat
+	public static final RegistryObject<Item> PALM_BOAT = ITEMS.register("palm_boat", () -> new ModBoatItem(false, ModBoat.BoatType.PALM, (new Item.Properties()).tab(CreativeModeTab.TAB_TRANSPORTATION)));
+	public static final RegistryObject<Item> PALM_BOAT_CHEST = ITEMS.register("palm_boat_chest", () -> new ModBoatItem(true, ModBoat.BoatType.PALM, (new Item.Properties()).tab(CreativeModeTab.TAB_TRANSPORTATION)));
 
 	public static final RegistryObject<Item> SUCCULENT_CUTTING = ITEMS.register("succulent_cutting", () -> new Item(new Item.Properties().tab(CreativeModeTab.TAB_MATERIALS)));
 

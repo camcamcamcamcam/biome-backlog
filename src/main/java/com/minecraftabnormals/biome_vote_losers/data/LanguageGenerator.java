@@ -2,6 +2,7 @@ package com.minecraftabnormals.biome_vote_losers.data;
 
 import com.minecraftabnormals.biome_vote_losers.BiomeVoteLosers;
 import com.minecraftabnormals.biome_vote_losers.register.ModBlocks;
+import com.minecraftabnormals.biome_vote_losers.register.ModEntities;
 import com.minecraftabnormals.biome_vote_losers.register.ModItems;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.LanguageProvider;
@@ -75,10 +76,22 @@ public class LanguageGenerator extends LanguageProvider {
         this.add(ModItems.COCONUT_SHELL.get(), "Coconut Shell");
         this.add(ModItems.VINEGAR_BOTTLE.get(), "Vinegar Bottle");
         this.add(ModItems.CALCITE_POWDER_BOTTLE.get(), "Calcite Powder Bottle");
+        this.add(ModItems.PALM_BOAT.get(), "Palm Boat");
+        this.add(ModItems.PALM_BOAT_CHEST.get(), "Palm Chest Boat");
         this.add(ModItems.SUCCULENT_CUTTING.get(), "Succulent Cutting");
         this.add(ModItems.MEERKAT_SPAWN_EGG.get(), "Meerkat Spawn Egg");
         this.add(ModItems.OSTRICH_SPAWN_EGG.get(), "Ostrich Spawn Egg");
         this.add(ModItems.VULTURE_SPAWN_EGG.get(), "Vulture Spawn Egg");
+
+        this.add(ModEntities.MEERKAT.get(), "Meerkat");
+        this.add(ModEntities.OSTRICH.get(), "Ostrich");
+        this.add(ModEntities.VULTURE.get(), "Vulture");
+        this.add(ModEntities.TUMBLEWEED.get(), "Tumble Weed");
+
+        this.add(ModEntities.CALCITE_POWDER.get(), "Calcite Powder");
+        this.add(ModEntities.COCONUT.get(), "Coconut");
+        this.add(ModEntities.MOD_BOAT.get(), "Boat");
+        this.add(ModEntities.MOD_CHEST_BOAT.get(), "Chest Boat");
 
         // this.add(ModBlocks.WORMHOLE.get(), "Wormhole");
     }

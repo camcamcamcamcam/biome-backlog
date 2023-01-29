@@ -4,6 +4,8 @@ import com.minecraftabnormals.biome_vote_losers.BiomeVoteLosers;
 import com.minecraftabnormals.biome_vote_losers.world.level.entity.CalcitePowderReaction;
 import com.minecraftabnormals.biome_vote_losers.world.level.entity.CoconutProjectile;
 import com.minecraftabnormals.biome_vote_losers.world.level.entity.Meerkat;
+import com.minecraftabnormals.biome_vote_losers.world.level.entity.ModBoat;
+import com.minecraftabnormals.biome_vote_losers.world.level.entity.ModChestBoat;
 import com.minecraftabnormals.biome_vote_losers.world.level.entity.Ostrich;
 import com.minecraftabnormals.biome_vote_losers.world.level.entity.Tumbleweed;
 import com.minecraftabnormals.biome_vote_losers.world.level.entity.Vulture;
@@ -29,6 +31,9 @@ public class ModEntities {
 	public static final RegistryObject<EntityType<Tumbleweed>> TUMBLEWEED = ENTITIES.register("tumbleweed", () -> EntityType.Builder.of(Tumbleweed::new, MobCategory.MISC).sized(0.7F, 0.8F).clientTrackingRange(8).build(prefix("tumbleweed")));
 	public static final RegistryObject<EntityType<CalcitePowderReaction>> CALCITE_POWDER = ENTITIES.register("calcite_powder_reaction", () -> EntityType.Builder.of(CalcitePowderReaction::new, MobCategory.MISC).sized(1.0F, 0.2F).clientTrackingRange(6).build(prefix("calcite_powder_reaction")));
 	public static final RegistryObject<EntityType<CoconutProjectile>> COCONUT = ENTITIES.register("coconut", () -> EntityType.Builder.<CoconutProjectile>of(CoconutProjectile::new, MobCategory.MISC).sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10).build(prefix("coconut")));
+	public static final RegistryObject<EntityType<ModBoat>> MOD_BOAT = ENTITIES.register("mod_boat", () -> EntityType.Builder.<ModBoat>of(ModBoat::new, MobCategory.MISC).sized(0.25F, 0.25F).sized(1.375F, 0.5625F).clientTrackingRange(10).build(prefix("mod_boat")));
+	public static final RegistryObject<EntityType<ModChestBoat>> MOD_CHEST_BOAT = ENTITIES.register("mod_chest_boat", () -> EntityType.Builder.<ModChestBoat>of(ModChestBoat::new, MobCategory.MISC).sized(0.25F, 0.25F).sized(1.375F, 0.5625F).clientTrackingRange(10).build(prefix("mod_chest_boat")));
+
 
 	private static String prefix(String path) {
 		return BiomeVoteLosers.MODID + "." + path;

@@ -7,6 +7,7 @@ import com.minecraftabnormals.biome_vote_losers.client.model.TumbleweedModel;
 import com.minecraftabnormals.biome_vote_losers.client.model.VultureModel;
 import com.minecraftabnormals.biome_vote_losers.client.particle.CalciteBubbleParticle;
 import com.minecraftabnormals.biome_vote_losers.client.render.MeerkatRender;
+import com.minecraftabnormals.biome_vote_losers.client.render.ModBoatRenderer;
 import com.minecraftabnormals.biome_vote_losers.client.render.OstrichRender;
 import com.minecraftabnormals.biome_vote_losers.client.render.TumbleweedRender;
 import com.minecraftabnormals.biome_vote_losers.client.render.VultureRender;
@@ -15,6 +16,9 @@ import com.minecraftabnormals.biome_vote_losers.register.ModBlocks;
 import com.minecraftabnormals.biome_vote_losers.register.ModEntities;
 import com.minecraftabnormals.biome_vote_losers.register.ModParticles;
 import com.minecraftabnormals.biome_vote_losers.world.level.block.SucculentBlock;
+import com.minecraftabnormals.biome_vote_losers.world.level.entity.ModBoat;
+import net.minecraft.client.model.BoatModel;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.particle.BubblePopParticle;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.Sheets;
@@ -60,6 +64,12 @@ public class ClientRegistrar {
 		event.registerEntityRenderer(ModEntities.TUMBLEWEED.get(), TumbleweedRender::new);
 		event.registerEntityRenderer(ModEntities.CALCITE_POWDER.get(), NoopRenderer::new);
 		event.registerEntityRenderer(ModEntities.COCONUT.get(), ThrownItemRenderer::new);
+		event.registerEntityRenderer(ModEntities.MOD_BOAT.get(), (r) -> {
+			return new ModBoatRenderer(r, false);
+		});
+		event.registerEntityRenderer(ModEntities.MOD_CHEST_BOAT.get(), (r) -> {
+			return new ModBoatRenderer(r, true);
+		});
 	}
 
 	@SubscribeEvent
@@ -68,6 +78,14 @@ public class ClientRegistrar {
 		event.registerLayerDefinition(ModModelLayers.OSTRICH, OstrichModel::createBodyLayer);
 		event.registerLayerDefinition(ModModelLayers.VULTURE, VultureModel::createBodyLayer);
 		event.registerLayerDefinition(ModModelLayers.TUMBLEWEED, TumbleweedModel::createBodyLayer);
+		LayerDefinition layerdefinition18 = BoatModel.createBodyModel(false);
+		LayerDefinition layerdefinition19 = BoatModel.createBodyModel(true);
+
+
+		for (ModBoat.BoatType boat$type : ModBoat.BoatType.values()) {
+			event.registerLayerDefinition(ModBoatRenderer.createBoatModelName(boat$type), () -> layerdefinition18);
+			event.registerLayerDefinition(ModBoatRenderer.createChestBoatModelName(boat$type), () -> layerdefinition19);
+		}
 	}
 
 	@SubscribeEvent

@@ -45,6 +45,8 @@ public class ItemModelGenerator extends ItemModelProvider {
 		this.singleTex(ModItems.COCONUT_SHELL);
 		this.singleTex(ModItems.VINEGAR_BOTTLE);
 		this.singleTex(ModItems.CALCITE_POWDER_BOTTLE);
+		this.singleTex(ModItems.PALM_BOAT);
+		this.singleTex(ModItems.PALM_BOAT_CHEST);
 
 		this.singleTex(ModItems.SUCCULENT_CUTTING);
 
