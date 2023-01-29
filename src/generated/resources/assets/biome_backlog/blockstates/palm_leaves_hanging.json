@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "waterlogged=false": {
+      "model": "biome_backlog:block/palm_leaves_hanging"
+    },
+    "waterlogged=true": {
+      "model": "biome_backlog:block/palm_leaves_hanging"
+    }
+  }
+}

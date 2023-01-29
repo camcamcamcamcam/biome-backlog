@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "biome_backlog:block/mound_horizontal",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "biome_backlog:block/mound"
+    },
+    "axis=z": {
+      "model": "biome_backlog:block/mound_horizontal",
+      "x": 90
+    }
+  }
+}

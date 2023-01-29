@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "cookingtime": 300,
+  "experience": 0.45,
+  "ingredient": {
+    "item": "biome_backlog:raw_ostrich"
+  },
+  "result": "biome_backlog:cooked_ostrich"
+}

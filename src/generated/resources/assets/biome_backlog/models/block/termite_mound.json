@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "biome_backlog:block/mound_top",
+    "side": "biome_backlog:block/termite_mound"
+  }
+}

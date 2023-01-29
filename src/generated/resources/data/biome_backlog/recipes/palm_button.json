@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "biome_backlog:palm_planks"
+    }
+  ],
+  "result": {
+    "item": "biome_backlog:palm_button"
+  }
+}

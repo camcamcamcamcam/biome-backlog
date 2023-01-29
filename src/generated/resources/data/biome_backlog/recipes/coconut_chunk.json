@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "biome_backlog:coconut_half"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "item": "biome_backlog:coconut_chunk"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "biome_backlog:block/salt_bricks"
+    },
+    "lit=true": {
+      "model": "biome_backlog:block/lit_salt_bricks"
+    }
+  }
+}

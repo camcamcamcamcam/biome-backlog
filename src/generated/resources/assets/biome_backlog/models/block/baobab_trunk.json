@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "biome_backlog:block/baobab_trunk_top",
+    "side": "biome_backlog:block/baobab_trunk"
+  }
+}

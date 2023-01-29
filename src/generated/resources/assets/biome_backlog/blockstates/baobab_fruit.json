@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "waterlogged=false": {
+      "model": "biome_backlog:block/baobab_fruit"
+    },
+    "waterlogged=true": {
+      "model": "biome_backlog:block/baobab_fruit"
+    }
+  }
+}

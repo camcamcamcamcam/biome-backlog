@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "biome_backlog:item/desiccated_coconut"
+  }
+}

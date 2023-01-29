@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "biome_backlog:block/palm_slab"
+    },
+    "type=double": {
+      "model": "biome_backlog:block/palm_planks"
+    },
+    "type=top": {
+      "model": "biome_backlog:block/palm_slab_top"
+    }
+  }
+}

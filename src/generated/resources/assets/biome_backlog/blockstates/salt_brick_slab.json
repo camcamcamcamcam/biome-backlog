@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "biome_backlog:block/salt_brick_slab"
+    },
+    "type=double": {
+      "model": "biome_backlog:block/salt_bricks"
+    },
+    "type=top": {
+      "model": "biome_backlog:block/salt_brick_slab_top"
+    }
+  }
+}
