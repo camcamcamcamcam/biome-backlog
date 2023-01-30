@@ -4,6 +4,7 @@ import com.minecraftabnormals.biome_backlog.BiomeBacklog;
 import com.minecraftabnormals.biome_backlog.world.level.block.BaobabFlowerBlock;
 import com.minecraftabnormals.biome_backlog.world.level.block.BurrowBlock;
 import com.minecraftabnormals.biome_backlog.world.level.block.CoconutBlock;
+import com.minecraftabnormals.biome_backlog.world.level.block.CoconutSaplingBlock;
 import com.minecraftabnormals.biome_backlog.world.level.block.DateBlock;
 import com.minecraftabnormals.biome_backlog.world.level.block.HangingLeavesBlock;
 import com.minecraftabnormals.biome_backlog.world.level.block.ModStandingSignBlock;
@@ -56,47 +57,47 @@ public class ModBlocks {
 
 	// BADLANDS
 
-	public static final RegistryObject<PearCactusBlock> PEAR_CACTUS = register("pear_cactus", () -> new PearCactusBlock(BlockBehaviour.Properties.of(Material.CACTUS).noOcclusion().randomTicks().instabreak().sound(SoundType.WOOL)), CreativeModeTab.TAB_DECORATIONS);
-	public static final RegistryObject<PearCactusBlock> STRIPPED_PEAR_CACTUS = register("stripped_pear_cactus", () -> new PearCactusBlock(BlockBehaviour.Properties.of(Material.CACTUS).noOcclusion().randomTicks().instabreak().sound(SoundType.WOOL)), CreativeModeTab.TAB_DECORATIONS);
+	public static final RegistryObject<PearCactusBlock> PEAR_CACTUS = register("pear_cactus", () -> new PearCactusBlock(BlockBehaviour.Properties.of(Material.CACTUS).noOcclusion().strength(0.3F).randomTicks().instabreak().sound(SoundType.WOOL)), CreativeModeTab.TAB_DECORATIONS);
+	public static final RegistryObject<PearCactusBlock> STRIPPED_PEAR_CACTUS = register("stripped_pear_cactus", () -> new PearCactusBlock(BlockBehaviour.Properties.of(Material.CACTUS).noOcclusion().strength(0.3F).randomTicks().instabreak().sound(SoundType.WOOL)), CreativeModeTab.TAB_DECORATIONS);
 
 	public static final RegistryObject<TumbleWeedBlock> TUMBLEWEED = noItemRegister("tumbleweed", () -> new TumbleWeedBlock(BlockBehaviour.Properties.of(Material.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.SWEET_BERRY_BUSH)));
 
 	// SAVANNA
 
-	public static final RegistryObject<MoundBlock> MOUND = register("mound", () -> new MoundBlock(BlockBehaviour.Properties.of(Material.CLAY).sound(SoundType.GRAVEL)), CreativeModeTab.TAB_DECORATIONS);
-	public static final RegistryObject<MoundBlock> TERMITE_MOUND = register("termite_mound", () -> new MoundBlock(BlockBehaviour.Properties.of(Material.CLAY).randomTicks().sound(SoundType.GRAVEL)), CreativeModeTab.TAB_DECORATIONS);
+	public static final RegistryObject<MoundBlock> MOUND = register("mound", () -> new MoundBlock(BlockBehaviour.Properties.of(Material.CLAY).strength(1.0F).sound(SoundType.GRAVEL)), CreativeModeTab.TAB_DECORATIONS);
+	public static final RegistryObject<MoundBlock> TERMITE_MOUND = register("termite_mound", () -> new MoundBlock(BlockBehaviour.Properties.of(Material.CLAY).strength(1.0F).randomTicks().sound(SoundType.GRAVEL)), CreativeModeTab.TAB_DECORATIONS);
 
-	public static final RegistryObject<OstrichEggBlock> OSTRICH_EGG = register("ostrich_egg", () -> new OstrichEggBlock(BlockBehaviour.Properties.of(Material.EGG).sound(SoundType.METAL)), CreativeModeTab.TAB_DECORATIONS);
+	public static final RegistryObject<OstrichEggBlock> OSTRICH_EGG = register("ostrich_egg", () -> new OstrichEggBlock(BlockBehaviour.Properties.of(Material.EGG).strength(1.0F).sound(SoundType.METAL)), CreativeModeTab.TAB_DECORATIONS);
 
-	public static final RegistryObject<Block> BAOBAB_LEAVES = register("baobab_leaves", () -> new LeavesBlock(BlockBehaviour.Properties.of(Material.LEAVES).sound(SoundType.GRASS).noOcclusion()), CreativeModeTab.TAB_DECORATIONS);
-	public static final RegistryObject<RotatedPillarBlock> BAOBAB_TRUNK = register("baobab_trunk", () -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD)));
+	public static final RegistryObject<Block> BAOBAB_LEAVES = register("baobab_leaves", () -> new LeavesBlock(BlockBehaviour.Properties.of(Material.LEAVES).strength(0.2F).sound(SoundType.GRASS).noOcclusion()), CreativeModeTab.TAB_DECORATIONS);
+	public static final RegistryObject<RotatedPillarBlock> BAOBAB_TRUNK = register("baobab_trunk", () -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.0F, 3.0F).sound(SoundType.WOOD)));
 
-	public static final RegistryObject<RotatedPillarBlock> BAOBAB_BARK = register("baobab_bark", () -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).sound(SoundType.WOOD)));
-	
+	public static final RegistryObject<RotatedPillarBlock> BAOBAB_BARK = register("baobab_bark", () -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.0F, 3.0F).sound(SoundType.WOOD)));
+
 	public static final RegistryObject<HangingLeavesBlock> BAOBAB_FLOWER = register("baobab_flower", () -> new BaobabFlowerBlock(BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.GRASS)), CreativeModeTab.TAB_DECORATIONS);
 
 	public static final RegistryObject<HangingLeavesBlock> BAOBAB_FRUIT = noItemRegister("baobab_fruit", () -> new HangingLeavesBlock(BlockBehaviour.Properties.of(Material.PLANT).sound(SoundType.SWEET_BERRY_BUSH)));
 
 	// DESERT
 
-	public static final RegistryObject<Block> BURROW = register("burrow", () -> new BurrowBlock(BlockBehaviour.Properties.of(Material.SAND).sound(SoundType.SAND)));
+	public static final RegistryObject<Block> BURROW = register("burrow", () -> new BurrowBlock(BlockBehaviour.Properties.of(Material.SAND).strength(0.5F).sound(SoundType.SAND)));
 
-	public static final BlockBehaviour.Properties PALM = BlockBehaviour.Properties.of(Material.WOOD).explosionResistance(9.0F).sound(SoundType.WOOD);
+	public static final BlockBehaviour.Properties PALM = BlockBehaviour.Properties.of(Material.WOOD).strength(2.0F, 9.0F).sound(SoundType.WOOD);
 
 	public static final RegistryObject<DateBlock> DATE_BUNCH = register("date_bunch", () -> new DateBlock(BlockBehaviour.Properties.of(Material.PLANT)), CreativeModeTab.TAB_DECORATIONS);
-	public static final RegistryObject<CoconutBlock> COCONUT = register("coconut", () -> new CoconutBlock(BlockBehaviour.Properties.of(Material.PLANT)), CreativeModeTab.TAB_DECORATIONS);
+	public static final RegistryObject<CoconutBlock> COCONUT = register("coconut", () -> new CoconutBlock(BlockBehaviour.Properties.of(Material.PLANT).strength(0.5F, 1.0F)), CreativeModeTab.TAB_DECORATIONS);
 
 	public static final RegistryObject<RotatedPillarBlock> PALM_LOG = register("palm_log", () -> new RotatedPillarBlock(PALM));
-	public static final RegistryObject<LeavesBlock> PALM_LEAVES = register("palm_leaves", () -> new LeavesBlock(BlockBehaviour.Properties.of(Material.LEAVES).sound(SoundType.GRASS).noOcclusion()), CreativeModeTab.TAB_DECORATIONS);
-	public static final RegistryObject<HangingLeavesBlock> PALM_LEAVES_HANGING = register("palm_leaves_hanging", () -> new HangingLeavesBlock(BlockBehaviour.Properties.of(Material.PLANT).sound(SoundType.GRASS)), CreativeModeTab.TAB_DECORATIONS);
-	public static final RegistryObject<Block> THATCH_BLOCK = register("thatch_block", () -> new Block(BlockBehaviour.Properties.of(Material.LEAVES).sound(SoundType.GRASS)));
-	public static final RegistryObject<StairBlock> THATCH_STAIRS = register("thatch_stairs", () -> new StairBlock(() -> THATCH_BLOCK.get().defaultBlockState(), BlockBehaviour.Properties.of(Material.LEAVES).sound(SoundType.GRASS)));
+	public static final RegistryObject<LeavesBlock> PALM_LEAVES = register("palm_leaves", () -> new LeavesBlock(BlockBehaviour.Properties.of(Material.LEAVES).strength(0.2F).sound(SoundType.GRASS).noOcclusion()), CreativeModeTab.TAB_DECORATIONS);
+	public static final RegistryObject<HangingLeavesBlock> PALM_LEAVES_HANGING = register("palm_leaves_hanging", () -> new HangingLeavesBlock(BlockBehaviour.Properties.of(Material.PLANT).strength(0.2F).sound(SoundType.GRASS)), CreativeModeTab.TAB_DECORATIONS);
+	public static final RegistryObject<Block> THATCH_BLOCK = register("thatch_block", () -> new Block(BlockBehaviour.Properties.of(Material.LEAVES).strength(0.25F, 0.5F).sound(SoundType.GRASS)));
+	public static final RegistryObject<StairBlock> THATCH_STAIRS = register("thatch_stairs", () -> new StairBlock(() -> THATCH_BLOCK.get().defaultBlockState(), BlockBehaviour.Properties.of(Material.LEAVES).strength(0.25F, 0.5F).sound(SoundType.GRASS)));
 
 	public static final RegistryObject<RotatedPillarBlock> STRIPPED_PALM_LOG = register("stripped_palm_log", () -> new RotatedPillarBlock(PALM));
 	public static final RegistryObject<RotatedPillarBlock> PALM_WOOD = register("palm_wood", () -> new RotatedPillarBlock(PALM));
 	public static final RegistryObject<RotatedPillarBlock> STRIPPED_PALM_WOOD = register("stripped_palm_wood", () -> new RotatedPillarBlock(PALM));
 	public static final RegistryObject<Block> PALM_PLANKS = register("palm_planks", () -> new Block(PALM));
-	public static final RegistryObject<Block> COCONUT_SAPLING = register("coconut_sapling", () -> new PalmSaplingBlock(new OakTreeGrower(), BlockBehaviour.Properties.of(Material.PLANT).sound(SoundType.GRASS).noCollission()), CreativeModeTab.TAB_DECORATIONS);
+	public static final RegistryObject<Block> COCONUT_SAPLING = register("coconut_sapling", () -> new CoconutSaplingBlock(new OakTreeGrower(), BlockBehaviour.Properties.of(Material.PLANT).sound(SoundType.GRASS).noCollission()), CreativeModeTab.TAB_DECORATIONS);
 	public static final RegistryObject<Block> DATE_SAPLING = register("date_sapling", () -> new PalmSaplingBlock(new OakTreeGrower(), BlockBehaviour.Properties.of(Material.PLANT).sound(SoundType.GRASS).noCollission()), CreativeModeTab.TAB_DECORATIONS);
 	public static final RegistryObject<DoorBlock> PALM_DOOR = register("palm_door", () -> new DoorBlock(PALM.noOcclusion()), CreativeModeTab.TAB_REDSTONE);
 	public static final RegistryObject<TrapDoorBlock> PALM_TRAPDOOR = register("palm_trapdoor", () -> new TrapDoorBlock(PALM.noOcclusion()), CreativeModeTab.TAB_REDSTONE);
@@ -109,7 +110,7 @@ public class ModBlocks {
 	public static final RegistryObject<WoodButtonBlock> PALM_BUTTON = register("palm_button", () -> new WoodButtonBlock(PALM), CreativeModeTab.TAB_REDSTONE);
 	public static final RegistryObject<PressurePlateBlock> PALM_PRESSURE_PLATE = register("palm_pressure_plate", () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, PALM), CreativeModeTab.TAB_REDSTONE);
 
-	public static final BlockBehaviour.Properties SALT = BlockBehaviour.Properties.of(Material.GLASS).sound(SoundType.GLASS).noOcclusion();
+	public static final BlockBehaviour.Properties SALT = BlockBehaviour.Properties.of(Material.GLASS).requiresCorrectToolForDrops().strength(1.0F, 4.0F).sound(SoundType.GLASS).noOcclusion();
 
 	public static final RegistryObject<SaltBlock> SALT_BLOCK = register("salt_block", () -> new SaltBlock(SALT));
 	public static final RegistryObject<SaltBlock> SALT_BRICKS = register("salt_bricks", () -> new SaltBlock(SALT));

@@ -1,7 +1,19 @@
 {
   "variants": {
-    "": {
+    "facing=east": {
+      "model": "biome_backlog:block/coconut_sapling",
+      "y": 270
+    },
+    "facing=north": {
+      "model": "biome_backlog:block/coconut_sapling",
+      "y": 180
+    },
+    "facing=south": {
       "model": "biome_backlog:block/coconut_sapling"
+    },
+    "facing=west": {
+      "model": "biome_backlog:block/coconut_sapling",
+      "y": 90
     }
   }
 }

@@ -525,7 +525,7 @@ public class Ostrich extends Animal implements NeutralMob {
 
     static class OstrichNodeEvaluator extends WalkNodeEvaluator {
         protected BlockPathTypes evaluateBlockPathType(BlockGetter p_33387_, boolean p_33388_, boolean p_33389_, BlockPos p_33390_, BlockPathTypes p_33391_) {
-            return p_33391_ == BlockPathTypes.FENCE ? BlockPathTypes.OPEN : super.evaluateBlockPathType(p_33387_, p_33388_, p_33389_, p_33390_, p_33391_);
+            return p_33391_ == BlockPathTypes.FENCE ? BlockPathTypes.WALKABLE : super.evaluateBlockPathType(p_33387_, p_33388_, p_33389_, p_33390_, p_33391_);
         }
 
         public int getNeighbors(Node[] p_77640_, Node p_77641_) {

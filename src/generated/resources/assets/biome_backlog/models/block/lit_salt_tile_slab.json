@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "biome_backlog:block/lit_salt_tiles",
+    "bottom": "biome_backlog:block/lit_salt_tiles",
+    "side": "biome_backlog:block/lit_salt_tiles",
+    "top": "biome_backlog:block/lit_salt_tiles"
+  }
+}

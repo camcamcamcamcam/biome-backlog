@@ -1,13 +1,40 @@
 {
   "variants": {
-    "type=bottom": {
+    "lit=false,type=bottom,waterlogged=false": {
       "model": "biome_backlog:block/salt_brick_slab"
     },
-    "type=double": {
-      "model": "biome_backlog:block/salt_bricks"
+    "lit=false,type=bottom,waterlogged=true": {
+      "model": "biome_backlog:block/salt_brick_slab"
     },
-    "type=top": {
+    "lit=false,type=double,waterlogged=false": {
+      "model": "biome_backlog:block/salt_brick_slab"
+    },
+    "lit=false,type=double,waterlogged=true": {
+      "model": "biome_backlog:block/salt_brick_slab"
+    },
+    "lit=false,type=top,waterlogged=false": {
       "model": "biome_backlog:block/salt_brick_slab_top"
+    },
+    "lit=false,type=top,waterlogged=true": {
+      "model": "biome_backlog:block/salt_brick_slab_top"
+    },
+    "lit=true,type=bottom,waterlogged=false": {
+      "model": "biome_backlog:block/lit_salt_brick_slab"
+    },
+    "lit=true,type=bottom,waterlogged=true": {
+      "model": "biome_backlog:block/lit_salt_brick_slab"
+    },
+    "lit=true,type=double,waterlogged=false": {
+      "model": "biome_backlog:block/lit_salt_brick_slab"
+    },
+    "lit=true,type=double,waterlogged=true": {
+      "model": "biome_backlog:block/lit_salt_brick_slab"
+    },
+    "lit=true,type=top,waterlogged=false": {
+      "model": "biome_backlog:block/lit_salt_brick_slab_top"
+    },
+    "lit=true,type=top,waterlogged=true": {
+      "model": "biome_backlog:block/lit_salt_brick_slab_top"
     }
   }
 }

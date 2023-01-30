@@ -4,11 +4,11 @@ package com.minecraftabnormals.biome_backlog.client.model;
 // Exported for Minecraft version 1.17 - 1.18 with Mojang mappings
 // Paste this class into your mod and generate all required imports
 
-
 import com.minecraftabnormals.biome_backlog.client.animation.definitions.OstrichAnimation;
 import com.minecraftabnormals.biome_backlog.world.level.entity.Ostrich;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Vector3f;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -19,6 +19,7 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 
 public class OstrichModel<T extends Ostrich> extends HierarchicalModel<T> {
+	private static final Vector3f ANIMATION_VECTOR_CACHE = new Vector3f();
 	private final ModelPart root;
 
 	private final ModelPart body;
@@ -60,6 +61,7 @@ public class OstrichModel<T extends Ostrich> extends HierarchicalModel<T> {
 
 	@Override
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+		//you should reset animation
 		this.root().getAllParts().forEach(ModelPart::resetPose);
 		float f = Math.min((float) entity.getDeltaMovement().lengthSqr() * 100.0F, 8.0F);
 		float f2 = Math.min((float) entity.getDeltaMovement().lengthSqr() * 50.0F, 8.0F);

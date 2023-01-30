@@ -1,0 +1,26 @@
+{
+  "values": [
+    "biome_backlog:stripped_palm_log",
+    "biome_backlog:stripped_palm_wood",
+    "biome_backlog:palm_log",
+    "biome_backlog:palm_planks",
+    "biome_backlog:palm_wood",
+    "biome_backlog:palm_button",
+    "biome_backlog:palm_door",
+    "biome_backlog:palm_trapdoor",
+    "biome_backlog:palm_fence",
+    "biome_backlog:palm_fence_gate",
+    "biome_backlog:palm_pressure_plate",
+    "biome_backlog:palm_sign",
+    "biome_backlog:palm_wall_sign",
+    "biome_backlog:palm_stairs",
+    "biome_backlog:palm_slab",
+    "biome_backlog:baobab_trunk",
+    "biome_backlog:baobab_bark",
+    "biome_backlog:coconut",
+    "biome_backlog:pear_cactus",
+    "biome_backlog:stripped_pear_cactus",
+    "biome_backlog:termite_mound",
+    "biome_backlog:mound"
+  ]
+}

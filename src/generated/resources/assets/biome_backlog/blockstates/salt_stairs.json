@@ -20,23 +20,23 @@
       "model": "biome_backlog:block/salt_stairs"
     },
     "facing=east,half=bottom,lit=true,shape=inner_left": {
-      "model": "biome_backlog:block/salt_stairs_inner",
+      "model": "biome_backlog:block/lit_salt_stairs_inner",
       "uvlock": true,
       "y": 270
     },
     "facing=east,half=bottom,lit=true,shape=inner_right": {
-      "model": "biome_backlog:block/salt_stairs_inner"
+      "model": "biome_backlog:block/lit_salt_stairs_inner"
     },
     "facing=east,half=bottom,lit=true,shape=outer_left": {
-      "model": "biome_backlog:block/salt_stairs_outer",
+      "model": "biome_backlog:block/lit_salt_stairs_outer",
       "uvlock": true,
       "y": 270
     },
     "facing=east,half=bottom,lit=true,shape=outer_right": {
-      "model": "biome_backlog:block/salt_stairs_outer"
+      "model": "biome_backlog:block/lit_salt_stairs_outer"
     },
     "facing=east,half=bottom,lit=true,shape=straight": {
-      "model": "biome_backlog:block/salt_stairs"
+      "model": "biome_backlog:block/lit_salt_stairs"
     },
     "facing=east,half=top,lit=false,shape=inner_left": {
       "model": "biome_backlog:block/salt_stairs_inner",
@@ -66,29 +66,29 @@
       "x": 180
     },
     "facing=east,half=top,lit=true,shape=inner_left": {
-      "model": "biome_backlog:block/salt_stairs_inner",
+      "model": "biome_backlog:block/lit_salt_stairs_inner",
       "uvlock": true,
       "x": 180
     },
     "facing=east,half=top,lit=true,shape=inner_right": {
-      "model": "biome_backlog:block/salt_stairs_inner",
+      "model": "biome_backlog:block/lit_salt_stairs_inner",
       "uvlock": true,
       "x": 180,
       "y": 90
     },
     "facing=east,half=top,lit=true,shape=outer_left": {
-      "model": "biome_backlog:block/salt_stairs_outer",
+      "model": "biome_backlog:block/lit_salt_stairs_outer",
       "uvlock": true,
       "x": 180
     },
     "facing=east,half=top,lit=true,shape=outer_right": {
-      "model": "biome_backlog:block/salt_stairs_outer",
+      "model": "biome_backlog:block/lit_salt_stairs_outer",
       "uvlock": true,
       "x": 180,
       "y": 90
     },
     "facing=east,half=top,lit=true,shape=straight": {
-      "model": "biome_backlog:block/salt_stairs",
+      "model": "biome_backlog:block/lit_salt_stairs",
       "uvlock": true,
       "x": 180
     },
@@ -118,27 +118,27 @@
       "y": 270
     },
     "facing=north,half=bottom,lit=true,shape=inner_left": {
-      "model": "biome_backlog:block/salt_stairs_inner",
+      "model": "biome_backlog:block/lit_salt_stairs_inner",
       "uvlock": true,
       "y": 180
     },
     "facing=north,half=bottom,lit=true,shape=inner_right": {
-      "model": "biome_backlog:block/salt_stairs_inner",
+      "model": "biome_backlog:block/lit_salt_stairs_inner",
       "uvlock": true,
       "y": 270
     },
     "facing=north,half=bottom,lit=true,shape=outer_left": {
-      "model": "biome_backlog:block/salt_stairs_outer",
+      "model": "biome_backlog:block/lit_salt_stairs_outer",
       "uvlock": true,
       "y": 180
     },
     "facing=north,half=bottom,lit=true,shape=outer_right": {
-      "model": "biome_backlog:block/salt_stairs_outer",
+      "model": "biome_backlog:block/lit_salt_stairs_outer",
       "uvlock": true,
       "y": 270
     },
     "facing=north,half=bottom,lit=true,shape=straight": {
-      "model": "biome_backlog:block/salt_stairs",
+      "model": "biome_backlog:block/lit_salt_stairs",
       "uvlock": true,
       "y": 270
     },
@@ -171,29 +171,29 @@
       "y": 270
     },
     "facing=north,half=top,lit=true,shape=inner_left": {
-      "model": "biome_backlog:block/salt_stairs_inner",
+      "model": "biome_backlog:block/lit_salt_stairs_inner",
       "uvlock": true,
       "x": 180,
       "y": 270
     },
     "facing=north,half=top,lit=true,shape=inner_right": {
-      "model": "biome_backlog:block/salt_stairs_inner",
+      "model": "biome_backlog:block/lit_salt_stairs_inner",
       "uvlock": true,
       "x": 180
     },
     "facing=north,half=top,lit=true,shape=outer_left": {
-      "model": "biome_backlog:block/salt_stairs_outer",
+      "model": "biome_backlog:block/lit_salt_stairs_outer",
       "uvlock": true,
       "x": 180,
       "y": 270
     },
     "facing=north,half=top,lit=true,shape=outer_right": {
-      "model": "biome_backlog:block/salt_stairs_outer",
+      "model": "biome_backlog:block/lit_salt_stairs_outer",
       "uvlock": true,
       "x": 180
     },
     "facing=north,half=top,lit=true,shape=straight": {
-      "model": "biome_backlog:block/salt_stairs",
+      "model": "biome_backlog:block/lit_salt_stairs",
       "uvlock": true,
       "x": 180,
       "y": 270
@@ -220,23 +220,23 @@
       "y": 90
     },
     "facing=south,half=bottom,lit=true,shape=inner_left": {
-      "model": "biome_backlog:block/salt_stairs_inner"
+      "model": "biome_backlog:block/lit_salt_stairs_inner"
     },
     "facing=south,half=bottom,lit=true,shape=inner_right": {
-      "model": "biome_backlog:block/salt_stairs_inner",
+      "model": "biome_backlog:block/lit_salt_stairs_inner",
       "uvlock": true,
       "y": 90
     },
     "facing=south,half=bottom,lit=true,shape=outer_left": {
-      "model": "biome_backlog:block/salt_stairs_outer"
+      "model": "biome_backlog:block/lit_salt_stairs_outer"
     },
     "facing=south,half=bottom,lit=true,shape=outer_right": {
-      "model": "biome_backlog:block/salt_stairs_outer",
+      "model": "biome_backlog:block/lit_salt_stairs_outer",
       "uvlock": true,
       "y": 90
     },
     "facing=south,half=bottom,lit=true,shape=straight": {
-      "model": "biome_backlog:block/salt_stairs",
+      "model": "biome_backlog:block/lit_salt_stairs",
       "uvlock": true,
       "y": 90
     },
@@ -271,31 +271,31 @@
       "y": 90
     },
     "facing=south,half=top,lit=true,shape=inner_left": {
-      "model": "biome_backlog:block/salt_stairs_inner",
+      "model": "biome_backlog:block/lit_salt_stairs_inner",
       "uvlock": true,
       "x": 180,
       "y": 90
     },
     "facing=south,half=top,lit=true,shape=inner_right": {
-      "model": "biome_backlog:block/salt_stairs_inner",
+      "model": "biome_backlog:block/lit_salt_stairs_inner",
       "uvlock": true,
       "x": 180,
       "y": 180
     },
     "facing=south,half=top,lit=true,shape=outer_left": {
-      "model": "biome_backlog:block/salt_stairs_outer",
+      "model": "biome_backlog:block/lit_salt_stairs_outer",
       "uvlock": true,
       "x": 180,
       "y": 90
     },
     "facing=south,half=top,lit=true,shape=outer_right": {
-      "model": "biome_backlog:block/salt_stairs_outer",
+      "model": "biome_backlog:block/lit_salt_stairs_outer",
       "uvlock": true,
       "x": 180,
       "y": 180
     },
     "facing=south,half=top,lit=true,shape=straight": {
-      "model": "biome_backlog:block/salt_stairs",
+      "model": "biome_backlog:block/lit_salt_stairs",
       "uvlock": true,
       "x": 180,
       "y": 90
@@ -326,27 +326,27 @@
       "y": 180
     },
     "facing=west,half=bottom,lit=true,shape=inner_left": {
-      "model": "biome_backlog:block/salt_stairs_inner",
+      "model": "biome_backlog:block/lit_salt_stairs_inner",
       "uvlock": true,
       "y": 90
     },
     "facing=west,half=bottom,lit=true,shape=inner_right": {
-      "model": "biome_backlog:block/salt_stairs_inner",
+      "model": "biome_backlog:block/lit_salt_stairs_inner",
       "uvlock": true,
       "y": 180
     },
     "facing=west,half=bottom,lit=true,shape=outer_left": {
-      "model": "biome_backlog:block/salt_stairs_outer",
+      "model": "biome_backlog:block/lit_salt_stairs_outer",
       "uvlock": true,
       "y": 90
     },
     "facing=west,half=bottom,lit=true,shape=outer_right": {
-      "model": "biome_backlog:block/salt_stairs_outer",
+      "model": "biome_backlog:block/lit_salt_stairs_outer",
       "uvlock": true,
       "y": 180
     },
     "facing=west,half=bottom,lit=true,shape=straight": {
-      "model": "biome_backlog:block/salt_stairs",
+      "model": "biome_backlog:block/lit_salt_stairs",
       "uvlock": true,
       "y": 180
     },
@@ -381,31 +381,31 @@
       "y": 180
     },
     "facing=west,half=top,lit=true,shape=inner_left": {
-      "model": "biome_backlog:block/salt_stairs_inner",
+      "model": "biome_backlog:block/lit_salt_stairs_inner",
       "uvlock": true,
       "x": 180,
       "y": 180
     },
     "facing=west,half=top,lit=true,shape=inner_right": {
-      "model": "biome_backlog:block/salt_stairs_inner",
+      "model": "biome_backlog:block/lit_salt_stairs_inner",
       "uvlock": true,
       "x": 180,
       "y": 270
     },
     "facing=west,half=top,lit=true,shape=outer_left": {
-      "model": "biome_backlog:block/salt_stairs_outer",
+      "model": "biome_backlog:block/lit_salt_stairs_outer",
       "uvlock": true,
       "x": 180,
       "y": 180
     },
     "facing=west,half=top,lit=true,shape=outer_right": {
-      "model": "biome_backlog:block/salt_stairs_outer",
+      "model": "biome_backlog:block/lit_salt_stairs_outer",
       "uvlock": true,
       "x": 180,
       "y": 270
     },
     "facing=west,half=top,lit=true,shape=straight": {
-      "model": "biome_backlog:block/salt_stairs",
+      "model": "biome_backlog:block/lit_salt_stairs",
       "uvlock": true,
       "x": 180,
       "y": 180
