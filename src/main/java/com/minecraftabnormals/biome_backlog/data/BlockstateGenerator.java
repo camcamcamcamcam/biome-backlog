@@ -50,9 +50,6 @@ public class BlockstateGenerator extends BlockStateProvider {
 		this.doorBlockWithRenderType(ModBlocks.PALM_DOOR.get(), texture(name(ModBlocks.PALM_DOOR.get()) + "_bottom"), texture(name(ModBlocks.PALM_DOOR.get()) + "_top"), "cutout");
 		this.trapdoorBlockWithRenderType(ModBlocks.PALM_TRAPDOOR.get(), texture(name(ModBlocks.PALM_TRAPDOOR.get())), true, "cutout");
 
-		// todo PALM_SIGN
-		// todo PALM_WALL_SIGN
-
 		this.fenceBlock(ModBlocks.PALM_FENCE.get(), texture(name(ModBlocks.PALM_PLANKS.get())));
 		this.fenceGateBlock(ModBlocks.PALM_FENCE_GATE.get(), texture(name(ModBlocks.PALM_PLANKS.get())));
 		this.buttonBlock(ModBlocks.PALM_BUTTON.get(), texture(name(ModBlocks.PALM_PLANKS.get())));
@@ -135,7 +132,6 @@ public class BlockstateGenerator extends BlockStateProvider {
 				return ConfiguredModel.builder().modelFile(isLit ? lit : unlit).build();
 			}
 		});
-		;
 	}
 
 	public void litStairsSaltBlock(StairBlock block, Block fullBlock) {

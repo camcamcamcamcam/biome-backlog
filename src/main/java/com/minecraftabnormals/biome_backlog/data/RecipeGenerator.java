@@ -67,6 +67,67 @@ public class RecipeGenerator extends RecipeProvider implements IConditionBuilder
                         .of(ModItems.RAW_OSTRICH.get()).build()))
                 .save(finishedRecipeConsumer, new ResourceLocation(BiomeBacklog.MODID, "cooked_ostrich_from_smoker"));
 
+        ShapedRecipeBuilder.shaped(ModBlocks.SALT_BLOCK.get())
+                .define('#', ModBlocks.SALT_TRAIL.get().asItem())
+                .pattern("##")
+                .pattern("##")
+                .unlockedBy("has_salt", inventoryTrigger(ItemPredicate.Builder.item()
+                        .of(ModBlocks.SALT_TRAIL.get().asItem()).build()))
+                .save(finishedRecipeConsumer);
+
+        ShapedRecipeBuilder.shaped(ModBlocks.SALT_BRICKS.get())
+                .define('#', ModBlocks.SALT_BLOCK.get().asItem())
+                .pattern("##")
+                .pattern("##")
+                .unlockedBy("has_salt_block", inventoryTrigger(ItemPredicate.Builder.item()
+                        .of(ModBlocks.SALT_BLOCK.get().asItem()).build()))
+                .save(finishedRecipeConsumer);
+
+        ShapedRecipeBuilder.shaped(ModBlocks.SALT_TILES.get())
+                .define('#', ModBlocks.SALT_BRICKS.get().asItem())
+                .pattern("##")
+                .pattern("##")
+                .unlockedBy("has_salt_block", inventoryTrigger(ItemPredicate.Builder.item()
+                        .of(ModBlocks.SALT_BLOCK.get().asItem()).build()))
+                .save(finishedRecipeConsumer);
+
+        stairBuilder(ModBlocks.SALT_STAIRS.get(), Ingredient.of(ModBlocks.SALT_BLOCK.get()))
+                .unlockedBy("has_salt_block", has(ModBlocks.SALT_BLOCK.get().asItem()))
+                .save(finishedRecipeConsumer);
+
+        stairBuilder(ModBlocks.SALT_BRICK_STAIRS.get(), Ingredient.of(ModBlocks.SALT_BRICKS.get()))
+                .unlockedBy("has_salt_block", has(ModBlocks.SALT_BLOCK.get().asItem()))
+                .save(finishedRecipeConsumer);
+
+        stairBuilder(ModBlocks.SALT_TILE_STAIRS.get(), Ingredient.of(ModBlocks.SALT_TILES.get()))
+                .unlockedBy("has_salt_block", has(ModBlocks.SALT_BLOCK.get().asItem()))
+                .save(finishedRecipeConsumer);
+
+        chiseledBuilder(ModBlocks.CHISELED_SALT_BLOCK.get(), Ingredient.of(ModBlocks.SALT_SLAB.get()))
+                .unlockedBy("has_salt_block", has(ModBlocks.SALT_BLOCK.get().asItem()))
+                .save(finishedRecipeConsumer);
+
+        slabBuilder(ModBlocks.SALT_SLAB.get(), Ingredient.of(ModBlocks.SALT_BLOCK.get()))
+                .unlockedBy("has_salt_block", has(ModBlocks.SALT_BLOCK.get().asItem()))
+                .save(finishedRecipeConsumer);
+
+        slabBuilder(ModBlocks.SALT_BRICK_SLAB.get(), Ingredient.of(ModBlocks.SALT_BRICKS.get()))
+                .unlockedBy("has_salt_block", has(ModBlocks.SALT_BLOCK.get().asItem()))
+                .save(finishedRecipeConsumer);
+
+        slabBuilder(ModBlocks.SALT_TILE_SLAB.get(), Ingredient.of(ModBlocks.SALT_TILES.get()))
+                .unlockedBy("has_salt_block", has(ModBlocks.SALT_BLOCK.get().asItem()))
+                .save(finishedRecipeConsumer);
+
+        ShapedRecipeBuilder.shaped(ModBlocks.SALT_LAMP.get())
+                .define('#', ModBlocks.SALT_TRAIL.get())
+                .define('X', Items.TORCH)
+                .pattern("###")
+                .pattern("#X#")
+                .pattern("###")
+                .unlockedBy("has_salt", inventoryTrigger(ItemPredicate.Builder.item()
+                        .of(ModBlocks.SALT_TRAIL.get()).build()))
+                .save(finishedRecipeConsumer);
 
         ShapedRecipeBuilder.shaped(ModBlocks.THATCH_BLOCK.get())
                 .define('#', ModBlocks.PALM_LEAVES.get().asItem())
@@ -90,6 +151,16 @@ public class RecipeGenerator extends RecipeProvider implements IConditionBuilder
                 .unlockedBy("has_item", inventoryTrigger(ItemPredicate.Builder.item()
                         .of(ModBlocks.PALM_WOOD.get()).build()))
                 .save(finishedRecipeConsumer, BiomeBacklog.prefix("palm_planks_from_wood"));
+        ShapelessRecipeBuilder.shapeless(ModBlocks.PALM_PLANKS.get(), 4)
+                .requires(ModBlocks.STRIPPED_PALM_LOG.get())
+                .unlockedBy("has_item", inventoryTrigger(ItemPredicate.Builder.item()
+                        .of(ModBlocks.STRIPPED_PALM_LOG.get()).build()))
+                .save(finishedRecipeConsumer, BiomeBacklog.prefix("palm_planks_from_stripped_log"));
+        ShapelessRecipeBuilder.shapeless(ModBlocks.PALM_PLANKS.get(), 4)
+                .requires(ModBlocks.STRIPPED_PALM_WOOD.get())
+                .unlockedBy("has_item", inventoryTrigger(ItemPredicate.Builder.item()
+                        .of(ModBlocks.STRIPPED_PALM_WOOD.get()).build()))
+                .save(finishedRecipeConsumer, BiomeBacklog.prefix("palm_planks_from_stripped_wood"));
 
         ShapedRecipeBuilder.shaped(ModBlocks.PALM_FENCE.get(), 3)
                 .define('#', ModBlocks.PALM_PLANKS.get())
