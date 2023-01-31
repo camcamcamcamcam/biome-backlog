@@ -1,7 +1,6 @@
 package com.minecraftabnormals.biome_backlog.world.level.block;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockGetter;
@@ -54,9 +53,5 @@ public class SaltSlabBlock extends SlabBlock {
 
     public boolean propagatesSkylightDown(BlockState p_48740_, BlockGetter p_48741_, BlockPos p_48742_) {
         return true;
-    }
-
-    public boolean skipRendering(BlockState p_53972_, BlockState p_53973_, Direction p_53974_) {
-        return p_53973_.is(this) ? true : super.skipRendering(p_53972_, p_53973_, p_53974_);
     }
 }
