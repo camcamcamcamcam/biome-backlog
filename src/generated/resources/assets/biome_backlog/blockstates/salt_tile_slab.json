@@ -1,10 +1,10 @@
 {
   "variants": {
     "lit=false,type=bottom,waterlogged=false": {
-      "model": "biome_backlog:block/salt_tile_slab"
+      "model": "biome_backlog:block/salt_tile_slab_bottom"
     },
     "lit=false,type=bottom,waterlogged=true": {
-      "model": "biome_backlog:block/salt_tile_slab"
+      "model": "biome_backlog:block/salt_tile_slab_bottom"
     },
     "lit=false,type=double,waterlogged=false": {
       "model": "biome_backlog:block/salt_tile_slab"
@@ -19,10 +19,10 @@
       "model": "biome_backlog:block/salt_tile_slab_top"
     },
     "lit=true,type=bottom,waterlogged=false": {
-      "model": "biome_backlog:block/lit_salt_tile_slab"
+      "model": "biome_backlog:block/lit_salt_tile_slab_bottom"
     },
     "lit=true,type=bottom,waterlogged=true": {
-      "model": "biome_backlog:block/lit_salt_tile_slab"
+      "model": "biome_backlog:block/lit_salt_tile_slab_bottom"
     },
     "lit=true,type=double,waterlogged=false": {
       "model": "biome_backlog:block/lit_salt_tile_slab"

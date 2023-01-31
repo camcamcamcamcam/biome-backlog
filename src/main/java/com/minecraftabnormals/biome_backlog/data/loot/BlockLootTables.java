@@ -83,7 +83,10 @@ public class BlockLootTables extends BlockLoot {
 		this.dropSelf(ModBlocks.PALM_BUTTON.get());
 		this.dropSelf(ModBlocks.PALM_PRESSURE_PLATE.get());
 
-		this.dropSelf(ModBlocks.SALT_BLOCK.get());
+		this.add(ModBlocks.SALT_BLOCK.get(), (p_176069_) ->
+				createSilkTouchDispatchTable(p_176069_, applyExplosionDecay(p_176069_,
+						LootItem.lootTableItem(ModBlocks.SALT_TRAIL.get())
+								.apply(SetItemCountFunction.setCount(ConstantValue.exactly(4))))));
 		this.dropSelf(ModBlocks.SALT_BRICKS.get());
 		this.dropSelf(ModBlocks.SALT_TILES.get());
 		this.dropSelf(ModBlocks.CHISELED_SALT_BLOCK.get());
@@ -95,6 +98,7 @@ public class BlockLootTables extends BlockLoot {
 		this.dropSelf(ModBlocks.SALT_TILE_STAIRS.get());
 		this.dropSelf(ModBlocks.SALT_LAMP.get());
 		this.dropSelf(ModBlocks.SALT_TRAIL.get());
+
 		this.dropSelf(ModBlocks.SUCCULENT.get());
 		this.add(ModBlocks.POTTED_SUCCULENT.get(), BlockLoot::createPotFlowerItemTable);
 
