@@ -1,13 +1,14 @@
 {
+	"credit": "Made with Blockbench",
 	"parent": "minecraft:block/block",
 	"textures": {
-      "0": "biome_backlog:block/coconut",
-      "particle": "biome_backlog:block/coconut"
-    },
+		"0": "biome_backlog:block/coconut",
+		"particle": "biome_backlog:block/coconut"
+	},
 	"elements": [
 		{
-			"from": [4, 0, 6],
-			"to": [12, 8, 14],
+			"from": [4, 0, 4],
+			"to": [12, 8, 12],
 			"faces": {
 				"north": {"uv": [0, 8, 4, 16], "texture": "#0"},
 				"east": {"uv": [0, 8, 4, 16], "texture": "#0"},

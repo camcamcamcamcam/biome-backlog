@@ -34,15 +34,9 @@ public class CoconutBlock extends HorizontalDirectionalBlock implements Fallable
 
     public static final BooleanProperty GREEN = BooleanProperty.create("green");
 
-    private static final VoxelShape SHAPE_GREEN_SOUTH = Block.box(4.0D, 0.0D, 6.0D, 12.0D, 10.0D, 14.0D);
-    private static final VoxelShape SHAPE_GREEN_NORTH = Block.box(4.0D, 0.0D, 2.0D, 12.0D, 10.0D, 10.0D);
-    private static final VoxelShape SHAPE_GREEN_EAST = Block.box(6.0D, 0.0D, 4.0D, 14.0D, 10.0D, 12.0D);
-    private static final VoxelShape SHAPE_GREEN_WEST = Block.box(2.0D, 0.0D, 4.0D, 10.0D, 10.0D, 12.0D);
+    private static final VoxelShape SHAPE_GREEN = Block.box(4.0D, 0.0D, 4.0D, 12.0D, 10.0D, 12.0D);
 
-    private static final VoxelShape SHAPE_BROWN_SOUTH = Block.box(4.0D, 0.0D, 6.0D, 12.0D, 8.0D, 14.0D);
-    private static final VoxelShape SHAPE_BROWN_NORTH = Block.box(4.0D, 0.0D, 2.0D, 12.0D, 8.0D, 10.0D);
-    private static final VoxelShape SHAPE_BROWN_EAST = Block.box(6.0D, 0.0D, 4.0D, 14.0D, 8.0D, 12.0D);
-    private static final VoxelShape SHAPE_BROWN_WEST = Block.box(2.0D, 0.0D, 4.0D, 10.0D, 8.0D, 12.0D);
+    private static final VoxelShape SHAPE_BROWN = Block.box(4.0D, 0.0D, 4.0D, 12.0D, 8.0D, 12.0D);
 
 
     public CoconutBlock(Properties properties) {
@@ -106,31 +100,7 @@ public class CoconutBlock extends HorizontalDirectionalBlock implements Fallable
     }
 
     public VoxelShape getShape(BlockState p_57809_, BlockGetter p_57810_, BlockPos p_57811_, CollisionContext p_57812_) {
-        if (p_57809_.getValue(GREEN)) {
-            switch ((Direction) p_57809_.getValue(FACING)) {
-                case SOUTH:
-                    return SHAPE_GREEN_SOUTH;
-                case NORTH:
-                default:
-                    return SHAPE_GREEN_NORTH;
-                case WEST:
-                    return SHAPE_GREEN_WEST;
-                case EAST:
-                    return SHAPE_GREEN_EAST;
-            }
-        } else {
-            switch ((Direction) p_57809_.getValue(FACING)) {
-                case SOUTH:
-                    return SHAPE_BROWN_SOUTH;
-                case NORTH:
-                default:
-                    return SHAPE_BROWN_NORTH;
-                case WEST:
-                    return SHAPE_BROWN_WEST;
-                case EAST:
-                    return SHAPE_BROWN_EAST;
-            }
-        }
+        return p_57809_.getValue(GREEN) ? SHAPE_GREEN : SHAPE_BROWN;
     }
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> p_57799_) {
         p_57799_.add(FACING, GREEN);
@@ -155,7 +125,7 @@ public class CoconutBlock extends HorizontalDirectionalBlock implements Fallable
                 return;
             }
         }
-        level.setBlock(pos, ModBlocks.COCONUT_SAPLING.get().defaultBlockState(), 3);
+        level.setBlock(pos, ModBlocks.COCONUT_SAPLING.get().defaultBlockState().setValue(FACING, state.getValue(FACING)), 3);
 
         if (!level.getBlockState(pos.below()).is(BlockTags.SAND)) {
             level.destroyBlock(pos, true);
