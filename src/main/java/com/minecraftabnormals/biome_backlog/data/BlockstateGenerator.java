@@ -120,8 +120,8 @@ public class BlockstateGenerator extends BlockStateProvider {
 		ModelFile lit_slab = models().slab("lit_" + name(block), texture("lit_" + name(fullBlock)), texture("lit_" + name(fullBlock)), texture("lit_" + name(fullBlock)));
 		ModelFile unlit_top = models().slabTop(name(block) + "_top", texture(name(fullBlock)), texture(name(fullBlock)), texture(name(fullBlock)));
 		ModelFile lit_top = models().slabTop("lit_" + name(block) + "_top", texture("lit_" + name(fullBlock)), texture("lit_" + name(fullBlock)), texture("lit_" + name(fullBlock)));
-		ModelFile unlit = models().cubeAll(name(block), texture(name(fullBlock)));
-		ModelFile lit = models().cubeAll("lit_" + name(block), texture("lit_" + name(fullBlock)));
+		ModelFile unlit = models().getExistingFile(key(fullBlock));
+		ModelFile lit = models().getExistingFile(suffix("lit_", key(fullBlock)));
 
 
 		getVariantBuilder(block).forAllStates(state -> {
@@ -200,6 +200,14 @@ public class BlockstateGenerator extends BlockStateProvider {
 
 	protected String name(Block block) {
 		return ForgeRegistries.BLOCKS.getKey(block).getPath();
+	}
+
+	private ResourceLocation suffix(ResourceLocation rl, String suffix) {
+		return new ResourceLocation(rl.getNamespace(), rl.getPath() + suffix);
+	}
+
+	private ResourceLocation suffix(String suffix, ResourceLocation rl) {
+		return new ResourceLocation(rl.getNamespace(), suffix + rl.getPath());
 	}
 
 	@Nonnull

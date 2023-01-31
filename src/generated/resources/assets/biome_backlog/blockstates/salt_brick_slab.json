@@ -7,10 +7,10 @@
       "model": "biome_backlog:block/salt_brick_slab"
     },
     "lit=false,type=double,waterlogged=false": {
-      "model": "biome_backlog:block/salt_brick_slab"
+      "model": "biome_backlog:block/salt_bricks"
     },
     "lit=false,type=double,waterlogged=true": {
-      "model": "biome_backlog:block/salt_brick_slab"
+      "model": "biome_backlog:block/salt_bricks"
     },
     "lit=false,type=top,waterlogged=false": {
       "model": "biome_backlog:block/salt_brick_slab_top"
@@ -25,10 +25,10 @@
       "model": "biome_backlog:block/lit_salt_brick_slab"
     },
     "lit=true,type=double,waterlogged=false": {
-      "model": "biome_backlog:block/lit_salt_brick_slab"
+      "model": "biome_backlog:block/lit_salt_bricks"
     },
     "lit=true,type=double,waterlogged=true": {
-      "model": "biome_backlog:block/lit_salt_brick_slab"
+      "model": "biome_backlog:block/lit_salt_bricks"
     },
     "lit=true,type=top,waterlogged=false": {
       "model": "biome_backlog:block/lit_salt_brick_slab_top"

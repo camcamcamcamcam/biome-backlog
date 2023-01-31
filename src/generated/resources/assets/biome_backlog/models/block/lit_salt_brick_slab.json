@@ -1,7 +1,6 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "minecraft:block/slab",
   "textures": {
-    "all": "biome_backlog:block/lit_salt_bricks",
     "bottom": "biome_backlog:block/lit_salt_bricks",
     "side": "biome_backlog:block/lit_salt_bricks",
     "top": "biome_backlog:block/lit_salt_bricks"
