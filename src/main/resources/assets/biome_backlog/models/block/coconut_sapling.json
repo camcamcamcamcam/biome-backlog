@@ -2,15 +2,15 @@
 	"render_type": "minecraft:cutout",
 	"parent": "minecraft:block/block",
 	"textures": {
-      "0": "biome_backlog:block/coconut_stem",
-      "1": "biome_backlog:block/coconut_sapling_base",
-      "particle": "biome_backlog:block/coconut"
-    },
+		"0": "biome_backlog:block/coconut_stem",
+		"1": "biome_backlog:block/coconut_sapling_base",
+		"particle": "biome_backlog:block/coconut"
+	},
 	"elements": [
 		{
-			"from": [-8.2, 0, 9],
-			"to": [6.2, 14, 9],
-			"rotation": {"angle": 45, "axis": "y", "origin": [0, -3, 0], "rescale": true},
+			"from": [-8.2, 0, 7],
+			"to": [6.2, 14, 7],
+			"rotation": {"angle": 45, "axis": "y", "origin": [0, -3, -2], "rescale": true},
 			"faces": {
 				"north": {"uv": [16, 0, 0, 14], "texture": "#0"},
 				"east": {"uv": [0, 0, 0, 16], "texture": "#missing"},
@@ -21,9 +21,9 @@
 			}
 		},
 		{
-			"from": [1.8, 0, 1],
-			"to": [16.2, 14, 1],
-			"rotation": {"angle": -45, "axis": "y", "origin": [0, -3, 0], "rescale": true},
+			"from": [1.8, 0, -1],
+			"to": [16.2, 14, -1],
+			"rotation": {"angle": -45, "axis": "y", "origin": [0, -3, -2], "rescale": true},
 			"faces": {
 				"north": {"uv": [16, 0, 0, 14], "texture": "#0"},
 				"east": {"uv": [0, 0, 0, 16], "texture": "#missing"},
@@ -34,9 +34,9 @@
 			}
 		},
 		{
-			"from": [4, 0, 6],
-			"to": [12, 5, 14],
-			"rotation": {"angle": 0, "axis": "y", "origin": [0, -3, 0]},
+			"from": [4, 0, 4],
+			"to": [12, 5, 12],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, -3, -2]},
 			"faces": {
 				"north": {"uv": [0, 8, 4, 13], "texture": "#1"},
 				"east": {"uv": [0, 8, 4, 13], "texture": "#1"},
@@ -47,9 +47,9 @@
 			}
 		},
 		{
-			"from": [7, 5, 9],
-			"to": [9, 11, 11],
-			"rotation": {"angle": 0, "axis": "y", "origin": [0, -3, 0]},
+			"from": [7, 5, 7],
+			"to": [9, 11, 9],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, -3, -2]},
 			"faces": {
 				"north": {"uv": [7, 10, 9, 16], "texture": "#0"},
 				"east": {"uv": [9, 10, 7, 16], "texture": "#0"},

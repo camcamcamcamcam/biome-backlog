@@ -2,13 +2,13 @@
 	"render_type": "minecraft:cutout",
 	"parent": "minecraft:block/block",
 	"textures": {
-      "0": "biome_backlog:block/coconut",
-      "particle": "biome_backlog:block/coconut"
-    },
+		"0": "biome_backlog:block/coconut",
+		"particle": "biome_backlog:block/coconut"
+	},
 	"elements": [
 		{
-			"from": [4, 0, 6],
-			"to": [12, 10, 14],
+			"from": [4, 0, 4],
+			"to": [12, 10, 12],
 			"faces": {
 				"north": {"uv": [8, 0, 12, 10], "texture": "#0"},
 				"east": {"uv": [8, 0, 12, 10], "texture": "#0"},
@@ -19,13 +19,13 @@
 			}
 		},
 		{
-			"from": [8, 10, 11],
+			"from": [8, 8, 11],
 			"to": [8, 14, 16],
 			"faces": {
 				"north": {"uv": [0, 0, 0, 2], "texture": "#missing"},
 				"east": {"uv": [7.5, 0, 5, 4], "texture": "#0"},
 				"south": {"uv": [0, 0, 0, 2], "texture": "#missing"},
-				"west": {"uv": [5, 0, 7.5, 4], "texture": "#0"},
+				"west": {"uv": [5, 0, 7.5, 6], "texture": "#0"},
 				"up": {"uv": [0, 0, 0, 2], "texture": "#missing"},
 				"down": {"uv": [0, 0, 0, 2], "texture": "#missing"}
 			}
