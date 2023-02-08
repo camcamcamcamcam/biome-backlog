@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/slab",
-  "textures": {
-    "bottom": "biome_backlog:block/lit_salt_bricks",
-    "side": "biome_backlog:block/lit_salt_bricks",
-    "top": "biome_backlog:block/lit_salt_bricks"
-  }
-}

@@ -1,8 +1,8 @@
 package com.camcamcamcamcam.biome_backlog.data;
 
+import com.camcamcamcamcam.biome_backlog.BiomeBacklog;
 import com.camcamcamcamcam.biome_backlog.register.ModBlocks;
 import com.camcamcamcamcam.biome_backlog.register.ModItems;
-import com.camcamcamcamcam.biome_backlog.BiomeBacklog;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -101,7 +101,7 @@ public class ItemModelGenerator extends ItemModelProvider {
 		this.toBlock(ModBlocks.SALT_BRICK_SLAB);
 		this.toBlock(ModBlocks.SALT_TILE_SLAB);
 
-		this.itemBlockFlat(ModBlocks.SUCCULENT);
+		this.itemBlockFlat(ModBlocks.SUCCULENT.get(), "succulent1");
 
 		// this.toBlock(ModBlocks.WORMHOLE);
 	}
