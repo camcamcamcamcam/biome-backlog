@@ -1,10 +1,10 @@
 package com.camcamcamcamcam.biome_backlog.data;
 
+import com.camcamcamcamcam.biome_backlog.BiomeBacklog;
 import com.camcamcamcamcam.biome_backlog.register.ModBlocks;
 import com.camcamcamcamcam.biome_backlog.world.level.block.SaltBlock;
-import com.camcamcamcamcam.biome_backlog.BiomeBacklog;
 import net.minecraft.core.Direction;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SlabBlock;
@@ -21,7 +21,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import javax.annotation.Nonnull;
 
 public class BlockstateGenerator extends BlockStateProvider {
-	public BlockstateGenerator(DataGenerator gen, ExistingFileHelper exFileHelper) {
+	public BlockstateGenerator(PackOutput gen, ExistingFileHelper exFileHelper) {
 		super(gen, BiomeBacklog.MODID, exFileHelper);
 	}
 
@@ -113,8 +113,8 @@ public class BlockstateGenerator extends BlockStateProvider {
 	}
 
 	public void litSlabSaltBlock(SlabBlock block, Block fullBlock) {
-		ModelFile unlit_slab = models().slab(name(block), texture(name(fullBlock)), texture(name(fullBlock)), texture(name(fullBlock)));
-		ModelFile lit_slab = models().slab("lit_" + name(block), texture("lit_" + name(fullBlock)), texture("lit_" + name(fullBlock)), texture("lit_" + name(fullBlock)));
+		ModelFile unlit_slab = models().slab(name(block) + "_bottom", texture(name(fullBlock)), texture(name(fullBlock)), texture(name(fullBlock)));
+		ModelFile lit_slab = models().slab("lit_" + name(block) + "_bottom", texture("lit_" + name(fullBlock)), texture("lit_" + name(fullBlock)), texture("lit_" + name(fullBlock)));
 		ModelFile unlit_top = models().slabTop(name(block) + "_top", texture(name(fullBlock)), texture(name(fullBlock)), texture(name(fullBlock)));
 		ModelFile lit_top = models().slabTop("lit_" + name(block) + "_top", texture("lit_" + name(fullBlock)), texture("lit_" + name(fullBlock)), texture("lit_" + name(fullBlock)));
 		ModelFile unlit = models().getExistingFile(key(fullBlock));

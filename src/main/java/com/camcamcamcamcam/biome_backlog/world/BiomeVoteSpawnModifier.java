@@ -2,19 +2,17 @@ package com.camcamcamcamcam.biome_backlog.world;
 
 import com.camcamcamcamcam.biome_backlog.register.ModBiomeModifiers;
 import com.camcamcamcamcam.biome_backlog.register.ModEntities;
-import com.camcamcamcamcam.biome_backlog.world.gen.feature.ModPlacements;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.Holder;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.biome.MobSpawnSettings;
-import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.common.world.ModifiableBiomeInfo;
 
-public class BiomeVoteModifier implements BiomeModifier {
-	public static final BiomeVoteModifier INSTANCE = new BiomeVoteModifier();
+public class BiomeVoteSpawnModifier implements BiomeModifier {
+	public static final BiomeVoteSpawnModifier INSTANCE = new BiomeVoteSpawnModifier();
 
 
 	@Override
@@ -25,11 +23,6 @@ public class BiomeVoteModifier implements BiomeModifier {
 			}
 			if (biome.is(Biomes.DESERT)) {
 				builder.getMobSpawnSettings().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(ModEntities.MEERKAT.get(), 8, 5, 6));
-			}
-
-			if (biome.is(Biomes.BADLANDS)) {
-				builder.getGenerationSettings().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacements.PATCH_PEAR_CACTUS);
-				builder.getGenerationSettings().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacements.PATCH_TUMBLEWEED);
 			}
 		}
 	}

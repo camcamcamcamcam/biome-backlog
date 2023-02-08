@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "biome_backlog:block/succulent"
+    "layer0": "biome_backlog:block/succulent1"
   }
 }

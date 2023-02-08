@@ -1,23 +1,24 @@
 package com.camcamcamcamcam.biome_backlog.client;
 
+import com.camcamcamcamcam.biome_backlog.BiomeBacklog;
 import com.camcamcamcamcam.biome_backlog.client.model.MeerkatModel;
 import com.camcamcamcamcam.biome_backlog.client.model.OstrichModel;
 import com.camcamcamcamcam.biome_backlog.client.model.TumbleweedModel;
 import com.camcamcamcamcam.biome_backlog.client.model.VultureModel;
 import com.camcamcamcamcam.biome_backlog.client.particle.CalciteBubbleParticle;
+import com.camcamcamcamcam.biome_backlog.client.render.MeerkatRender;
+import com.camcamcamcamcam.biome_backlog.client.render.ModBoatRenderer;
+import com.camcamcamcamcam.biome_backlog.client.render.OstrichRender;
+import com.camcamcamcamcam.biome_backlog.client.render.TumbleweedRender;
+import com.camcamcamcamcam.biome_backlog.client.render.VultureRender;
 import com.camcamcamcamcam.biome_backlog.register.ModBlockEntities;
 import com.camcamcamcamcam.biome_backlog.register.ModBlocks;
 import com.camcamcamcamcam.biome_backlog.register.ModEntities;
 import com.camcamcamcamcam.biome_backlog.register.ModParticles;
 import com.camcamcamcamcam.biome_backlog.world.level.block.SucculentBlock;
 import com.camcamcamcamcam.biome_backlog.world.level.entity.ModBoat;
-import com.camcamcamcamcam.biome_backlog.BiomeBacklog;
-import com.camcamcamcamcam.biome_backlog.client.render.MeerkatRender;
-import com.camcamcamcamcam.biome_backlog.client.render.ModBoatRenderer;
-import com.camcamcamcamcam.biome_backlog.client.render.OstrichRender;
-import com.camcamcamcamcam.biome_backlog.client.render.TumbleweedRender;
-import com.camcamcamcamcam.biome_backlog.client.render.VultureRender;
 import net.minecraft.client.model.BoatModel;
+import net.minecraft.client.model.ChestBoatModel;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.particle.BubblePopParticle;
 import net.minecraft.client.renderer.BiomeColors;
@@ -78,8 +79,8 @@ public class ClientRegistrar {
 		event.registerLayerDefinition(ModModelLayers.OSTRICH, OstrichModel::createBodyLayer);
 		event.registerLayerDefinition(ModModelLayers.VULTURE, VultureModel::createBodyLayer);
 		event.registerLayerDefinition(ModModelLayers.TUMBLEWEED, TumbleweedModel::createBodyLayer);
-		LayerDefinition layerdefinition18 = BoatModel.createBodyModel(false);
-		LayerDefinition layerdefinition19 = BoatModel.createBodyModel(true);
+		LayerDefinition layerdefinition18 = BoatModel.createBodyModel();
+		LayerDefinition layerdefinition19 = ChestBoatModel.createBodyModel();
 
 
 		for (ModBoat.BoatType boat$type : ModBoat.BoatType.values()) {

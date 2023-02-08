@@ -1,13 +1,12 @@
 package com.camcamcamcamcam.biome_backlog.register;
 
+import com.camcamcamcamcam.biome_backlog.BiomeBacklog;
 import com.camcamcamcamcam.biome_backlog.capability.DeathTrackCapability;
 import com.camcamcamcamcam.biome_backlog.world.level.entity.ModBoat;
 import com.camcamcamcamcam.biome_backlog.world.level.entity.ModBoatType;
 import com.camcamcamcamcam.biome_backlog.world.level.entity.Vulture;
 import com.camcamcamcamcam.biome_backlog.world.server.DeathTrackRequest;
-import com.camcamcamcamcam.biome_backlog.BiomeBacklog;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
 import net.minecraft.core.Vec3i;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -30,6 +29,7 @@ import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.UUID;
 
@@ -125,7 +125,7 @@ public class ModEvents {
             if (!event.getLevel().isClientSide && living.isAlive() && living instanceof Vulture && ((Vulture) living).isTame() && ((Vulture) living).hasCircle()) {
                 UUID ownerUUID = ((Vulture) living).getOwnerUUID();
                 event.getLevel().getCapability(BiomeBacklog.TRUSTED_VULTURE_CAP).ifPresent(cap -> {
-                    DeathTrackRequest request = new DeathTrackRequest(living.getUUID(), Registry.ENTITY_TYPE.getKey(event.getEntity().getType()).toString(), ownerUUID, living.blockPosition(), event.getEntity().level.dayTime());
+                    DeathTrackRequest request = new DeathTrackRequest(living.getUUID(), ForgeRegistries.ENTITY_TYPES.getKey(event.getEntity().getType()).toString(), ownerUUID, living.blockPosition(), event.getEntity().level.dayTime());
                     cap.addDeathTrackRequest(request);
                 });
             }

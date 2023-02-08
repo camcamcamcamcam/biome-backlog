@@ -2,8 +2,6 @@ package com.camcamcamcamcam.biome_backlog;
 
 import com.camcamcamcamcam.biome_backlog.capability.DeathTrackCapability;
 import com.camcamcamcamcam.biome_backlog.client.ClientRegistrar;
-import com.camcamcamcamcam.biome_backlog.world.gen.feature.ModConfiguredFeatures;
-import com.camcamcamcamcam.biome_backlog.world.gen.feature.ModPlacements;
 import com.camcamcamcamcam.biome_backlog.register.ModBiomeModifiers;
 import com.camcamcamcamcam.biome_backlog.register.ModBlockEntities;
 import com.camcamcamcamcam.biome_backlog.register.ModBlocks;
@@ -95,8 +93,6 @@ public class BiomeBacklog {
 		event.enqueueWork(() -> {
 			WoodType.register(ModBlocks.PALM_TYPE);
 			((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.SUCCULENT.getId(), ModBlocks.POTTED_SUCCULENT);
-			ModConfiguredFeatures.init();
-			ModPlacements.init();
 		});
 
 		ModEntities.spawnPlacementSetup();

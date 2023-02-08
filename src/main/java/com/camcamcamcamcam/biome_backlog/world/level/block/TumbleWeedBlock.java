@@ -1,7 +1,7 @@
 package com.camcamcamcamcam.biome_backlog.world.level.block;
 
-import com.camcamcamcamcam.biome_backlog.world.level.entity.Tumbleweed;
 import com.camcamcamcamcam.biome_backlog.register.ModEntities;
+import com.camcamcamcamcam.biome_backlog.world.level.entity.Tumbleweed;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -17,6 +17,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.BushBlock;
@@ -108,7 +109,7 @@ public class TumbleWeedBlock extends BushBlock implements BonemealableBlock {
     }
 
     @Override
-    public boolean isValidBonemealTarget(BlockGetter p_50897_, BlockPos p_50898_, BlockState state, boolean p_50900_) {
+    public boolean isValidBonemealTarget(LevelReader p_50897_, BlockPos p_50898_, BlockState state, boolean p_50900_) {
         return !state.getValue(STUNTED) && state.getValue(AGE) < MAX_AGE;
     }
 

@@ -4,6 +4,7 @@ import com.camcamcamcamcam.biome_backlog.register.ModItems;
 import com.camcamcamcamcam.biome_backlog.register.ModParticles;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -40,10 +41,10 @@ public class CalcitePowderReaction extends Entity {
         data.putShort("Age", (short) this.age);
     }
 
-    @Override
-    public Packet<?> getAddEntityPacket() {
-        return new ClientboundAddEntityPacket(this);
-    }
+	@Override
+	public Packet<ClientGamePacketListener> getAddEntityPacket() {
+		return new ClientboundAddEntityPacket(this);
+	}
 
     @Override
     public void tick() {

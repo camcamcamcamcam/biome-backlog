@@ -3,7 +3,7 @@ package com.camcamcamcamcam.biome_backlog.utils;
 import com.camcamcamcamcam.biome_backlog.recipe.BlockPropertyPair;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceKey;
@@ -31,7 +31,7 @@ public class BlockStateRecipeUtil {
 			buf.writeBoolean(false);
 		} else {
 			buf.writeBoolean(true);
-			buf.writeVarInt(Registry.BLOCK.getId(pair.block()));
+			buf.writeVarInt(BuiltInRegistries.BLOCK.getId(pair.block()));
 			CompoundTag tag = new CompoundTag();
 			for (Map.Entry<Property<?>, Comparable<?>> entry : pair.properties().entrySet()) {
 				Property<?> property = entry.getKey();
@@ -64,7 +64,7 @@ public class BlockStateRecipeUtil {
 			return BlockPropertyPair.of(Blocks.AIR, new HashMap<>());
 		} else {
 			int id = buf.readVarInt();
-			Block block = Registry.BLOCK.byId(id);
+			Block block = BuiltInRegistries.BLOCK.byId(id);
 
 			Map<Property<?>, Comparable<?>> properties = new HashMap<>();
 			CompoundTag tag = buf.readNbt();
@@ -103,7 +103,7 @@ public class BlockStateRecipeUtil {
 
 	public static Block blockFromJson(JsonObject json) {
 		String blockName = GsonHelper.getAsString(json, "block");
-		Block block = Registry.BLOCK.getOptional(new ResourceLocation(blockName)).orElseThrow(() -> new JsonSyntaxException("Unknown block '" + blockName + "'"));
+		Block block = BuiltInRegistries.BLOCK.getOptional(new ResourceLocation(blockName)).orElseThrow(() -> new JsonSyntaxException("Unknown block '" + blockName + "'"));
 		if (block.defaultBlockState().isAir()) {
 			throw new JsonSyntaxException("Invalid block: " + blockName);
 		} else {

@@ -1,14 +1,14 @@
 package com.camcamcamcamcam.biome_backlog.data;
 
+import com.camcamcamcamcam.biome_backlog.BiomeBacklog;
 import com.camcamcamcamcam.biome_backlog.register.ModBlocks;
 import com.camcamcamcamcam.biome_backlog.register.ModEntities;
 import com.camcamcamcamcam.biome_backlog.register.ModItems;
-import com.camcamcamcamcam.biome_backlog.BiomeBacklog;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.LanguageProvider;
 
 public class LanguageGenerator extends LanguageProvider {
-    public LanguageGenerator(DataGenerator gen) {
+    public LanguageGenerator(PackOutput gen) {
         super(gen, BiomeBacklog.MODID, "en_us");
     }
 
