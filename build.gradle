@@ -12,7 +12,7 @@ apply plugin: "eclipse"
 apply plugin: "maven-publish"
 
 
-version = '1.19.3-1.0.0'
+version = '1.19.3-1.1.0'
 group = 'com.camcamcamcamcam.biome_backlog' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'biome_backlog'
 
