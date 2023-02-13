@@ -6,10 +6,13 @@ import com.camcamcamcamcam.biome_backlog.register.ModBiomeModifiers;
 import com.camcamcamcamcam.biome_backlog.register.ModBlockEntities;
 import com.camcamcamcamcam.biome_backlog.register.ModBlocks;
 import com.camcamcamcamcam.biome_backlog.register.ModEntities;
+import com.camcamcamcamcam.biome_backlog.register.ModFoliagePlacerTypes;
 import com.camcamcamcamcam.biome_backlog.register.ModItems;
 import com.camcamcamcamcam.biome_backlog.register.ModParticles;
 import com.camcamcamcamcam.biome_backlog.register.ModRecipeSerializers;
 import com.camcamcamcamcam.biome_backlog.register.ModRecipeTypes;
+import com.camcamcamcamcam.biome_backlog.register.ModTreeDecoratorTypes;
+import com.camcamcamcamcam.biome_backlog.register.ModTrunkPlacerTypes;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.logging.LogUtils;
 import it.unimi.dsi.fastutil.longs.LongSet;
@@ -56,6 +59,8 @@ public class BiomeBacklog {
 		ModItems.ITEMS.register(modEventBus);
 		ModEntities.ENTITIES.register(modEventBus);
 		ModBlockEntities.BLOCK_ENTITIES.register(modEventBus);
+		ModTreeDecoratorTypes.DECORATOR_TYPE.register(modEventBus);
+		ModFoliagePlacerTypes.FOLIAGE_PLACER_TYPE.register(modEventBus);
 		ModBiomeModifiers.BIOME_MODIFIER_SERIALIZERS.register(modEventBus);
 		ModParticles.PARTICLES.register(modEventBus);
 
@@ -93,6 +98,7 @@ public class BiomeBacklog {
 		event.enqueueWork(() -> {
 			WoodType.register(ModBlocks.PALM_TYPE);
 			((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.SUCCULENT.getId(), ModBlocks.POTTED_SUCCULENT);
+			ModTrunkPlacerTypes.init();
 		});
 
 		ModEntities.spawnPlacementSetup();

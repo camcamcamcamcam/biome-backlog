@@ -2,9 +2,8 @@ package com.camcamcamcamcam.biome_backlog.world.level.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.SaplingBlock;
 import net.minecraft.world.level.block.grower.AbstractTreeGrower;
 import net.minecraft.world.level.block.state.BlockState;
@@ -20,8 +19,7 @@ public class PalmSaplingBlock extends SaplingBlock {
         return state.is(BlockTags.DIRT) || state.is(BlockTags.SAND);
     }
 
-    @Override
-    public boolean isBonemealSuccess(Level level, RandomSource randomSource, BlockPos pos, BlockState state) {
-        return state.is(BlockTags.SAND);
+    public boolean isValidBonemealTarget(LevelReader level, BlockPos blockPos, BlockState state, boolean p_261524_) {
+        return level.getBlockState(blockPos.below()).is(BlockTags.SAND);
     }
 }
