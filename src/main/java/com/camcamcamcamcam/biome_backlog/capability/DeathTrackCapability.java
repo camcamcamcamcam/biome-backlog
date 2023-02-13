@@ -10,7 +10,6 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
-import org.apache.commons.compress.utils.Lists;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -19,7 +18,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class DeathTrackCapability implements ICapabilityProvider, INBTSerializable<CompoundTag> {
-	private List<DeathTrackRequest> deathTrackList = Lists.newArrayList();
+	private List<DeathTrackRequest> deathTrackList = new ArrayList<DeathTrackRequest>();
 
 	@Override
 	@Nonnull
