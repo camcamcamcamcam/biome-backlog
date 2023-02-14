@@ -17,15 +17,15 @@ import java.util.function.BiConsumer;
 
 public class PalmTreeFoliagePlacer extends FoliagePlacer {
 	public static final Codec<PalmTreeFoliagePlacer> CODEC = RecordCodecBuilder.create((p_68630_) -> {
-		return foliagePlacerParts(p_68630_).and(Codec.intRange(0, 16).fieldOf("leaf_placement_max_attempts").forGetter((p_161468_) -> {
-			return p_161468_.leafPlacementMaxAttempts;
+		return foliagePlacerParts(p_68630_).and(Codec.intRange(0, 16).fieldOf("leaf_length").forGetter((p_161468_) -> {
+			return p_161468_.leefLength;
 		})).apply(p_68630_, PalmTreeFoliagePlacer::new);
 	});
-	private final int leafPlacementMaxAttempts;
+	private final int leefLength;
 
-	public PalmTreeFoliagePlacer(IntProvider p_161506_, IntProvider p_161507_, int p_161509_) {
-		super(p_161506_, p_161507_);
-		this.leafPlacementMaxAttempts = p_161509_;
+	public PalmTreeFoliagePlacer(IntProvider range, IntProvider rangeOffset, int leafLength) {
+		super(range, rangeOffset);
+		this.leefLength = leafLength;
 	}
 
 	protected FoliagePlacerType<?> type() {
@@ -34,10 +34,18 @@ public class PalmTreeFoliagePlacer extends FoliagePlacer {
 
 	protected void createFoliage(LevelSimulatedReader p_225723_, BiConsumer<BlockPos, BlockState> p_225724_, RandomSource p_225725_, TreeConfiguration p_225726_, int p_225727_, FoliagePlacer.FoliageAttachment p_225728_, int p_225729_, int p_225730_, int p_225731_) {
 		BlockPos blockpos = p_225728_.pos();
-		int attempts = p_225725_.nextInt(this.leafPlacementMaxAttempts) + 3;
-		BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos(blockpos.getX(), blockpos.getY(), blockpos.getZ());
+		int attempts = p_225725_.nextInt(this.leefLength) + 3;
+		tryPlaceLeaf(p_225723_, p_225724_, p_225725_, p_225726_, blockpos);
+		BlockPos.MutableBlockPos blockpos$mutableblockpos = blockpos.mutable();
+		for (int i = 0; i > -1; --i) {
+			int j = 1 + i;
+			this.placeLeavesRow(p_225723_, p_225724_, p_225725_, p_225726_, blockpos, j, i, false);
+		}
+		for (int i = 0; i < 10; ++i) {
+			blockpos$mutableblockpos.setWithOffset(blockpos, p_225725_.nextInt(p_225730_) - p_225725_.nextInt(p_225730_), p_225725_.nextInt(p_225730_) - p_225730_ + 2, p_225725_.nextInt(p_225730_) - p_225725_.nextInt(p_225730_));
+			tryPlaceLeaf(p_225723_, p_225724_, p_225725_, p_225726_, blockpos$mutableblockpos);
+		}
 
-		tryPlaceLeaf(p_225723_, p_225724_, p_225725_, p_225726_, blockpos$mutableblockpos);
 		for (Direction direction : Direction.Plane.HORIZONTAL) {
 			BlockPos.MutableBlockPos blockpos$mutableblockpos2 = new BlockPos.MutableBlockPos(blockpos.getX(), blockpos.getY(), blockpos.getZ());
 			int leavesGravity = 0;

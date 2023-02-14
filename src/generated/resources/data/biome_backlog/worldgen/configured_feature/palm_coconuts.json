@@ -34,7 +34,7 @@
     },
     "foliage_placer": {
       "type": "biome_backlog:palm_tree_foliage",
-      "leaf_placement_max_attempts": 2,
+      "leaf_length": 2,
       "offset": 0,
       "radius": 2
     },
