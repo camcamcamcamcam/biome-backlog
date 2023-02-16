@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "biome_backlog:cactus_pad"
+    },
+    {
+      "item": "biome_backlog:cactus_pad"
+    },
+    {
+      "item": "biome_backlog:cactus_pad"
+    },
+    {
+      "item": "biome_backlog:cactus_pad"
+    },
+    {
+      "item": "minecraft:bowl"
+    },
+    {
+      "item": "biome_backlog:vinegar_bottle"
+    }
+  ],
+  "result": {
+    "item": "biome_backlog:cactus_salad"
+  }
+}

@@ -64,6 +64,8 @@ public class ModCreativeTabEvents {
 
 		if (event.getTab() == CreativeModeTabs.FOOD_AND_DRINKS) {
 			event.accept(ModItems.PRICKLY_PEAR);
+			event.accept(ModItems.PRICKLESS_PEAR);
+			event.accept(ModItems.CACTUS_SALAD);
 			event.accept(ModItems.RAW_OSTRICH);
 			event.accept(ModItems.COOKED_OSTRICH);
 			event.accept(ModItems.DATE);

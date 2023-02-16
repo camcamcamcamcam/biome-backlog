@@ -52,6 +52,31 @@ public class RecipeGenerator extends RecipeProvider implements IConditionBuilder
                         .of(ModItems.CACTUS_PAD.get()).build()))
                 .save(finishedRecipeConsumer);
 
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, ModItems.CACTUS_SALAD.get())
+                .requires(ModItems.CACTUS_PAD.get(), 4)
+                .requires(Items.BOWL)
+                .requires(ModItems.VINEGAR_BOTTLE.get())
+                .unlockedBy("has_cactus_pad", inventoryTrigger(ItemPredicate.Builder.item()
+                        .of(ModItems.CACTUS_PAD.get()).build()))
+                .save(finishedRecipeConsumer);
+
+        SimpleCookingRecipeBuilder.generic(Ingredient.of(ModItems.PRICKLY_PEAR.get()), RecipeCategory.FOOD, ModItems.PRICKLESS_PEAR.get(),
+                        0.45F, 300, RecipeSerializer.SMELTING_RECIPE)
+                .unlockedBy("has_prickly_pear", inventoryTrigger(ItemPredicate.Builder.item()
+                        .of(ModItems.PRICKLY_PEAR.get()).build()))
+                .save(finishedRecipeConsumer, new ResourceLocation(BiomeBacklog.MODID, "prickless_pear"));
+        SimpleCookingRecipeBuilder.campfireCooking(Ingredient.of(ModItems.PRICKLY_PEAR.get()), RecipeCategory.FOOD, ModItems.PRICKLESS_PEAR.get(),
+                        0.45F, 300)
+                .unlockedBy("has_prickly_pear", inventoryTrigger(ItemPredicate.Builder.item()
+                        .of(ModItems.PRICKLY_PEAR.get()).build()))
+                .save(finishedRecipeConsumer, new ResourceLocation(BiomeBacklog.MODID, "prickless_pear_from_campfire"));
+        SimpleCookingRecipeBuilder.smoking(Ingredient.of(ModItems.PRICKLY_PEAR.get()), RecipeCategory.FOOD, ModItems.PRICKLESS_PEAR.get(),
+                        0.45F, 150)
+                .unlockedBy("has_prickly_pear", inventoryTrigger(ItemPredicate.Builder.item()
+                        .of(ModItems.PRICKLY_PEAR.get()).build()))
+                .save(finishedRecipeConsumer, new ResourceLocation(BiomeBacklog.MODID, "prickless_pear_from_smoker"));
+
+
         SimpleCookingRecipeBuilder.generic(Ingredient.of(ModItems.RAW_OSTRICH.get()), RecipeCategory.FOOD, ModItems.COOKED_OSTRICH.get(),
                         0.45F, 300, RecipeSerializer.SMELTING_RECIPE)
                 .unlockedBy("has_raw_ostrich", inventoryTrigger(ItemPredicate.Builder.item()

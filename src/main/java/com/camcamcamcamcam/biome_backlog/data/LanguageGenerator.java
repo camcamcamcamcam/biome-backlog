@@ -17,7 +17,9 @@ public class LanguageGenerator extends LanguageProvider {
         this.add(ModBlocks.PEAR_CACTUS.get(), "Pear Cactus");
         this.add(ModBlocks.STRIPPED_PEAR_CACTUS.get(), "Stripped Pear Cactus");
         this.add(ModItems.CACTUS_PAD.get(), "Cactus Pad");
+        this.add(ModItems.CACTUS_SALAD.get(), "Cactus Salad");
         this.add(ModItems.PRICKLY_PEAR.get(), "Prickly Pear");
+        this.add(ModItems.PRICKLESS_PEAR.get(), "Prickless Pear");
         this.add(ModItems.TUMBLEWEED_SEED.get(), "Tumbleweed Seed");
 
         this.add(ModBlocks.MOUND.get(), "Mound");
