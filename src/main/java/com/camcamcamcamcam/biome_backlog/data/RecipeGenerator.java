@@ -10,11 +10,7 @@ import com.camcamcamcamcam.biome_backlog.register.ModRecipeSerializers;
 import com.camcamcamcamcam.biome_backlog.register.ModTags;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.recipes.FinishedRecipe;
-import net.minecraft.data.recipes.RecipeProvider;
-import net.minecraft.data.recipes.ShapedRecipeBuilder;
-import net.minecraft.data.recipes.ShapelessRecipeBuilder;
-import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
+import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.Items;
@@ -40,7 +36,7 @@ public class RecipeGenerator extends RecipeProvider implements IConditionBuilder
                 .pattern("##")
                 .unlockedBy("has_calcite_powder", inventoryTrigger(ItemPredicate.Builder.item()
                         .of(ModItems.CALCITE_POWDER_BOTTLE.get()).build()))
-                .save(finishedRecipeConsumer);
+                .save(finishedRecipeConsumer, BiomeBacklog.prefix("calcite"));
 
         ShapedRecipeBuilder.shaped(Items.LEATHER)
                 .define('#', ModItems.CACTUS_PAD.get())
@@ -49,7 +45,7 @@ public class RecipeGenerator extends RecipeProvider implements IConditionBuilder
                 .pattern("###")
                 .unlockedBy("has_cactus_pad", inventoryTrigger(ItemPredicate.Builder.item()
                         .of(ModItems.CACTUS_PAD.get()).build()))
-                .save(finishedRecipeConsumer);
+                .save(finishedRecipeConsumer, BiomeBacklog.prefix("leather"));
 
         SimpleCookingRecipeBuilder.cooking(Ingredient.of(ModItems.RAW_OSTRICH.get()), ModItems.COOKED_OSTRICH.get(),
                         0.45F, 300, RecipeSerializer.SMELTING_RECIPE)
@@ -259,7 +255,7 @@ public class RecipeGenerator extends RecipeProvider implements IConditionBuilder
                 .requires(ModItems.COCONUT_SHELL.get())
                 .unlockedBy("has_coconut_shell", inventoryTrigger(ItemPredicate.Builder.item()
                         .of(ModItems.COCONUT_SHELL.get()).build()))
-                .save(finishedRecipeConsumer);
+                .save(finishedRecipeConsumer, BiomeBacklog.prefix("bowl"));
 
         SimpleCookingRecipeBuilder.cooking(Ingredient.of(ModItems.COCONUT_SHELL.get()), Items.CHARCOAL,
                         0.45F, 300, RecipeSerializer.SMELTING_RECIPE)
