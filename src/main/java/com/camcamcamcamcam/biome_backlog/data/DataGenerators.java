@@ -23,8 +23,8 @@ public class DataGenerators {
 		generator.addProvider(event.includeClient(), new ItemModelGenerator(packOutput, existingFileHelper));
 		ModBlockTagProvider blockTags = new ModBlockTagProvider(packOutput, lookupProvider, existingFileHelper);
 		generator.addProvider(event.includeServer(), blockTags);
-		generator.addProvider(event.includeServer(), new ModItemTagProvider(packOutput, lookupProvider, blockTags, existingFileHelper));
-		generator.addProvider(event.includeServer(), LootGenerator.create(packOutput));
+        generator.addProvider(event.includeServer(), new ModItemTagProvider(packOutput, lookupProvider, blockTags.contentsGetter(), existingFileHelper));
+        generator.addProvider(event.includeServer(), LootGenerator.create(packOutput));
 		generator.addProvider(event.includeServer(), new RecipeGenerator(packOutput));
 		generator.addProvider(event.includeServer(), new LanguageGenerator(packOutput));
 		generator.addProvider(event.includeServer(), new WorldGenerator(packOutput, lookupProvider));

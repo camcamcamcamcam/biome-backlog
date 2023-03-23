@@ -8,12 +8,9 @@ import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.level.LevelSimulatedReader;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType;
-
-import java.util.function.BiConsumer;
 
 public class PalmTreeFoliagePlacer extends FoliagePlacer {
 	public static final Codec<PalmTreeFoliagePlacer> CODEC = RecordCodecBuilder.create((p_68630_) -> {
@@ -32,7 +29,8 @@ public class PalmTreeFoliagePlacer extends FoliagePlacer {
 		return ModFoliagePlacerTypes.PALM_TREE_FOLIAGE.get();
 	}
 
-	protected void createFoliage(LevelSimulatedReader p_225723_, BiConsumer<BlockPos, BlockState> p_225724_, RandomSource p_225725_, TreeConfiguration p_225726_, int p_225727_, FoliagePlacer.FoliageAttachment p_225728_, int p_225729_, int p_225730_, int p_225731_) {
+	@Override
+	protected void createFoliage(LevelSimulatedReader p_225723_, FoliageSetter p_225724_, RandomSource p_225725_, TreeConfiguration p_225726_, int p_225727_, FoliagePlacer.FoliageAttachment p_225728_, int p_225729_, int p_225730_, int p_225731_) {
 		BlockPos blockpos = p_225728_.pos();
 		int attempts = p_225725_.nextInt(this.leefLength) + 3;
 		tryPlaceLeaf(p_225723_, p_225724_, p_225725_, p_225726_, blockpos);

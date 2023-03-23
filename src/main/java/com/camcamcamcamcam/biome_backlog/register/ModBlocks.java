@@ -3,44 +3,13 @@ package com.camcamcamcamcam.biome_backlog.register;
 import com.camcamcamcamcam.biome_backlog.BiomeBacklog;
 import com.camcamcamcamcam.biome_backlog.world.gen.grower.PalmTreeCoconutGrower;
 import com.camcamcamcamcam.biome_backlog.world.gen.grower.PalmTreeDateGrower;
-import com.camcamcamcamcam.biome_backlog.world.level.block.BaobabFlowerBlock;
-import com.camcamcamcamcam.biome_backlog.world.level.block.BurrowBlock;
-import com.camcamcamcamcam.biome_backlog.world.level.block.CoconutBlock;
-import com.camcamcamcamcam.biome_backlog.world.level.block.CoconutSaplingBlock;
-import com.camcamcamcamcam.biome_backlog.world.level.block.DateBlock;
-import com.camcamcamcamcam.biome_backlog.world.level.block.HangingLeavesBlock;
-import com.camcamcamcamcam.biome_backlog.world.level.block.ModStandingSignBlock;
-import com.camcamcamcamcam.biome_backlog.world.level.block.ModWallSignBlock;
-import com.camcamcamcamcam.biome_backlog.world.level.block.MoundBlock;
-import com.camcamcamcamcam.biome_backlog.world.level.block.OstrichEggBlock;
-import com.camcamcamcamcam.biome_backlog.world.level.block.PalmSaplingBlock;
-import com.camcamcamcamcam.biome_backlog.world.level.block.PearCactusBlock;
-import com.camcamcamcamcam.biome_backlog.world.level.block.SaltBlock;
-import com.camcamcamcamcam.biome_backlog.world.level.block.SaltLampBlock;
-import com.camcamcamcamcam.biome_backlog.world.level.block.SaltSlabBlock;
-import com.camcamcamcamcam.biome_backlog.world.level.block.SaltStairBlock;
-import com.camcamcamcamcam.biome_backlog.world.level.block.SaltTrailBlock;
-import com.camcamcamcamcam.biome_backlog.world.level.block.SucculentBlock;
-import com.camcamcamcamcam.biome_backlog.world.level.block.TumbleWeedBlock;
-import net.minecraft.sounds.SoundEvents;
+import com.camcamcamcamcam.biome_backlog.world.level.block.*;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SignItem;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.ButtonBlock;
-import net.minecraft.world.level.block.DoorBlock;
-import net.minecraft.world.level.block.FenceBlock;
-import net.minecraft.world.level.block.FenceGateBlock;
-import net.minecraft.world.level.block.FlowerPotBlock;
-import net.minecraft.world.level.block.LeavesBlock;
-import net.minecraft.world.level.block.PressurePlateBlock;
-import net.minecraft.world.level.block.RotatedPillarBlock;
-import net.minecraft.world.level.block.SlabBlock;
-import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.StairBlock;
-import net.minecraft.world.level.block.TrapDoorBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.material.Material;
 import net.minecraftforge.registries.DeferredRegister;
@@ -54,7 +23,7 @@ import java.util.function.Supplier;
 public class ModBlocks {
 	public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, BiomeBacklog.MODID);
 
-	public static final WoodType PALM_TYPE = WoodType.create(BiomeBacklog.prefix("palm").toString());
+	public static final WoodType PALM_TYPE = WoodType.register(new WoodType(BiomeBacklog.prefix("palm").toString(), BlockSetType.OAK));
 
 	// BADLANDS
 
@@ -100,16 +69,16 @@ public class ModBlocks {
 	public static final RegistryObject<Block> PALM_PLANKS = register("palm_planks", () -> new Block(PALM));
 	public static final RegistryObject<Block> COCONUT_SAPLING = register("coconut_sapling", () -> new CoconutSaplingBlock(new PalmTreeCoconutGrower(), BlockBehaviour.Properties.of(Material.PLANT).sound(SoundType.GRASS).noCollission()));
 	public static final RegistryObject<Block> DATE_SAPLING = register("date_sapling", () -> new PalmSaplingBlock(new PalmTreeDateGrower(), BlockBehaviour.Properties.of(Material.PLANT).sound(SoundType.GRASS).noCollission()));
-	public static final RegistryObject<DoorBlock> PALM_DOOR = register("palm_door", () -> new DoorBlock(PALM.noOcclusion(), SoundEvents.WOODEN_DOOR_CLOSE, SoundEvents.WOODEN_DOOR_OPEN));
-	public static final RegistryObject<TrapDoorBlock> PALM_TRAPDOOR = register("palm_trapdoor", () -> new TrapDoorBlock(PALM.noOcclusion(), SoundEvents.WOODEN_TRAPDOOR_CLOSE, SoundEvents.WOODEN_TRAPDOOR_OPEN));
+	public static final RegistryObject<DoorBlock> PALM_DOOR = register("palm_door", () -> new DoorBlock(PALM.noOcclusion(), BlockSetType.OAK));
+	public static final RegistryObject<TrapDoorBlock> PALM_TRAPDOOR = register("palm_trapdoor", () -> new TrapDoorBlock(PALM.noOcclusion(), BlockSetType.OAK));
 	public static final RegistryObject<ModStandingSignBlock> PALM_SIGN = register("palm_sign", () -> new ModStandingSignBlock(BlockBehaviour.Properties.of(Material.WOOD).noCollission().sound(SoundType.WOOD), WoodType.OAK));
 	public static final RegistryObject<ModWallSignBlock> PALM_WALL_SIGN = noItemRegister("palm_wall_sign", () -> new ModWallSignBlock(BlockBehaviour.Properties.of(Material.WOOD).noCollission().sound(SoundType.WOOD), WoodType.OAK));
 	public static final RegistryObject<FenceBlock> PALM_FENCE = register("palm_fence", () -> new FenceBlock(PALM));
-	public static final RegistryObject<FenceGateBlock> PALM_FENCE_GATE = register("palm_fence_gate", () -> new FenceGateBlock(PALM, SoundEvents.FENCE_GATE_CLOSE, SoundEvents.FENCE_GATE_OPEN));
+	public static final RegistryObject<FenceGateBlock> PALM_FENCE_GATE = register("palm_fence_gate", () -> new FenceGateBlock(PALM, WoodType.OAK));
 	public static final RegistryObject<StairBlock> PALM_STAIRS = register("palm_stairs", () -> new StairBlock(() -> PALM_PLANKS.get().defaultBlockState(), PALM));
 	public static final RegistryObject<SlabBlock> PALM_SLAB = register("palm_slab", () -> new SlabBlock(PALM));
-	public static final RegistryObject<ButtonBlock> PALM_BUTTON = register("palm_button", () -> new ButtonBlock(PALM, 30, true, SoundEvents.NETHER_WOOD_BUTTON_CLICK_OFF, SoundEvents.NETHER_WOOD_BUTTON_CLICK_ON));
-	public static final RegistryObject<PressurePlateBlock> PALM_PRESSURE_PLATE = register("palm_pressure_plate", () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, PALM, SoundEvents.WOODEN_PRESSURE_PLATE_CLICK_OFF, SoundEvents.WOODEN_PRESSURE_PLATE_CLICK_ON));
+	public static final RegistryObject<ButtonBlock> PALM_BUTTON = register("palm_button", () -> new ButtonBlock(PALM, BlockSetType.OAK, 30, true));
+	public static final RegistryObject<PressurePlateBlock> PALM_PRESSURE_PLATE = register("palm_pressure_plate", () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, PALM, BlockSetType.OAK));
 
 	public static final BlockBehaviour.Properties SALT = BlockBehaviour.Properties.of(Material.GLASS).requiresCorrectToolForDrops().strength(1.0F, 4.0F).sound(SoundType.GLASS).noOcclusion();
 

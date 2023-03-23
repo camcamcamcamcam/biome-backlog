@@ -13,16 +13,12 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityDimensions;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MoverType;
-import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -160,7 +156,7 @@ public class Tumbleweed extends Entity {
             this.setDamageCooldown(DAMAGE_COOLDOWN_MAX);
 
             for (final var entity : collidingEntities) {
-                entity.hurt(DamageSource.CACTUS, 2.0F);
+                entity.hurt(this.damageSources().cactus(), 2.0F);
             }
 
             if (!this.level.isClientSide) {
@@ -263,7 +259,7 @@ public class Tumbleweed extends Entity {
             return false;
         }
 
-        if (source.isExplosion()) {
+        if (source.is(DamageTypeTags.IS_EXPLOSION)) {
             this.dropSeeds(true);
             return true;
         }

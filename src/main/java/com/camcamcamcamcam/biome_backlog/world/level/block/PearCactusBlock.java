@@ -88,7 +88,7 @@ public class PearCactusBlock extends BushBlock implements BonemealableBlock {
 	public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, boolean willHarvest, FluidState fluid) {
 		boolean destroyed = super.onDestroyedByPlayer(state, level, pos, player, willHarvest, fluid);
 		if (state.getBlock() == ModBlocks.PEAR_CACTUS.get()) {
-			player.hurt(DamageSource.CACTUS, 1.0F);
+			player.hurt(player.damageSources().cactus(), 1.0F);
 		}
 		return destroyed;
 	}

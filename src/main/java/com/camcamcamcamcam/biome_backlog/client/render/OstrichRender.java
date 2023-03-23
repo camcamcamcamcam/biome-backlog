@@ -1,9 +1,9 @@
 package com.camcamcamcamcam.biome_backlog.client.render;
 
-import com.camcamcamcamcam.biome_backlog.world.level.entity.Ostrich;
 import com.camcamcamcamcam.biome_backlog.BiomeBacklog;
 import com.camcamcamcamcam.biome_backlog.client.ModModelLayers;
 import com.camcamcamcamcam.biome_backlog.client.model.OstrichModel;
+import com.camcamcamcamcam.biome_backlog.world.level.entity.Ostrich;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
@@ -14,7 +14,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class OstrichRender<T extends Ostrich> extends MobRenderer<T, OstrichModel<T>> {
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation(BiomeBacklog.MODID, "textures/entity/ostrich.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(BiomeBacklog.MODID, "textures/entity/ostrich/ostrich.png");
+    private static final ResourceLocation ANGRY_TEXTURE = new ResourceLocation(BiomeBacklog.MODID, "textures/entity/ostrich/ostrich_angry.png");
 
     public OstrichRender(EntityRendererProvider.Context p_174304_) {
         super(p_174304_, new OstrichModel<>(p_174304_.bakeLayer(ModModelLayers.OSTRICH)), 0.5F);

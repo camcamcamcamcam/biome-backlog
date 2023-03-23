@@ -14,16 +14,7 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntitySelector;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.MoverType;
-import net.minecraft.world.entity.SpawnGroupData;
-import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.BodyRotationControl;
@@ -135,8 +126,8 @@ public class Vulture extends TamableAnimal {
 				this.move(MoverType.SELF, this.getDeltaMovement());
 				this.setDeltaMovement(this.getDeltaMovement().scale(0.5D));
 			} else {
-				BlockPos ground = new BlockPos(this.getX(), this.getY() - 1.0D, this.getZ());
-				float f = 0.91F;
+				BlockPos ground = BlockPos.containing(this.getX(), this.getY() - 1.0D, this.getZ());
+                float f = 0.91F;
 				if (this.onGround) {
 					f = this.level.getBlockState(ground).getFriction(this.level, ground, this) * 0.91F;
 				}
@@ -153,7 +144,7 @@ public class Vulture extends TamableAnimal {
 			}
 		}
 
-		this.calculateEntityAnimation(this, false);
+        this.calculateEntityAnimation(false);
 	}
 
 	public boolean onClimbable() {

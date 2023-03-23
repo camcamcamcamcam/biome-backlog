@@ -4,7 +4,6 @@ import com.camcamcamcamcam.biome_backlog.register.ModBlocks;
 import com.camcamcamcamcam.biome_backlog.register.ModEntities;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -16,49 +15,26 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.Mth;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.AnimationState;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.ExperienceOrb;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.NeutralMob;
-import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.BreedGoal;
-import net.minecraft.world.entity.ai.goal.FloatGoal;
-import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
-import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
-import net.minecraft.world.entity.ai.goal.MoveToBlockGoal;
-import net.minecraft.world.entity.ai.goal.TemptGoal;
-import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
-import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.util.DefaultRandomPos;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
-import net.minecraft.world.level.pathfinder.Node;
-import net.minecraft.world.level.pathfinder.PathFinder;
-import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
@@ -89,16 +65,10 @@ public class Ostrich extends Animal implements NeutralMob {
     public Ostrich(EntityType<? extends Ostrich> p_27557_, Level p_27558_) {
         super(p_27557_, p_27558_);
         this.maxUpStep = 1.5F;
+        GroundPathNavigation groundpathnavigation = (GroundPathNavigation) this.getNavigation();
+        groundpathnavigation.setCanFloat(true);
+        groundpathnavigation.setCanWalkOverFences(true);
     }
-
-    public static AttributeSupplier.Builder createAttributes() {
-        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 24.0D).add(Attributes.MOVEMENT_SPEED, 0.25D).add(Attributes.ATTACK_DAMAGE, 5.0F).add(Attributes.FOLLOW_RANGE, 20.0F);
-    }
-
-    protected PathNavigation createNavigation(Level p_33348_) {
-        return new OstrichNavigation(this, p_33348_);
-    }
-
 
     protected void defineSynchedData() {
         super.defineSynchedData();
@@ -416,7 +386,7 @@ public class Ostrich extends Animal implements NeutralMob {
                         vec31 = DefaultRandomPos.getPosTowards(this.ostrich, 8, 7, vec3, (double) ((float) Math.PI / 2F));
                     }
 
-                    if (vec31 != null && !flag && !this.ostrich.level.getBlockState(new BlockPos(vec31)).is(Blocks.WATER)) {
+                    if (vec31 != null && !flag && !this.ostrich.level.getBlockState(BlockPos.containing(vec31)).is(Blocks.WATER)) {
                         vec31 = DefaultRandomPos.getPosTowards(this.ostrich, 16, 5, vec3, (double) ((float) Math.PI / 2F));
                     }
 
@@ -509,76 +479,6 @@ public class Ostrich extends Animal implements NeutralMob {
 
         protected double getFollowDistance() {
             return super.getFollowDistance() * 0.5D;
-        }
-    }
-
-    static class OstrichNavigation extends GroundPathNavigation {
-        public OstrichNavigation(Mob p_33379_, Level p_33380_) {
-            super(p_33379_, p_33380_);
-        }
-
-        protected PathFinder createPathFinder(int p_33382_) {
-            this.nodeEvaluator = new Ostrich.OstrichNodeEvaluator();
-            return new PathFinder(this.nodeEvaluator, p_33382_);
-        }
-    }
-
-    static class OstrichNodeEvaluator extends WalkNodeEvaluator {
-        protected BlockPathTypes evaluateBlockPathType(BlockGetter p_33387_, boolean p_33388_, boolean p_33389_, BlockPos p_33390_, BlockPathTypes p_33391_) {
-            return p_33391_ == BlockPathTypes.FENCE ? BlockPathTypes.WALKABLE : super.evaluateBlockPathType(p_33387_, p_33388_, p_33389_, p_33390_, p_33391_);
-        }
-
-        public int getNeighbors(Node[] p_77640_, Node p_77641_) {
-            int i = 0;
-            int j = 0;
-            BlockPathTypes blockpathtypes = this.getCachedBlockType(this.mob, p_77641_.x, p_77641_.y + 1, p_77641_.z);
-            BlockPathTypes blockpathtypes1 = this.getCachedBlockType(this.mob, p_77641_.x, p_77641_.y, p_77641_.z);
-            if (this.mob.getPathfindingMalus(blockpathtypes) >= 0.0F && blockpathtypes1 != BlockPathTypes.STICKY_HONEY) {
-                j = Mth.floor(Math.max(2.0F, this.mob.getStepHeight()));
-            }
-
-            double d0 = this.getFloorLevel(new BlockPos(p_77641_.x, p_77641_.y, p_77641_.z));
-            Node node = this.findAcceptedNode(p_77641_.x, p_77641_.y, p_77641_.z + 1, j, d0, Direction.SOUTH, blockpathtypes1);
-            if (this.isNeighborValid(node, p_77641_)) {
-                p_77640_[i++] = node;
-            }
-
-            Node node1 = this.findAcceptedNode(p_77641_.x - 1, p_77641_.y, p_77641_.z, j, d0, Direction.WEST, blockpathtypes1);
-            if (this.isNeighborValid(node1, p_77641_)) {
-                p_77640_[i++] = node1;
-            }
-
-            Node node2 = this.findAcceptedNode(p_77641_.x + 1, p_77641_.y, p_77641_.z, j, d0, Direction.EAST, blockpathtypes1);
-            if (this.isNeighborValid(node2, p_77641_)) {
-                p_77640_[i++] = node2;
-            }
-
-            Node node3 = this.findAcceptedNode(p_77641_.x, p_77641_.y, p_77641_.z - 1, j, d0, Direction.NORTH, blockpathtypes1);
-            if (this.isNeighborValid(node3, p_77641_)) {
-                p_77640_[i++] = node3;
-            }
-
-            Node node4 = this.findAcceptedNode(p_77641_.x - 1, p_77641_.y, p_77641_.z - 1, j, d0, Direction.NORTH, blockpathtypes1);
-            if (this.isDiagonalValid(p_77641_, node1, node3, node4)) {
-                p_77640_[i++] = node4;
-            }
-
-            Node node5 = this.findAcceptedNode(p_77641_.x + 1, p_77641_.y, p_77641_.z - 1, j, d0, Direction.NORTH, blockpathtypes1);
-            if (this.isDiagonalValid(p_77641_, node2, node3, node5)) {
-                p_77640_[i++] = node5;
-            }
-
-            Node node6 = this.findAcceptedNode(p_77641_.x - 1, p_77641_.y, p_77641_.z + 1, j, d0, Direction.SOUTH, blockpathtypes1);
-            if (this.isDiagonalValid(p_77641_, node1, node, node6)) {
-                p_77640_[i++] = node6;
-            }
-
-            Node node7 = this.findAcceptedNode(p_77641_.x + 1, p_77641_.y, p_77641_.z + 1, j, d0, Direction.SOUTH, blockpathtypes1);
-            if (this.isDiagonalValid(p_77641_, node2, node, node7)) {
-                p_77640_[i++] = node7;
-            }
-
-            return i;
         }
     }
 }

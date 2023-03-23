@@ -2,11 +2,7 @@ package com.camcamcamcamcam.biome_backlog.client.particle;
 
 import com.camcamcamcamcam.biome_backlog.register.ModParticles;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.particle.Particle;
-import net.minecraft.client.particle.ParticleProvider;
-import net.minecraft.client.particle.ParticleRenderType;
-import net.minecraft.client.particle.SpriteSet;
-import net.minecraft.client.particle.TextureSheetParticle;
+import net.minecraft.client.particle.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraftforge.api.distmarker.Dist;
@@ -23,7 +19,7 @@ public class CalciteBubbleParticle extends TextureSheetParticle {
     @Override
     public void tick() {
         /* Make bubbles fall down when there's no block beneath them. This is a little hacky. */
-        if (this.gravity == 0.0F && this.level.getBlockState(new BlockPos(this.x, this.y, this.z).below()).isAir()) {
+        if (this.gravity == 0.0F && this.level.getBlockState(BlockPos.containing(this.x, this.y, this.z).below()).isAir()) {
             this.gravity = 0.5F * this.random.nextFloat();
         } else {
             this.gravity = 0.0F;

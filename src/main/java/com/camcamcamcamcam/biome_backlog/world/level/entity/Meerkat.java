@@ -1,9 +1,9 @@
 package com.camcamcamcamcam.biome_backlog.world.level.entity;
 
-import com.camcamcamcamcam.biome_backlog.world.level.block.entity.BurrowBlockEntity;
 import com.camcamcamcamcam.biome_backlog.register.ModBlocks;
 import com.camcamcamcamcam.biome_backlog.register.ModEntities;
 import com.camcamcamcamcam.biome_backlog.register.ModTags;
+import com.camcamcamcamcam.biome_backlog.world.level.block.entity.BurrowBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
@@ -19,25 +19,10 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.util.VisibleForDebug;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.AnimationState;
-import net.minecraft.world.entity.EntityDimensions;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.Pose;
-import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.BreedGoal;
-import net.minecraft.world.entity.ai.goal.FloatGoal;
-import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
-import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
-import net.minecraft.world.entity.ai.goal.PanicGoal;
-import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.util.AirRandomPos;
@@ -193,10 +178,6 @@ public class Meerkat extends Animal {
 				}
 			}
 		}
-	}
-
-	public boolean isInvulnerableTo(DamageSource p_219427_) {
-		return this.isDiggingOrEmerging() && !p_219427_.isBypassInvul() ? true : super.isInvulnerableTo(p_219427_);
 	}
 
 	private boolean isDiggingOrEmerging() {
