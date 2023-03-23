@@ -10,7 +10,6 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.AxeItem;
@@ -80,7 +79,7 @@ public class PearCactusBlock extends BushBlock implements BonemealableBlock {
 
 	public void entityInside(BlockState p_51148_, Level p_51149_, BlockPos p_51150_, Entity p_51151_) {
 		if (p_51151_.isPickable() & p_51148_.getBlock() == ModBlocks.PEAR_CACTUS.get()) {
-			p_51151_.hurt(DamageSource.CACTUS, 1.0F);
+			p_51151_.hurt(p_51151_.damageSources().cactus(), 1.0F);
 		}
 	}
 

@@ -12,5 +12,6 @@
   ],
   "result": {
     "item": "minecraft:calcite"
-  }
+  },
+  "show_notification": true
 }

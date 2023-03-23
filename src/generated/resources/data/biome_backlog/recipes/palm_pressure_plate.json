@@ -11,5 +11,6 @@
   ],
   "result": {
     "item": "biome_backlog:palm_pressure_plate"
-  }
+  },
+  "show_notification": true
 }

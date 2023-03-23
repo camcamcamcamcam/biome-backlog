@@ -12,5 +12,6 @@
   "result": {
     "count": 6,
     "item": "biome_backlog:salt_brick_slab"
-  }
+  },
+  "show_notification": true
 }

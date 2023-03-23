@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "biome_backlog:salt_lamp"
-  }
+  },
+  "show_notification": true
 }

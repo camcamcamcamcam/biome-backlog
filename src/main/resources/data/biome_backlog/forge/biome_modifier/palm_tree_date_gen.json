@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "minecraft:desert",
+  "features": "biome_backlog:palm_tree_date",
+  "step": "vegetal_decoration"
+}

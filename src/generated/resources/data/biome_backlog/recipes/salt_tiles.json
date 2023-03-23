@@ -12,5 +12,6 @@
   ],
   "result": {
     "item": "biome_backlog:salt_tiles"
-  }
+  },
+  "show_notification": true
 }
