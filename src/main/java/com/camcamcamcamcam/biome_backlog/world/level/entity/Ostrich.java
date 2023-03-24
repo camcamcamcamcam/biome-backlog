@@ -15,6 +15,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.util.Mth;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.damagesource.DamageSource;
@@ -38,6 +39,8 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumSet;
@@ -50,10 +53,10 @@ public class Ostrich extends Animal implements NeutralMob {
     private static final EntityDataAccessor<Boolean> DIP = SynchedEntityData.defineId(Ostrich.class, EntityDataSerializers.BOOLEAN);
 
     public AnimationState idlingState = new AnimationState();
-    public AnimationState walkingState = new AnimationState();
-    public AnimationState runningState = new AnimationState();
     public AnimationState dippingState = new AnimationState();
     public AnimationState kickingState = new AnimationState();
+
+    private float runningScale;
 
     private static final UniformInt PERSISTENT_ANGER_TIME = TimeUtil.rangeOfSeconds(20, 39);
     @javax.annotation.Nullable
@@ -87,8 +90,6 @@ public class Ostrich extends Animal implements NeutralMob {
         if (DIP.equals(p_29615_)) {
             if (this.isDip()) {
                 idlingState.stop();
-                walkingState.stop();
-                runningState.stop();
                 this.dippingState.start(this.tickCount);
             } else {
                 this.dippingState.stop();
@@ -103,19 +104,21 @@ public class Ostrich extends Animal implements NeutralMob {
         if ((this.isDip() || this.isMoving()) && level.isClientSide()) {
             if (isDashing()) {
                 idlingState.stop();
-                walkingState.stop();
-                runningState.startIfStopped(this.tickCount);
+                runningScale = Mth.clamp(runningScale + 0.1F, 0, 1);
             } else {
-                runningState.stop();
                 idlingState.stop();
-                walkingState.startIfStopped(this.tickCount);
+                runningScale = Mth.clamp(runningScale - 0.1F, 0, 1);
             }
         } else if (level.isClientSide()) {
-            runningState.stop();
-            walkingState.stop();
+            runningScale = Mth.clamp(runningScale - 0.1F, 0, 1);
             idlingState.startIfStopped(this.tickCount);
         }
         super.tick();
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public float getRunningScale() {
+        return runningScale;
     }
 
     public void setHomeTarget(@Nullable BlockPos pos) {

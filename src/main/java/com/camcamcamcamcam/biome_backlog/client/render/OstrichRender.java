@@ -23,7 +23,7 @@ public class OstrichRender<T extends Ostrich> extends MobRenderer<T, OstrichMode
 
     @Override
     public ResourceLocation getTextureLocation(T p_114482_) {
-        return TEXTURE;
+        return p_114482_.isAngry() ? ANGRY_TEXTURE : TEXTURE;
     }
 
     @Override
