@@ -1,14 +1,7 @@
 package com.camcamcamcamcam.biome_backlog.register;
 
 import com.camcamcamcamcam.biome_backlog.BiomeBacklog;
-import com.camcamcamcamcam.biome_backlog.world.level.entity.CalcitePowderReaction;
-import com.camcamcamcamcam.biome_backlog.world.level.entity.CoconutProjectile;
-import com.camcamcamcamcam.biome_backlog.world.level.entity.Meerkat;
-import com.camcamcamcamcam.biome_backlog.world.level.entity.ModBoat;
-import com.camcamcamcamcam.biome_backlog.world.level.entity.ModChestBoat;
-import com.camcamcamcamcam.biome_backlog.world.level.entity.Ostrich;
-import com.camcamcamcamcam.biome_backlog.world.level.entity.Tumbleweed;
-import com.camcamcamcamcam.biome_backlog.world.level.entity.Vulture;
+import com.camcamcamcamcam.biome_backlog.world.level.entity.*;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.SpawnPlacements;
@@ -26,7 +19,7 @@ public class ModEntities {
 	public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, BiomeBacklog.MODID);
 
 	public static final RegistryObject<EntityType<Meerkat>> MEERKAT = ENTITIES.register("meerkat", () -> EntityType.Builder.of(Meerkat::new, MobCategory.CREATURE).sized(0.6F, 0.7F).clientTrackingRange(8).build(prefix("meerkat")));
-	public static final RegistryObject<EntityType<Ostrich>> OSTRICH = ENTITIES.register("ostrich", () -> EntityType.Builder.of(Ostrich::new, MobCategory.CREATURE).sized(1.0F, 2.5F).clientTrackingRange(8).build(prefix("ostrich")));
+	public static final RegistryObject<EntityType<Ostrich>> OSTRICH = ENTITIES.register("ostrich", () -> EntityType.Builder.of(Ostrich::new, MobCategory.CREATURE).sized(0.9F, 2.5F).clientTrackingRange(8).build(prefix("ostrich")));
 	public static final RegistryObject<EntityType<Vulture>> VULTURE = ENTITIES.register("vulture", () -> EntityType.Builder.of(Vulture::new, MobCategory.CREATURE).sized(0.85F, 0.85F).clientTrackingRange(8).build(prefix("vulture")));
 	public static final RegistryObject<EntityType<Tumbleweed>> TUMBLEWEED = ENTITIES.register("tumbleweed", () -> EntityType.Builder.of(Tumbleweed::new, MobCategory.MISC).sized(0.7F, 0.8F).clientTrackingRange(8).build(prefix("tumbleweed")));
 	public static final RegistryObject<EntityType<CalcitePowderReaction>> CALCITE_POWDER = ENTITIES.register("calcite_powder_reaction", () -> EntityType.Builder.of(CalcitePowderReaction::new, MobCategory.MISC).sized(1.0F, 0.2F).clientTrackingRange(6).build(prefix("calcite_powder_reaction")));

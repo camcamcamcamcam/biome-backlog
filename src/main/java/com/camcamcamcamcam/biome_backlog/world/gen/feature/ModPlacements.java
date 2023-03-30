@@ -27,8 +27,8 @@ public class ModPlacements {
 
 	public static void bootstrapPlacements(BootstapContext<PlacedFeature> context) {
 		HolderGetter<ConfiguredFeature<?, ?>> configuredFeature = context.lookup(Registries.CONFIGURED_FEATURE);
-		PlacementUtils.register(context, PATCH_PEAR_CACTUS, configuredFeature.getOrThrow(ModConfiguredFeatures.PATCH_PEAR_CACTUS), RarityFilter.onAverageOnceEvery(28), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
-		PlacementUtils.register(context, PATCH_TUMBLEWEED, configuredFeature.getOrThrow(ModConfiguredFeatures.PATCH_TUMBLEWEED), RarityFilter.onAverageOnceEvery(32), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
+		PlacementUtils.register(context, PATCH_PEAR_CACTUS, configuredFeature.getOrThrow(ModConfiguredFeatures.PATCH_PEAR_CACTUS), RarityFilter.onAverageOnceEvery(25), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
+		PlacementUtils.register(context, PATCH_TUMBLEWEED, configuredFeature.getOrThrow(ModConfiguredFeatures.PATCH_TUMBLEWEED), RarityFilter.onAverageOnceEvery(22), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
 		PlacementUtils.register(context, PALM_TREE_COCONUT, configuredFeature.getOrThrow(ModConfiguredFeatures.PALM_COCONUTS), treePlacement(PlacementUtils.countExtra(1, 0.05F, 1), ModBlocks.COCONUT_SAPLING.get()));
 		PlacementUtils.register(context, PALM_TREE_DATE, configuredFeature.getOrThrow(ModConfiguredFeatures.PALM_DATE), treePlacement(RarityFilter.onAverageOnceEvery(26), ModBlocks.DATE_SAPLING.get()));
 	}

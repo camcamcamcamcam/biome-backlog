@@ -1,6 +1,6 @@
 {
   "type": "forge:add_features",
   "biomes": "#minecraft:is_badlands",
-  "features": "biome_backlog:patch_tumbleweed",
+  "features": "biome_backlog:patch_pear_cactus",
   "step": "vegetal_decoration"
 }
