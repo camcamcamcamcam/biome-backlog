@@ -13,7 +13,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
@@ -156,7 +155,7 @@ public class Tumbleweed extends Entity {
             this.setDamageCooldown(DAMAGE_COOLDOWN_MAX);
 
             for (final var entity : collidingEntities) {
-                entity.hurt(this.damageSources().cactus(), 2.0F);
+                entity.hurt(DamageSource.CACTUS, 2.0F);
             }
 
             if (!this.level.isClientSide) {
@@ -259,7 +258,7 @@ public class Tumbleweed extends Entity {
             return false;
         }
 
-        if (source.is(DamageTypeTags.IS_EXPLOSION)) {
+        if (source.isExplosion()) {
             this.dropSeeds(true);
             return true;
         }

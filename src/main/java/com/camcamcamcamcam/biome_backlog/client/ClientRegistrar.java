@@ -18,7 +18,6 @@ import com.camcamcamcamcam.biome_backlog.register.ModParticles;
 import com.camcamcamcamcam.biome_backlog.world.level.block.SucculentBlock;
 import com.camcamcamcamcam.biome_backlog.world.level.entity.ModBoat;
 import net.minecraft.client.model.BoatModel;
-import net.minecraft.client.model.ChestBoatModel;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.particle.BubblePopParticle;
 import net.minecraft.client.renderer.BiomeColors;
@@ -79,8 +78,8 @@ public class ClientRegistrar {
 		event.registerLayerDefinition(ModModelLayers.OSTRICH, OstrichModel::createBodyLayer);
 		event.registerLayerDefinition(ModModelLayers.VULTURE, VultureModel::createBodyLayer);
 		event.registerLayerDefinition(ModModelLayers.TUMBLEWEED, TumbleweedModel::createBodyLayer);
-		LayerDefinition layerdefinition18 = BoatModel.createBodyModel();
-		LayerDefinition layerdefinition19 = ChestBoatModel.createBodyModel();
+		LayerDefinition layerdefinition18 = BoatModel.createBodyModel(false);
+		LayerDefinition layerdefinition19 = BoatModel.createBodyModel(true);
 
 
 		for (ModBoat.BoatType boat$type : ModBoat.BoatType.values()) {

@@ -3,7 +3,7 @@ package com.camcamcamcamcam.biome_backlog.data;
 import com.camcamcamcamcam.biome_backlog.BiomeBacklog;
 import com.camcamcamcamcam.biome_backlog.register.ModBlocks;
 import com.camcamcamcamcam.biome_backlog.register.ModItems;
-import net.minecraft.data.PackOutput;
+import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -17,7 +17,7 @@ import net.minecraftforge.registries.RegistryObject;
 import static com.camcamcamcamcam.biome_backlog.BiomeBacklog.prefix;
 
 public class ItemModelGenerator extends ItemModelProvider {
-	public ItemModelGenerator(PackOutput generator, ExistingFileHelper existingFileHelper) {
+	public ItemModelGenerator(DataGenerator generator, ExistingFileHelper existingFileHelper) {
 		super(generator, BiomeBacklog.MODID, existingFileHelper);
 	}
 

@@ -13,6 +13,8 @@ import com.camcamcamcamcam.biome_backlog.register.ModRecipeSerializers;
 import com.camcamcamcamcam.biome_backlog.register.ModRecipeTypes;
 import com.camcamcamcamcam.biome_backlog.register.ModTreeDecoratorTypes;
 import com.camcamcamcamcam.biome_backlog.register.ModTrunkPlacerTypes;
+import com.camcamcamcamcam.biome_backlog.world.gen.feature.ModConfiguredFeatures;
+import com.camcamcamcamcam.biome_backlog.world.gen.feature.ModPlacements;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.logging.LogUtils;
 import it.unimi.dsi.fastutil.longs.LongSet;
@@ -63,6 +65,8 @@ public class BiomeBacklog {
 		ModFoliagePlacerTypes.FOLIAGE_PLACER_TYPE.register(modEventBus);
 		ModBiomeModifiers.BIOME_MODIFIER_SERIALIZERS.register(modEventBus);
 		ModParticles.PARTICLES.register(modEventBus);
+		ModConfiguredFeatures.CONFIGURED_FEATURES.register(modEventBus);
+		ModPlacements.PLACED_FEATURES.register(modEventBus);
 
 		ModRecipeTypes.RECIPE_TYPES.register(modEventBus);
 		ModRecipeSerializers.RECIPE_SERIALIZERS.register(modEventBus);

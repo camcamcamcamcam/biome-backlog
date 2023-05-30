@@ -4,7 +4,7 @@ import com.camcamcamcamcam.biome_backlog.BiomeBacklog;
 import com.camcamcamcamcam.biome_backlog.register.ModBlocks;
 import com.camcamcamcamcam.biome_backlog.world.level.block.SaltBlock;
 import net.minecraft.core.Direction;
-import net.minecraft.data.PackOutput;
+import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SlabBlock;
@@ -21,7 +21,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import javax.annotation.Nonnull;
 
 public class BlockstateGenerator extends BlockStateProvider {
-	public BlockstateGenerator(PackOutput gen, ExistingFileHelper exFileHelper) {
+	public BlockstateGenerator(DataGenerator gen, ExistingFileHelper exFileHelper) {
 		super(gen, BiomeBacklog.MODID, exFileHelper);
 	}
 

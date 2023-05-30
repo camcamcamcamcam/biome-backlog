@@ -6,7 +6,6 @@ import com.camcamcamcamcam.biome_backlog.register.ModRecipeSerializers;
 import com.camcamcamcamcam.biome_backlog.register.ModRecipeTypes;
 import com.camcamcamcamcam.biome_backlog.utils.BlockStateRecipeUtil;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
@@ -82,7 +81,7 @@ public class ColorLoseRecipe implements Recipe<Container> {
 
 	@Nonnull
 	@Override
-	public ItemStack assemble(@Nonnull Container container, RegistryAccess p_267165_) {
+	public ItemStack assemble(@Nonnull Container container) {
 		return ItemStack.EMPTY;
 	}
 
@@ -91,12 +90,14 @@ public class ColorLoseRecipe implements Recipe<Container> {
 		return false;
 	}
 
-	@Override
-	public ItemStack getResultItem(RegistryAccess p_267052_) {
-		return ItemStack.EMPTY;
-	}
-
 	public ItemStack getToastSymbol() {
 		return new ItemStack(Items.WHITE_DYE);
+	}
+
+
+	@Nonnull
+	@Override
+	public ItemStack getResultItem() {
+		return ItemStack.EMPTY;
 	}
 }

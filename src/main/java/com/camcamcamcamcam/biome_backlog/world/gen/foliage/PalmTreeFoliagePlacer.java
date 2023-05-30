@@ -8,9 +8,12 @@ import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.level.LevelSimulatedReader;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType;
+
+import java.util.function.BiConsumer;
 
 public class PalmTreeFoliagePlacer extends FoliagePlacer {
 	public static final Codec<PalmTreeFoliagePlacer> CODEC = RecordCodecBuilder.create((p_68630_) -> {
@@ -30,18 +33,18 @@ public class PalmTreeFoliagePlacer extends FoliagePlacer {
 	}
 
 	@Override
-	protected void createFoliage(LevelSimulatedReader p_225723_, FoliageSetter p_225724_, RandomSource p_225725_, TreeConfiguration p_225726_, int p_225727_, FoliagePlacer.FoliageAttachment p_225728_, int p_225729_, int p_225730_, int p_225731_) {
+	protected void createFoliage(LevelSimulatedReader p_225723_, BiConsumer<BlockPos, BlockState> p_225614_, RandomSource p_225725_, TreeConfiguration p_225726_, int p_225727_, FoliagePlacer.FoliageAttachment p_225728_, int p_225729_, int p_225730_, int p_225731_) {
 		BlockPos blockpos = p_225728_.pos();
 		int attempts = p_225725_.nextInt(this.leefLength) + 3;
-		tryPlaceLeaf(p_225723_, p_225724_, p_225725_, p_225726_, blockpos);
+		tryPlaceLeaf(p_225723_, p_225614_, p_225725_, p_225726_, blockpos);
 		BlockPos.MutableBlockPos blockpos$mutableblockpos = blockpos.mutable();
 		for (int i = 0; i > -1; --i) {
 			int j = 1 + i;
-			this.placeLeavesRow(p_225723_, p_225724_, p_225725_, p_225726_, blockpos, j, i, false);
+			this.placeLeavesRow(p_225723_, p_225614_, p_225725_, p_225726_, blockpos, j, i, false);
 		}
 		for (int i = 0; i < 10; ++i) {
 			blockpos$mutableblockpos.setWithOffset(blockpos, p_225725_.nextInt(p_225730_) - p_225725_.nextInt(p_225730_), p_225725_.nextInt(p_225730_) - p_225730_ + 2, p_225725_.nextInt(p_225730_) - p_225725_.nextInt(p_225730_));
-			tryPlaceLeaf(p_225723_, p_225724_, p_225725_, p_225726_, blockpos$mutableblockpos);
+			tryPlaceLeaf(p_225723_, p_225614_, p_225725_, p_225726_, blockpos$mutableblockpos);
 		}
 
 		for (Direction direction : Direction.Plane.HORIZONTAL) {
@@ -54,12 +57,12 @@ public class PalmTreeFoliagePlacer extends FoliagePlacer {
 				if (leavesGravity >= maxLimit) {
 					leavesGravity = 0;
 					maxLimit /= 1.5F;
-					tryPlaceLeaf(p_225723_, p_225724_, p_225725_, p_225726_, blockpos$mutableblockpos2);
+					tryPlaceLeaf(p_225723_, p_225614_, p_225725_, p_225726_, blockpos$mutableblockpos2);
 					blockpos$mutableblockpos2.move(Direction.DOWN);
 				} else {
 					++leavesGravity;
 				}
-				tryPlaceLeaf(p_225723_, p_225724_, p_225725_, p_225726_, blockpos$mutableblockpos2);
+				tryPlaceLeaf(p_225723_, p_225614_, p_225725_, p_225726_, blockpos$mutableblockpos2);
 			}
 		}
 

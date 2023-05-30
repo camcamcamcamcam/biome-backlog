@@ -2,9 +2,8 @@ package com.camcamcamcamcam.biome_backlog.data.loot;
 
 import com.camcamcamcamcam.biome_backlog.register.ModEntities;
 import com.camcamcamcamcam.biome_backlog.register.ModItems;
-import net.minecraft.data.loot.EntityLootSubProvider;
+import net.minecraft.data.loot.EntityLoot;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootPool;
@@ -19,29 +18,25 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Stream;
 
-public class EntityLootTables extends EntityLootSubProvider {
+public class EntityLootTables extends EntityLoot {
 
 	private final Set<EntityType<?>> knownEntities = new HashSet<>();
 
-	public EntityLootTables() {
-		super(FeatureFlags.REGISTRY.allFlags());
-	}
-
 	@Override
 	protected void add(EntityType<?> entityType, LootTable.Builder builder) {
-		super.add(entityType, builder);
+		this.add(entityType.getDefaultLootTable(), builder);
 		knownEntities.add(entityType);
 	}
 
 	@Override
-	public void generate() {
+	protected void addTables() {
 		this.add(ModEntities.OSTRICH.get(), LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(Items.LEATHER).apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 2.0F))).apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F))))).withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(ModItems.RAW_OSTRICH.get()).apply(SmeltItemFunction.smelted().when(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, ENTITY_ON_FIRE))).apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F))))));
 	}
 
 	@Override
-	protected Stream<EntityType<?>> getKnownEntityTypes() {
-		return this.knownEntities.stream();
+	protected Iterable<EntityType<?>> getKnownEntities() {
+		return knownEntities;
 	}
+
 }

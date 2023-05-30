@@ -126,7 +126,7 @@ public class Vulture extends TamableAnimal {
 				this.move(MoverType.SELF, this.getDeltaMovement());
 				this.setDeltaMovement(this.getDeltaMovement().scale(0.5D));
 			} else {
-				BlockPos ground = BlockPos.containing(this.getX(), this.getY() - 1.0D, this.getZ());
+				BlockPos ground = new BlockPos(this.getX(), this.getY() - 1.0D, this.getZ());
                 float f = 0.91F;
 				if (this.onGround) {
 					f = this.level.getBlockState(ground).getFriction(this.level, ground, this) * 0.91F;
@@ -144,7 +144,7 @@ public class Vulture extends TamableAnimal {
 			}
 		}
 
-        this.calculateEntityAnimation(false);
+        this.calculateEntityAnimation(this, false);
 	}
 
 	public boolean onClimbable() {

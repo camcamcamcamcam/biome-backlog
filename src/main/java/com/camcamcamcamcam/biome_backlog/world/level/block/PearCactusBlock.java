@@ -10,13 +10,13 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.BushBlock;
@@ -79,7 +79,7 @@ public class PearCactusBlock extends BushBlock implements BonemealableBlock {
 
 	public void entityInside(BlockState p_51148_, Level p_51149_, BlockPos p_51150_, Entity p_51151_) {
 		if (p_51151_.isPickable() & p_51148_.getBlock() == ModBlocks.PEAR_CACTUS.get()) {
-			p_51151_.hurt(p_51151_.damageSources().cactus(), 1.0F);
+			p_51151_.hurt(DamageSource.CACTUS, 1.0F);
 		}
 	}
 
@@ -87,7 +87,7 @@ public class PearCactusBlock extends BushBlock implements BonemealableBlock {
 	public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, boolean willHarvest, FluidState fluid) {
 		boolean destroyed = super.onDestroyedByPlayer(state, level, pos, player, willHarvest, fluid);
 		if (state.getBlock() == ModBlocks.PEAR_CACTUS.get()) {
-			player.hurt(player.damageSources().cactus(), 1.0F);
+			player.hurt(DamageSource.CACTUS, 1.0F);
 		}
 		return destroyed;
 	}
@@ -112,7 +112,7 @@ public class PearCactusBlock extends BushBlock implements BonemealableBlock {
 	}
 
 	@Override
-	public boolean isValidBonemealTarget(LevelReader p_50897_, BlockPos p_50898_, BlockState p_50899_, boolean p_50900_) {
+	public boolean isValidBonemealTarget(BlockGetter p_50897_, BlockPos p_50898_, BlockState p_50899_, boolean p_50900_) {
 		return p_50899_.getValue(AGE) < 2;
 	}
 

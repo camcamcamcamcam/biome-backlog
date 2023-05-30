@@ -6,8 +6,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -147,7 +146,7 @@ public class BlockStateIngredient implements Predicate<BlockState> {
 			}
 		} else if (json.has("tag")) {
 			ResourceLocation resourcelocation = new ResourceLocation(GsonHelper.getAsString(json, "tag"));
-			TagKey<Block> tagKey = TagKey.create(Registries.BLOCK, resourcelocation);
+			TagKey<Block> tagKey = TagKey.create(Registry.BLOCK_REGISTRY, resourcelocation);
 			return new TagValue(tagKey);
 		} else {
 			throw new JsonParseException("An ingredient entry needs either a tag or a block");
@@ -181,7 +180,7 @@ public class BlockStateIngredient implements Predicate<BlockState> {
 		@Override
 		public JsonObject serialize() {
 			JsonObject jsonObject = new JsonObject();
-			jsonObject.addProperty("block", BuiltInRegistries.BLOCK.getKey(this.block).toString());
+			jsonObject.addProperty("block", Registry.BLOCK.getKey(this.block).toString());
 			JsonObject jsonObject1 = new JsonObject();
 			if (!this.properties.isEmpty()) {
 				for (Map.Entry<Property<?>, Comparable<?>> entry : this.properties.entrySet()) {
@@ -209,7 +208,7 @@ public class BlockStateIngredient implements Predicate<BlockState> {
 		@Override
 		public JsonObject serialize() {
 			JsonObject jsonObject = new JsonObject();
-			jsonObject.addProperty("block", BuiltInRegistries.BLOCK.getKey(this.block).toString());
+			jsonObject.addProperty("block", Registry.BLOCK.getKey(this.block).toString());
 			return jsonObject;
 		}
 	}
@@ -224,7 +223,7 @@ public class BlockStateIngredient implements Predicate<BlockState> {
 		@Override
 		public Collection<BlockPropertyPair> getPairs() {
 			List<BlockPropertyPair> list = new ArrayList<>();
-			BuiltInRegistries.BLOCK.getTagOrEmpty(this.tag).forEach(holder -> list.add(BlockPropertyPair.of(holder.value(), Map.of())));
+			Registry.BLOCK.getTagOrEmpty(this.tag).forEach(holder -> list.add(BlockPropertyPair.of(holder.value(), Map.of())));
 			return list;
 		}
 

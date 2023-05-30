@@ -1,15 +1,12 @@
 package com.camcamcamcamcam.biome_backlog.client.render;
 
-import com.camcamcamcamcam.biome_backlog.BiomeBacklog;
 import com.camcamcamcamcam.biome_backlog.world.level.entity.ModBoat;
 import com.camcamcamcamcam.biome_backlog.world.level.entity.ModBoatType;
 import com.google.common.collect.ImmutableMap;
+import com.camcamcamcamcam.biome_backlog.BiomeBacklog;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.client.model.BoatModel;
-import net.minecraft.client.model.ChestBoatModel;
-import net.minecraft.client.model.ListModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.entity.BoatRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
@@ -19,7 +16,7 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 public class ModBoatRenderer extends BoatRenderer {
-	private final Map<ModBoat.BoatType, Pair<ResourceLocation, ListModel<Boat>>> boatResources;
+	private final Map<ModBoat.BoatType, Pair<ResourceLocation, BoatModel>> boatResources;
 
 	public ModBoatRenderer(EntityRendererProvider.Context p_234563_, boolean p_234564_) {
 		super(p_234563_, p_234564_);
@@ -36,9 +33,7 @@ public class ModBoatRenderer extends BoatRenderer {
 
 	private BoatModel createBoatModel(EntityRendererProvider.Context p_234569_, ModBoat.BoatType p_234570_, boolean p_234571_) {
 		ModelLayerLocation modellayerlocation = p_234571_ ? createChestBoatModelName(p_234570_) : createBoatModelName(p_234570_);
-		ModelPart modelpart = p_234569_.bakeLayer(modellayerlocation);
-		return p_234571_ ? new ChestBoatModel(modelpart) : new BoatModel(modelpart);
-
+		return new BoatModel(p_234569_.bakeLayer(modellayerlocation), p_234571_);
 	}
 
 	public static ModelLayerLocation createBoatModelName(ModBoat.BoatType p_171290_) {
@@ -53,7 +48,7 @@ public class ModBoatRenderer extends BoatRenderer {
 		return new ModelLayerLocation(new ResourceLocation(BiomeBacklog.MODID, p_171301_), p_171302_);
 	}
 
-	public Pair<ResourceLocation, ListModel<Boat>> getModelWithLocation(Boat boat) {
+	public Pair<ResourceLocation, BoatModel> getModelWithLocation(Boat boat) {
 		if (boat instanceof ModBoatType boatType) {
 			return this.boatResources.get(boatType.getModBoatType());
 		}

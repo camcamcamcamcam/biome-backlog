@@ -19,7 +19,7 @@ public class CalciteBubbleParticle extends TextureSheetParticle {
     @Override
     public void tick() {
         /* Make bubbles fall down when there's no block beneath them. This is a little hacky. */
-        if (this.gravity == 0.0F && this.level.getBlockState(BlockPos.containing(this.x, this.y, this.z).below()).isAir()) {
+        if (this.gravity == 0.0F && this.level.getBlockState(new BlockPos(this.x, this.y, this.z).below()).isAir()) {
             this.gravity = 0.5F * this.random.nextFloat();
         } else {
             this.gravity = 0.0F;

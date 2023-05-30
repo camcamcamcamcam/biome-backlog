@@ -9,7 +9,6 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -44,10 +43,10 @@ public class DateBlock extends Block implements BonemealableBlock {
         p_57799_.add(HANGING);
     }
 
-	@Override
-	public boolean isValidBonemealTarget(LevelReader setter, BlockPos pos, BlockState state, boolean isClient) {
-		return true;
-	}
+    @Override
+    public boolean isValidBonemealTarget(BlockGetter setter, BlockPos pos, BlockState state, boolean isClient) {
+        return true;
+    }
 
     @Override
     public boolean isBonemealSuccess(Level level, RandomSource source, BlockPos pos, BlockState state) {

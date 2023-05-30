@@ -5,7 +5,7 @@ import com.camcamcamcamcam.biome_backlog.recipe.BlockStateIngredient;
 import com.camcamcamcamcam.biome_backlog.recipe.serializer.ColorLoseRecipeSerializer;
 import com.google.gson.JsonObject;
 import net.minecraft.advancements.CriterionTriggerInstance;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.Registry;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
@@ -69,7 +69,7 @@ public class ColorLoseBuilder implements RecipeBuilder {
 	}
 
 	static ResourceLocation getDefaultBlockRecipeId(Block p_176494_) {
-		return BuiltInRegistries.BLOCK.getKey(p_176494_);
+		return Registry.BLOCK.getKey(p_176494_);
 	}
 
 	@Override

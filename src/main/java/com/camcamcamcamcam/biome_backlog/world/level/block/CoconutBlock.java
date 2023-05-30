@@ -17,7 +17,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.Fallable;
@@ -49,7 +48,7 @@ public class CoconutBlock extends HorizontalDirectionalBlock implements Fallable
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        BlockState state = super.getStateForPlacement(context);
+        BlockState state = super.getStateForPlacement(context).setValue(GREEN, context.getClickedFace().getAxis().isHorizontal());
         if (!state.getValue(GREEN)) {
             for (Direction direction : context.getNearestLookingDirections()) {
                 if (direction.getAxis().isHorizontal()) {
@@ -107,10 +106,10 @@ public class CoconutBlock extends HorizontalDirectionalBlock implements Fallable
         p_57799_.add(FACING, GREEN);
     }
 
-	@Override
-	public boolean isValidBonemealTarget(LevelReader blockGetter, BlockPos pos, BlockState state, boolean isClientSide) {
-		return !state.getValue(GREEN);
-	}
+    @Override
+    public boolean isValidBonemealTarget(BlockGetter blockGetter, BlockPos pos, BlockState state, boolean isClientSide) {
+        return !state.getValue(GREEN);
+    }
 
     @Override
     public boolean isBonemealSuccess(Level level, RandomSource randomSource, BlockPos pos, BlockState state) {
