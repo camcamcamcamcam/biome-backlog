@@ -50,15 +50,15 @@ public class CalcitePowderReaction extends Entity {
     public void tick() {
         super.tick();
 
-        if (this.level.isClientSide) {
+        if (this.level().isClientSide) {
             if (this.random.nextInt(3) == 0) {
                 final var x = this.getRandomX(0.5);
                 final var z = this.getRandomZ(0.5);
 
-                this.level.addAlwaysVisibleParticle(ModParticles.CALCITE_POWDER_BUBBLE.get(), x, this.getY() + 0.1, z, 0.0, 0.0, 0.0);
+                this.level().addAlwaysVisibleParticle(ModParticles.CALCITE_POWDER_BUBBLE.get(), x, this.getY() + 0.1, z, 0.0, 0.0, 0.0);
             }
         } else {
-            if (!this.level.getBlockState(this.getOnPos()).is(Blocks.CALCITE)) {
+            if (!this.level().getBlockState(this.getOnPos()).is(Blocks.CALCITE)) {
                 this.discard();
                 return;
             }

@@ -105,11 +105,11 @@ public class Vulture extends TamableAnimal {
 	}
 	public void tick() {
 		super.tick();
-		if (this.level.isClientSide) {
+		if (this.level().isClientSide) {
 			float f = Mth.cos((float) (this.getUniqueFlapTickOffset() + this.tickCount) * 7.448451F * ((float) Math.PI / 180F) + (float) Math.PI);
 			float f1 = Mth.cos((float) (this.getUniqueFlapTickOffset() + this.tickCount + 1) * 7.448451F * ((float) Math.PI / 180F) + (float) Math.PI);
 			if (f > 0.0F && f1 <= 0.0F) {
-				this.level.playLocalSound(this.getX(), this.getY(), this.getZ(), SoundEvents.PHANTOM_FLAP, this.getSoundSource(), 0.95F + this.random.nextFloat() * 0.05F, 0.95F + this.random.nextFloat() * 0.05F, false);
+				this.level().playLocalSound(this.getX(), this.getY(), this.getZ(), SoundEvents.PHANTOM_FLAP, this.getSoundSource(), 0.95F + this.random.nextFloat() * 0.05F, 0.95F + this.random.nextFloat() * 0.05F, false);
 			}
 		}
 
@@ -128,17 +128,17 @@ public class Vulture extends TamableAnimal {
 			} else {
 				BlockPos ground = BlockPos.containing(this.getX(), this.getY() - 1.0D, this.getZ());
                 float f = 0.91F;
-				if (this.onGround) {
-					f = this.level.getBlockState(ground).getFriction(this.level, ground, this) * 0.91F;
+				if (this.onGround()) {
+					f = this.level().getBlockState(ground).getFriction(this.level(), ground, this) * 0.91F;
 				}
 
 				float f1 = 0.16277137F / (f * f * f);
 				f = 0.91F;
-				if (this.onGround) {
-					f = this.level.getBlockState(ground).getFriction(this.level, ground, this) * 0.91F;
+				if (this.onGround()) {
+					f = this.level().getBlockState(ground).getFriction(this.level(), ground, this) * 0.91F;
 				}
 
-				this.moveRelative(this.onGround ? 0.1F * f1 : 0.02F, p_20818_);
+				this.moveRelative(this.onGround() ? 0.1F * f1 : 0.02F, p_20818_);
 				this.move(MoverType.SELF, this.getDeltaMovement());
 				this.setDeltaMovement(this.getDeltaMovement().scale((double) f));
 			}
@@ -203,7 +203,7 @@ public class Vulture extends TamableAnimal {
 		Item item = itemstack.getItem();
 		boolean flag = this.isTame() && this.isOwnedBy(p_30412_) && !this.hasCircle() || itemstack.is(Items.ROTTEN_FLESH) && !this.isTame() && !this.isOwnedBy(p_30412_);
 
-		if (this.level.isClientSide) {
+		if (this.level().isClientSide) {
 			return flag ? InteractionResult.CONSUME : InteractionResult.PASS;
 		} else {
 			if (flag) {
@@ -214,7 +214,7 @@ public class Vulture extends TamableAnimal {
 				this.tame(p_30412_);
 				this.navigation.stop();
 				this.setTarget((LivingEntity) null);
-				this.level.broadcastEntityEvent(this, (byte) 7);
+				this.level().broadcastEntityEvent(this, (byte) 7);
 
 				return InteractionResult.SUCCESS;
 			}
@@ -253,7 +253,7 @@ public class Vulture extends TamableAnimal {
 				return false;
 			} else {
 				this.nextScanTick = reducedTickDelay(60);
-				List<Zombie> list = Vulture.this.level.getNearbyEntities(Zombie.class, this.attackTargeting, Vulture.this, Vulture.this.getBoundingBox().inflate(16.0D, 64.0D, 16.0D));
+				List<Zombie> list = Vulture.this.level().getNearbyEntities(Zombie.class, this.attackTargeting, Vulture.this, Vulture.this.getBoundingBox().inflate(16.0D, 64.0D, 16.0D));
 				if (!list.isEmpty()) {
 					list.sort(Comparator.<Entity, Double>comparing(Entity::getY).reversed());
 
@@ -285,7 +285,7 @@ public class Vulture extends TamableAnimal {
 				return false;
 			} else {
 				this.nextScanTick = reducedTickDelay(60);
-				List<Zombie> list = Vulture.this.level.getNearbyEntities(Zombie.class, this.attackTargeting, Vulture.this, Vulture.this.getBoundingBox().inflate(16.0D, 64.0D, 16.0D));
+				List<Zombie> list = Vulture.this.level().getNearbyEntities(Zombie.class, this.attackTargeting, Vulture.this, Vulture.this.getBoundingBox().inflate(16.0D, 64.0D, 16.0D));
 				if (!list.isEmpty()) {
 					list.sort(Comparator.<Entity, Double>comparing(Entity::getY).reversed());
 
@@ -322,7 +322,7 @@ public class Vulture extends TamableAnimal {
 		}
 
 		public void stop() {
-			Vulture.this.anchorPoint = Vulture.this.level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, Vulture.this.anchorPoint).above(10 + Vulture.this.random.nextInt(20));
+			Vulture.this.anchorPoint = Vulture.this.level().getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, Vulture.this.anchorPoint).above(10 + Vulture.this.random.nextInt(20));
 		}
 
 		public void tick() {
@@ -340,8 +340,8 @@ public class Vulture extends TamableAnimal {
 
 		private void setAnchorAboveTarget() {
 			Vulture.this.anchorPoint = Vulture.this.getTarget().blockPosition().above(20 + Vulture.this.random.nextInt(20));
-			if (Vulture.this.anchorPoint.getY() < Vulture.this.level.getSeaLevel()) {
-				Vulture.this.anchorPoint = new BlockPos(Vulture.this.anchorPoint.getX(), Vulture.this.level.getSeaLevel() + 1, Vulture.this.anchorPoint.getZ());
+			if (Vulture.this.anchorPoint.getY() < Vulture.this.level().getSeaLevel()) {
+				Vulture.this.anchorPoint = new BlockPos(Vulture.this.anchorPoint.getX(), Vulture.this.level().getSeaLevel() + 1, Vulture.this.anchorPoint.getZ());
 			}
 
 		}
@@ -397,12 +397,12 @@ public class Vulture extends TamableAnimal {
 				this.selectNext();
 			}
 
-			if (Vulture.this.moveTargetPoint.y < Vulture.this.getY() && !Vulture.this.level.isEmptyBlock(Vulture.this.blockPosition().below(1))) {
+			if (Vulture.this.moveTargetPoint.y < Vulture.this.getY() && !Vulture.this.level().isEmptyBlock(Vulture.this.blockPosition().below(1))) {
 				this.height = Math.max(1.0F, this.height);
 				this.selectNext();
 			}
 
-			if (Vulture.this.moveTargetPoint.y > Vulture.this.getY() && !Vulture.this.level.isEmptyBlock(Vulture.this.blockPosition().above(1))) {
+			if (Vulture.this.moveTargetPoint.y > Vulture.this.getY() && !Vulture.this.level().isEmptyBlock(Vulture.this.blockPosition().above(1))) {
 				this.height = Math.min(-1.0F, this.height);
 				this.selectNext();
 			}
@@ -411,7 +411,7 @@ public class Vulture extends TamableAnimal {
 
 		private void selectNext() {
 			if (Vulture.this.getOwner() instanceof Player) {
-				if (((Player) Vulture.this.getOwner()).getLastDeathLocation().isPresent() && ((Player) Vulture.this.getOwner()).getLastDeathLocation().get().dimension() == Vulture.this.getLevel().dimension()) {
+				if (((Player) Vulture.this.getOwner()).getLastDeathLocation().isPresent() && ((Player) Vulture.this.getOwner()).getLastDeathLocation().get().dimension() == Vulture.this.level().dimension()) {
 					Vulture.this.anchorPoint = ((Player) Vulture.this.getOwner()).getLastDeathLocation().get().pos().above(10);
 				}
 			}
@@ -460,12 +460,12 @@ public class Vulture extends TamableAnimal {
 				this.selectNext();
 			}
 
-			if (Vulture.this.moveTargetPoint.y < Vulture.this.getY() && !Vulture.this.level.isEmptyBlock(Vulture.this.blockPosition().below(1))) {
+			if (Vulture.this.moveTargetPoint.y < Vulture.this.getY() && !Vulture.this.level().isEmptyBlock(Vulture.this.blockPosition().below(1))) {
 				this.height = Math.max(1.0F, this.height);
 				this.selectNext();
 			}
 
-			if (Vulture.this.moveTargetPoint.y > Vulture.this.getY() && !Vulture.this.level.isEmptyBlock(Vulture.this.blockPosition().above(1))) {
+			if (Vulture.this.moveTargetPoint.y > Vulture.this.getY() && !Vulture.this.level().isEmptyBlock(Vulture.this.blockPosition().above(1))) {
 				this.height = Math.min(-1.0F, this.height);
 				this.selectNext();
 			}
@@ -577,7 +577,7 @@ public class Vulture extends TamableAnimal {
 				} else {
 					if (Vulture.this.tickCount > this.catSearchTick) {
 						this.catSearchTick = Vulture.this.tickCount + 20;
-						List<Cat> list = Vulture.this.level.getEntitiesOfClass(Cat.class, Vulture.this.getBoundingBox().inflate(16.0D), EntitySelector.ENTITY_STILL_ALIVE);
+						List<Cat> list = Vulture.this.level().getEntitiesOfClass(Cat.class, Vulture.this.getBoundingBox().inflate(16.0D), EntitySelector.ENTITY_STILL_ALIVE);
 
 						for (Cat cat : list) {
 							cat.hiss();
@@ -607,7 +607,7 @@ public class Vulture extends TamableAnimal {
 					Vulture.this.doHurtTarget(livingentity);
 					Vulture.this.attackPhase = Vulture.AttackPhase.CIRCLE;
 					if (!Vulture.this.isSilent()) {
-						Vulture.this.level.levelEvent(1039, Vulture.this.blockPosition(), 0);
+						Vulture.this.level().levelEvent(1039, Vulture.this.blockPosition(), 0);
 					}
 				} else if (Vulture.this.horizontalCollision || Vulture.this.hurtTime > 0) {
 					Vulture.this.attackPhase = Vulture.AttackPhase.CIRCLE;

@@ -69,7 +69,7 @@ public class Ostrich extends Animal implements NeutralMob {
 
     public Ostrich(EntityType<? extends Ostrich> p_27557_, Level p_27558_) {
         super(p_27557_, p_27558_);
-        this.maxUpStep = 1.5F;
+        this.setMaxUpStep(1.5F);
         GroundPathNavigation groundpathnavigation = (GroundPathNavigation) this.getNavigation();
         groundpathnavigation.setCanFloat(true);
         groundpathnavigation.setCanWalkOverFences(true);
@@ -101,7 +101,7 @@ public class Ostrich extends Animal implements NeutralMob {
 
     @Override
     public void tick() {
-        if ((this.isDip() || this.isMoving()) && level.isClientSide()) {
+        if ((this.isDip() || this.isMoving()) && level().isClientSide()) {
             if (isDashing()) {
                 idlingState.stop();
                 runningScale = Mth.clamp(runningScale + 0.1F, 0, 1);
@@ -109,7 +109,7 @@ public class Ostrich extends Animal implements NeutralMob {
                 idlingState.stop();
                 runningScale = Mth.clamp(runningScale - 0.1F, 0, 1);
             }
-        } else if (level.isClientSide()) {
+        } else if (level().isClientSide()) {
             runningScale = Mth.clamp(runningScale - 0.1F, 0, 1);
             idlingState.startIfStopped(this.tickCount);
         }
@@ -191,7 +191,7 @@ public class Ostrich extends Animal implements NeutralMob {
             this.featherTime = compoundTag.getInt("FeatherTime");
         }
         this.setHasEgg(compoundTag.getBoolean("HasEgg"));
-        this.readPersistentAngerSaveData(this.level, compoundTag);
+        this.readPersistentAngerSaveData(this.level(), compoundTag);
     }
 
     public boolean hasEgg() {
@@ -218,16 +218,16 @@ public class Ostrich extends Animal implements NeutralMob {
     public void aiStep() {
         super.aiStep();
         if (this.homeTarget != null) {
-            if (!this.level.getBlockState(this.homeTarget).is(ModBlocks.OSTRICH_EGG.get())) {
+            if (!this.level().getBlockState(this.homeTarget).is(ModBlocks.OSTRICH_EGG.get())) {
                 this.homeTarget = null;
             }
         }
 
-        if (!this.level.isClientSide) {
-            this.updatePersistentAnger((ServerLevel) this.level, true);
+        if (!this.level().isClientSide) {
+            this.updatePersistentAnger((ServerLevel) this.level(), true);
         }
 
-        if (!this.level.isClientSide && this.isAlive() && !this.isBaby() && --this.featherTime <= 0) {
+        if (!this.level().isClientSide && this.isAlive() && !this.isBaby() && --this.featherTime <= 0) {
             this.playSound(SoundEvents.BAT_TAKEOFF, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
             this.spawnAtLocation(Items.FEATHER);
             this.gameEvent(GameEvent.ENTITY_INTERACT);
@@ -246,7 +246,7 @@ public class Ostrich extends Animal implements NeutralMob {
 
     @Override
     public boolean doHurtTarget(Entity p_21372_) {
-        this.level.broadcastEntityEvent(this, (byte) 4);
+        this.level().broadcastEntityEvent(this, (byte) 4);
         return super.doHurtTarget(p_21372_);
     }
 
@@ -311,7 +311,7 @@ public class Ostrich extends Animal implements NeutralMob {
         public boolean canUse() {
             if (Ostrich.this.getHomeTarget() != null) {
                 if (!Ostrich.this.isDip() && Ostrich.this.getTarget() == null && Ostrich.this.homeTarget.distSqr(Ostrich.this.blockPosition()) < 64) {
-                    if (Ostrich.this.isOnGround() && Ostrich.this.level.getBlockState(Ostrich.this.blockPosition().below()).is(BlockTags.SAND) && Ostrich.this.random.nextInt(240) == 0) {
+                    if (Ostrich.this.onGround() && Ostrich.this.level().getBlockState(Ostrich.this.blockPosition().below()).is(BlockTags.SAND) && Ostrich.this.random.nextInt(240) == 0) {
                         return true;
                     }
                 }
@@ -395,7 +395,7 @@ public class Ostrich extends Animal implements NeutralMob {
                         vec31 = DefaultRandomPos.getPosTowards(this.ostrich, 8, 7, vec3, (double) ((float) Math.PI / 2F));
                     }
 
-                    if (vec31 != null && !flag && !this.ostrich.level.getBlockState(BlockPos.containing(vec31)).is(Blocks.WATER)) {
+                    if (vec31 != null && !flag && !this.ostrich.level().getBlockState(BlockPos.containing(vec31)).is(Blocks.WATER)) {
                         vec31 = DefaultRandomPos.getPosTowards(this.ostrich, 16, 5, vec3, (double) ((float) Math.PI / 2F));
                     }
 
@@ -430,7 +430,7 @@ public class Ostrich extends Animal implements NeutralMob {
         public void tick() {
             super.tick();
             if (!this.ostrich.isInWater() && this.isReachedTarget()) {
-                Level level = this.ostrich.level;
+                Level level = this.ostrich.level();
                 level.playSound((Player) null, this.blockPos.above(), SoundEvents.TURTLE_LAY_EGG, SoundSource.BLOCKS, 0.3F, 0.9F + level.random.nextFloat() * 0.2F);
                 level.setBlock(this.blockPos.above(), ModBlocks.OSTRICH_EGG.get().defaultBlockState(), 3);
                 this.ostrich.setHasEgg(false);
@@ -475,7 +475,7 @@ public class Ostrich extends Animal implements NeutralMob {
                     for (int k = 0; k <= j; k = k > 0 ? -k : 1 - k) {
                         for (int l = k < j && k > -j ? j : 0; l <= j; l = l > 0 ? -l : 1 - l) {
                             blockpos$mutable.setWithOffset(blockpos, k, i, l);
-                            if (level.getBlockState(blockpos$mutable).is(ModBlocks.OSTRICH_EGG.get())) {
+                            if (level().getBlockState(blockpos$mutable).is(ModBlocks.OSTRICH_EGG.get())) {
                                 return true;
                             }
                         }

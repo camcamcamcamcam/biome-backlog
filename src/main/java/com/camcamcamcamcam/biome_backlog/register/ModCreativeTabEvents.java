@@ -2,15 +2,15 @@ package com.camcamcamcamcam.biome_backlog.register;
 
 import com.camcamcamcamcam.biome_backlog.BiomeBacklog;
 import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraftforge.event.CreativeModeTabEvent;
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = BiomeBacklog.MODID)
 public class ModCreativeTabEvents {
 	@SubscribeEvent
-	public static void registerCreativeTab(CreativeModeTabEvent.BuildContents event) {
-		if (event.getTab() == CreativeModeTabs.BUILDING_BLOCKS) {
+	public static void registerCreativeTab(BuildCreativeModeTabContentsEvent event) {
+		if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
 			event.accept(ModBlocks.PALM_LOG);
 			event.accept(ModBlocks.PALM_WOOD);
 			event.accept(ModBlocks.STRIPPED_PALM_LOG);
@@ -41,11 +41,11 @@ public class ModCreativeTabEvents {
 			event.accept(ModBlocks.SALT_TILE_SLAB);
 			event.accept(ModBlocks.SALT_TILE_STAIRS);
 		}
-		if (event.getTab() == CreativeModeTabs.REDSTONE_BLOCKS) {
+		if (event.getTabKey() == CreativeModeTabs.REDSTONE_BLOCKS) {
 			event.accept(ModBlocks.PALM_BUTTON);
 			event.accept(ModBlocks.PALM_PRESSURE_PLATE);
 		}
-		if (event.getTab() == CreativeModeTabs.NATURAL_BLOCKS) {
+		if (event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS) {
 			event.accept(ModBlocks.PALM_LEAVES);
 			event.accept(ModBlocks.COCONUT_SAPLING);
 			event.accept(ModBlocks.COCONUT);
@@ -56,13 +56,13 @@ public class ModCreativeTabEvents {
 			event.accept(ModBlocks.SUCCULENT);
 			event.accept(ModItems.TUMBLEWEED_SEED);
 		}
-		if (event.getTab() == CreativeModeTabs.SPAWN_EGGS) {
+		if (event.getTabKey() == CreativeModeTabs.SPAWN_EGGS) {
 			event.accept(ModItems.OSTRICH_SPAWN_EGG);
 			event.accept(ModItems.VULTURE_SPAWN_EGG);
 			event.accept(ModItems.MEERKAT_SPAWN_EGG);
 		}
 
-		if (event.getTab() == CreativeModeTabs.FOOD_AND_DRINKS) {
+		if (event.getTabKey() == CreativeModeTabs.FOOD_AND_DRINKS) {
 			event.accept(ModItems.PRICKLY_PEAR);
 			event.accept(ModItems.PRICKLESS_PEAR);
 			event.accept(ModItems.CACTUS_SALAD);
@@ -72,7 +72,7 @@ public class ModCreativeTabEvents {
 			event.accept(ModItems.COCONUT_CHUNK);
 			event.accept(ModItems.DESICCATED_COCONUT);
 		}
-		if (event.getTab() == CreativeModeTabs.INGREDIENTS) {
+		if (event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
 			event.accept(ModItems.CACTUS_PAD);
 			event.accept(ModItems.COCONUT_HALF);
 			event.accept(ModItems.COCONUT_SHELL);

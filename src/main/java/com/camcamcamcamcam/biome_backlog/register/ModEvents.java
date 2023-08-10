@@ -39,7 +39,7 @@ public class ModEvents {
     public static void onProjectileHit(ProjectileImpactEvent event) {
         if (event.getRayTraceResult() instanceof BlockHitResult blockHitResult) {
             Projectile projectile = event.getProjectile();
-            Level level = projectile.level;
+            Level level = projectile.level();
             Vec3 projectileMovement = projectile.getDeltaMovement();
             if (projectileMovement.length() > 0.1 && level.getBlockState(blockHitResult.getBlockPos()).is(ModTags.PALM_WOOD)) {
                 event.setCanceled(true);
@@ -57,7 +57,7 @@ public class ModEvents {
 
         if (event.getRayTraceResult() instanceof EntityHitResult entityHitResult) {
             Projectile projectile = event.getProjectile();
-            Level level = projectile.level;
+            Level level = projectile.level();
             Vec3 projectileMovement = projectile.getDeltaMovement();
             if (projectileMovement.length() > 0.1) {
                 if (entityHitResult.getEntity() instanceof ModBoatType boatType) {
@@ -89,9 +89,9 @@ public class ModEvents {
 
         if (livingEntity instanceof Player) {
             if (((Player) livingEntity).getLastDeathLocation().isPresent()) {
-                if (livingEntity.level instanceof ServerLevel serverLevel) {
+                if (livingEntity.level() instanceof ServerLevel serverLevel) {
                     BlockPos pos = ((Player) livingEntity).getLastDeathLocation().get().pos();
-                    livingEntity.level.getCapability(BiomeBacklog.TRUSTED_VULTURE_CAP).ifPresent(deathTrackCapability -> {
+                    livingEntity.level().getCapability(BiomeBacklog.TRUSTED_VULTURE_CAP).ifPresent(deathTrackCapability -> {
                         for (DeathTrackRequest request : deathTrackCapability.getDeathTrackRequestsFor()) {
                             loadChunksAround(serverLevel, request.getVultureUUID(), request.getChunkPosition(), true);
                             Entity entityFromChunk = serverLevel.getEntity(request.getVultureUUID());
@@ -125,7 +125,7 @@ public class ModEvents {
             if (!event.getLevel().isClientSide && living.isAlive() && living instanceof Vulture && ((Vulture) living).isTame() && ((Vulture) living).hasCircle()) {
                 UUID ownerUUID = ((Vulture) living).getOwnerUUID();
                 event.getLevel().getCapability(BiomeBacklog.TRUSTED_VULTURE_CAP).ifPresent(cap -> {
-                    DeathTrackRequest request = new DeathTrackRequest(living.getUUID(), ForgeRegistries.ENTITY_TYPES.getKey(event.getEntity().getType()).toString(), ownerUUID, living.blockPosition(), event.getEntity().level.dayTime());
+                    DeathTrackRequest request = new DeathTrackRequest(living.getUUID(), ForgeRegistries.ENTITY_TYPES.getKey(event.getEntity().getType()).toString(), ownerUUID, living.blockPosition(), event.getEntity().level().dayTime());
                     cap.addDeathTrackRequest(request);
                 });
             }

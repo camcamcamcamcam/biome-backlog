@@ -42,7 +42,7 @@ public class CoconutProjectile extends ThrowableItemProjectile {
             ParticleOptions particleoptions = this.getParticle();
 
             for(int i = 0; i < 8; ++i) {
-                this.level.addParticle(particleoptions, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
+                this.level().addParticle(particleoptions, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
             }
         }
 
@@ -50,8 +50,8 @@ public class CoconutProjectile extends ThrowableItemProjectile {
 
     protected void onHit(HitResult hitResult) {
         super.onHit(hitResult);
-        if (!this.level.isClientSide) {
-            this.level.broadcastEntityEvent(this, (byte)3);
+        if (!this.level().isClientSide) {
+            this.level().broadcastEntityEvent(this, (byte) 3);
             if (hitResult instanceof BlockHitResult blockHitResult && blockHitResult.getDirection() == Direction.UP) {
                 Vec3 deltaMovement = this.getDeltaMovement();
                 Vec3 newDeltaMovement = new Vec3(deltaMovement.x(), 0.0, deltaMovement.z());

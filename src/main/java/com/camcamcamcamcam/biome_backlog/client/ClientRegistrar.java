@@ -6,11 +6,7 @@ import com.camcamcamcamcam.biome_backlog.client.model.OstrichModel;
 import com.camcamcamcamcam.biome_backlog.client.model.TumbleweedModel;
 import com.camcamcamcamcam.biome_backlog.client.model.VultureModel;
 import com.camcamcamcamcam.biome_backlog.client.particle.CalciteBubbleParticle;
-import com.camcamcamcamcam.biome_backlog.client.render.MeerkatRender;
-import com.camcamcamcamcam.biome_backlog.client.render.ModBoatRenderer;
-import com.camcamcamcamcam.biome_backlog.client.render.OstrichRender;
-import com.camcamcamcamcam.biome_backlog.client.render.TumbleweedRender;
-import com.camcamcamcamcam.biome_backlog.client.render.VultureRender;
+import com.camcamcamcamcam.biome_backlog.client.render.*;
 import com.camcamcamcamcam.biome_backlog.register.ModBlockEntities;
 import com.camcamcamcamcam.biome_backlog.register.ModBlocks;
 import com.camcamcamcamcam.biome_backlog.register.ModEntities;
@@ -91,8 +87,8 @@ public class ClientRegistrar {
 
 	@SubscribeEvent
 	public static void registerParticleProviders(RegisterParticleProvidersEvent event) {
-		event.register(ModParticles.CALCITE_POWDER_BUBBLE.get(), CalciteBubbleParticle.Provider::new);
-		event.register(ModParticles.CALCITE_POWDER_BUBBLE_POP.get(), BubblePopParticle.Provider::new);
+		event.registerSpriteSet(ModParticles.CALCITE_POWDER_BUBBLE.get(), CalciteBubbleParticle.Provider::new);
+		event.registerSpriteSet(ModParticles.CALCITE_POWDER_BUBBLE_POP.get(), BubblePopParticle.Provider::new);
 	}
 
 	@SubscribeEvent

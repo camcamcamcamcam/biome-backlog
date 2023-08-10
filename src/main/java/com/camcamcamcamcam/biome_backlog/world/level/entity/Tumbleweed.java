@@ -26,7 +26,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.synth.SimplexNoise;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.ToolActions;
 import org.jetbrains.annotations.Nullable;
 
 public class Tumbleweed extends Entity {
@@ -127,12 +127,12 @@ public class Tumbleweed extends Entity {
     }
 
     private void playAmbientSound(SoundEvent sound) {
-        this.level.playSound(null, this.getX(), this.getY(), this.getZ(), sound, SoundSource.AMBIENT, 1.0F, 1.0F);
+        this.level().playSound(null, this.getX(), this.getY(), this.getZ(), sound, SoundSource.AMBIENT, 1.0F, 1.0F);
     }
 
     private void dropSeeds(boolean destroy) {
-        final var item = new ItemEntity(this.level, this.getX(), this.getY(), this.getZ(), new ItemStack(ModItems.TUMBLEWEED_SEED.get()));
-        this.level.addFreshEntity(item);
+        final var item = new ItemEntity(this.level(), this.getX(), this.getY(), this.getZ(), new ItemStack(ModItems.TUMBLEWEED_SEED.get()));
+        this.level().addFreshEntity(item);
 
         if (destroy) {
             this.playAmbientSound(SoundEvents.SWEET_BERRY_BUSH_BREAK);
@@ -144,7 +144,7 @@ public class Tumbleweed extends Entity {
 
     private void checkEntityCollision() {
         if (this.decrementDamageCooldown()) {
-            final var collidingEntities = this.level.getEntitiesOfClass(
+            final var collidingEntities = this.level().getEntitiesOfClass(
                 LivingEntity.class,
                 this.getBoundingBox().inflate(COLLISION_EPSILON)
             );
@@ -159,13 +159,13 @@ public class Tumbleweed extends Entity {
                 entity.hurt(this.damageSources().cactus(), 2.0F);
             }
 
-            if (!this.level.isClientSide) {
+            if (!this.level().isClientSide) {
                 final var pos = this.blockPosition();
-                final var state = this.level.getBlockState(pos);
+                final var state = this.level().getBlockState(pos);
 
-                if (!this.hasAlreadyCollided && ModBlocks.TUMBLEWEED.get().canSurvive(state, this.level, pos)) {
-                    this.level.setBlock(pos, ModBlocks.TUMBLEWEED.get().defaultBlockState(), Block.UPDATE_CLIENTS);
-                    this.level.playSound(null, pos, SoundEvents.SWEET_BERRY_BUSH_PLACE, SoundSource.BLOCKS, 1.0F, 1.0F);
+                if (!this.hasAlreadyCollided && ModBlocks.TUMBLEWEED.get().canSurvive(state, this.level(), pos)) {
+                    this.level().setBlock(pos, ModBlocks.TUMBLEWEED.get().defaultBlockState(), Block.UPDATE_CLIENTS);
+                    this.level().playSound(null, pos, SoundEvents.SWEET_BERRY_BUSH_PLACE, SoundSource.BLOCKS, 1.0F, 1.0F);
 
                     this.hasAlreadyCollided = true;
                 } else if (!this.hasAlreadyCollided) {
@@ -229,7 +229,7 @@ public class Tumbleweed extends Entity {
         }
 
         final double newVerticalSpeed;
-        if (this.onGround && shouldRoll) {
+        if (this.onGround() && shouldRoll) {
             newVerticalSpeed = BOUNCE_SPEED;
         } else {
             newVerticalSpeed = realVelocity.y + GRAVITY;
@@ -270,7 +270,7 @@ public class Tumbleweed extends Entity {
 
         final var player = (Player) source.getDirectEntity();
 
-        if (!player.getItemInHand(InteractionHand.MAIN_HAND).is(Tags.Items.TOOLS_HOES)) {
+        if (!(player.getItemInHand(InteractionHand.MAIN_HAND).canPerformAction(ToolActions.HOE_DIG))) {
             return false;
         }
 

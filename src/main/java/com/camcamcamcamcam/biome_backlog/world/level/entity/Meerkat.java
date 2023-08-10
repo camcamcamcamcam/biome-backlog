@@ -144,7 +144,7 @@ public class Meerkat extends Animal {
 	@Override
 	public void aiStep() {
 		super.aiStep();
-		if (!this.level.isClientSide) {
+		if (!this.level().isClientSide) {
 			if (this.stayOutOfBurrowCountdown > 0) {
 				--this.stayOutOfBurrowCountdown;
 			}
@@ -153,7 +153,7 @@ public class Meerkat extends Animal {
 
 	public void tick() {
 		super.tick();
-		if (this.level.isClientSide()) {
+		if (this.level().isClientSide()) {
 
 			switch (this.getPose()) {
 				case DIGGING:
@@ -174,7 +174,7 @@ public class Meerkat extends Animal {
 					double d0 = this.getX() + (double) Mth.randomBetween(randomsource, -0.3F, 0.3F);
 					double d1 = this.getY();
 					double d2 = this.getZ() + (double) Mth.randomBetween(randomsource, -0.3F, 0.3F);
-					this.level.addParticle(new BlockParticleOption(ParticleTypes.BLOCK, blockstate), d0, d1, d2, 0.0D, 0.0D, 0.0D);
+					this.level().addParticle(new BlockParticleOption(ParticleTypes.BLOCK, blockstate), d0, d1, d2, 0.0D, 0.0D, 0.0D);
 				}
 			}
 		}
@@ -350,7 +350,7 @@ public class Meerkat extends Animal {
 	}
 
 	public void shareTheBurrow(@javax.annotation.Nullable BlockPos burrowPos) {
-		for (Meerkat meerkat : this.level.getEntities(EntityTypeTest.forClass(Meerkat.class), this.getBoundingBox().inflate(32D), (meerkat) -> {
+		for (Meerkat meerkat : this.level().getEntities(EntityTypeTest.forClass(Meerkat.class), this.getBoundingBox().inflate(32D), (meerkat) -> {
 			return meerkat.getTrustedLeaderUUID() == this.getUUID();
 		})) {
 			meerkat.setBurrowPos(burrowPos);
@@ -359,7 +359,7 @@ public class Meerkat extends Animal {
 
 	public boolean wantsToEnterBurrow() {
 		if (this.getTarget() == null && this.getPose() != Pose.EMERGING && this.getPose() != Pose.DIGGING) {
-			boolean flag = this.stayOutOfBurrowCountdown <= 0 || this.level.isRaining() || this.level.isNight();
+			boolean flag = this.stayOutOfBurrowCountdown <= 0 || this.level().isRaining() || this.level().isNight();
 			return flag;
 		} else {
 			return false;
@@ -428,7 +428,7 @@ public class Meerkat extends Animal {
 		public boolean canUse() {
 			if (this.meerkat.getTrustedLeaderUUID() == this.meerkat.getUUID() || this.meerkat.getTrustedLeaderUUID() == null) {
 				if (!this.meerkat.hasBurrow() && wantsToMakeBurrow()) {
-					return this.meerkat.level.getBlockState(this.meerkat.blockPosition().below()).is(Blocks.SAND);
+					return this.meerkat.level().getBlockState(this.meerkat.blockPosition().below()).is(Blocks.SAND);
 				}
 			}
 
@@ -455,8 +455,8 @@ public class Meerkat extends Animal {
 			super.tick();
 			++this.tick;
 			if (this.tick % 5 == 0) {
-				if (this.meerkat.level.getBlockState(this.meerkat.blockPosition().below()).is(Blocks.SAND)) {
-					this.meerkat.level.levelEvent(2001, this.meerkat.blockPosition().below(), Block.getId(this.meerkat.level.getBlockState(this.meerkat.blockPosition().below())));
+				if (this.meerkat.level().getBlockState(this.meerkat.blockPosition().below()).is(Blocks.SAND)) {
+					this.meerkat.level().levelEvent(2001, this.meerkat.blockPosition().below(), Block.getId(this.meerkat.level().getBlockState(this.meerkat.blockPosition().below())));
 				}
 			}
 		}
@@ -464,8 +464,8 @@ public class Meerkat extends Animal {
 		@Override
 		public void stop() {
 			super.stop();
-			if (this.meerkat.level.getBlockState(this.meerkat.blockPosition().below()).is(Blocks.SAND)) {
-				this.meerkat.level.setBlock(this.meerkat.blockPosition().below(), ModBlocks.BURROW.get().defaultBlockState(), 2);
+			if (this.meerkat.level().getBlockState(this.meerkat.blockPosition().below()).is(Blocks.SAND)) {
+				this.meerkat.level().setBlock(this.meerkat.blockPosition().below(), ModBlocks.BURROW.get().defaultBlockState(), 2);
 				this.meerkat.setBurrowPos(this.meerkat.blockPosition().below());
 				Meerkat.this.shareTheBurrow(this.meerkat.blockPosition().below());
 			}
@@ -481,7 +481,7 @@ public class Meerkat extends Animal {
 
 		public boolean canUse() {
 			if (Meerkat.this.hasBurrow() && wantsToEnterBurrow() && Meerkat.this.burrowPos.closerToCenterThan(Meerkat.this.position(), 2.0D)) {
-				BlockEntity blockentity = Meerkat.this.level.getBlockEntity(Meerkat.this.burrowPos);
+				BlockEntity blockentity = Meerkat.this.level().getBlockEntity(Meerkat.this.burrowPos);
 				if (blockentity instanceof BurrowBlockEntity) {
 					BurrowBlockEntity burrow = (BurrowBlockEntity) blockentity;
 					if (!burrow.isFull()) {
@@ -511,7 +511,7 @@ public class Meerkat extends Animal {
 		@Override
 		public void stop() {
 			super.stop();
-			BlockEntity blockentity = Meerkat.this.level.getBlockEntity(Meerkat.this.burrowPos);
+			BlockEntity blockentity = Meerkat.this.level().getBlockEntity(Meerkat.this.burrowPos);
 			if (blockentity instanceof BurrowBlockEntity burrow) {
 				burrow.addOccupant(Meerkat.this);
 			} else {
@@ -530,13 +530,13 @@ public class Meerkat extends Animal {
 
 	@VisibleForDebug
 	public class MeerkatGoToBurrowGoal extends Goal {
-		int travellingTicks = Meerkat.this.level.random.nextInt(10);
+		int travellingTicks = Meerkat.this.level().random.nextInt(10);
 		public MeerkatGoToBurrowGoal() {
 			this.setFlags(EnumSet.of(Goal.Flag.MOVE));
 		}
 
 		public boolean canUse() {
-			return Meerkat.this.burrowPos != null && Meerkat.this.wantsToEnterBurrow() && !Meerkat.this.hasRestriction() && !this.hasReachedTarget(Meerkat.this.burrowPos) && Meerkat.this.level.getBlockState(Meerkat.this.burrowPos).is(ModTags.BURROW);
+			return Meerkat.this.burrowPos != null && Meerkat.this.wantsToEnterBurrow() && !Meerkat.this.hasRestriction() && !this.hasReachedTarget(Meerkat.this.burrowPos) && Meerkat.this.level().getBlockState(Meerkat.this.burrowPos).is(ModTags.BURROW);
 		}
 
 		public boolean canContinueToUse() {
@@ -624,7 +624,7 @@ public class Meerkat extends Animal {
 			if (!this.meerkat.isStanding()) {
 				if (this.cooldown <= 0) {
 					this.cooldown = TIME_BETWEEN_STANDING.sample(this.meerkat.random);
-					if (this.meerkat.getTarget() == null && this.meerkat.isOnGround() && !this.meerkat.isInWater()) {
+					if (this.meerkat.getTarget() == null && this.meerkat.onGround() && !this.meerkat.isInWater()) {
 						return true;
 					}
 				} else {
@@ -668,7 +668,7 @@ public class Meerkat extends Animal {
 		public boolean canUse() {
 			if (this.meerkat.isStanding()) {
 
-				if (this.meerkat.getTarget() != null || !this.meerkat.isOnGround() || this.meerkat.isInWater()) {
+				if (this.meerkat.getTarget() != null || !this.meerkat.onGround() || this.meerkat.isInWater()) {
 					return true;
 				}
 				if (this.cooldown <= 0) {

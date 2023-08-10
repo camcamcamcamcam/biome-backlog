@@ -1,7 +1,7 @@
 package com.camcamcamcamcam.biome_backlog.world.level.block;
 
-import com.camcamcamcamcam.biome_backlog.world.level.entity.Ostrich;
 import com.camcamcamcamcam.biome_backlog.register.ModEntities;
+import com.camcamcamcamcam.biome_backlog.world.level.entity.Ostrich;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -38,7 +38,7 @@ public class OstrichEggBlock extends Block {
 	}
 
 	public static void angerNearbyOstrichs(Player p_34874_) {
-		List<Ostrich> list = p_34874_.level.getEntitiesOfClass(Ostrich.class, p_34874_.getBoundingBox().inflate(16.0D));
+		List<Ostrich> list = p_34874_.level().getEntitiesOfClass(Ostrich.class, p_34874_.getBoundingBox().inflate(16.0D));
 		list.stream().filter((p_34881_) -> {
 			return p_34881_.hasLineOfSight(p_34874_) && !p_34874_.isCreative();
 		}).forEach((p_34872_) -> {
