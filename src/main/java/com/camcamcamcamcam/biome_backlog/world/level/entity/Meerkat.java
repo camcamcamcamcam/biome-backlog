@@ -319,6 +319,13 @@ public class Meerkat extends Animal {
 		return p_27817_.closerThan(this.blockPosition(), (double) p_27818_);
 	}
 
+	@Override
+	public void knockback(double p_147241_, double p_147242_, double p_147243_) {
+		if (!this.isDiggingOrEmerging()) {
+			super.knockback(p_147241_, p_147242_, p_147243_);
+		}
+	}
+
 	boolean isTooFarAway(BlockPos p_27890_) {
 		return !this.closerThan(p_27890_, 128);
 	}
