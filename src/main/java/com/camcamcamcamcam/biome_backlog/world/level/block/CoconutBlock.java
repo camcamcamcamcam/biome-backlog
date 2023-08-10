@@ -41,7 +41,7 @@ public class CoconutBlock extends HorizontalDirectionalBlock implements Fallable
 
     public CoconutBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(GREEN, true));
+        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(GREEN, false));
 
     }
 
@@ -57,7 +57,11 @@ public class CoconutBlock extends HorizontalDirectionalBlock implements Fallable
                 }
             }
         } else {
-            state = state.setValue(FACING, context.getClickedFace().getOpposite());
+            if (context.getClickedFace().getOpposite().getAxis().isHorizontal()) {
+                state = state.setValue(FACING, context.getClickedFace().getOpposite());
+            } else {
+                state = state.setValue(FACING, Direction.NORTH);
+            }
         }
         return state;
     }
@@ -117,17 +121,19 @@ public class CoconutBlock extends HorizontalDirectionalBlock implements Fallable
 
     @Override
     public void performBonemeal(ServerLevel level, RandomSource randomSource, BlockPos pos, BlockState state) {
-        for (Direction direction : Direction.values()) {
+        if (!level.getBlockState(pos.below()).is(BlockTags.SAND)) {
+
+            for (Direction direction : Direction.values()) {
             BlockPos offset = pos.offset(direction.getStepX(), direction.getStepY(), direction.getStepZ());
             if (direction.getAxis().isHorizontal() && level.getBlockState(offset).is(BlockTags.LOGS)) {
                 level.setBlock(pos, state.setValue(GREEN, true).setValue(FACING, direction), 3);
                 return;
             }
         }
-        level.setBlock(pos, ModBlocks.COCONUT_SAPLING.get().defaultBlockState().setValue(FACING, state.getValue(FACING)), 3);
 
-        if (!level.getBlockState(pos.below()).is(BlockTags.SAND)) {
             level.destroyBlock(pos, true);
+        } else {
+            level.setBlock(pos, ModBlocks.COCONUT_SAPLING.get().defaultBlockState().setValue(FACING, state.getValue(FACING)), 3);
         }
     }
 }
