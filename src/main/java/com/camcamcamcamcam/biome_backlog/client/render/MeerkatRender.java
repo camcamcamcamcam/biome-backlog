@@ -1,10 +1,9 @@
 package com.camcamcamcamcam.biome_backlog.client.render;
 
-import com.camcamcamcamcam.biome_backlog.client.model.MeerkatModel;
-import com.camcamcamcamcam.biome_backlog.world.level.entity.Meerkat;
 import com.camcamcamcamcam.biome_backlog.BiomeBacklog;
 import com.camcamcamcamcam.biome_backlog.client.ModModelLayers;
-import com.mojang.blaze3d.vertex.PoseStack;
+import com.camcamcamcamcam.biome_backlog.client.model.MeerkatModel;
+import com.camcamcamcamcam.biome_backlog.world.level.entity.Meerkat;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
@@ -23,11 +22,5 @@ public class MeerkatRender<T extends Meerkat> extends MobRenderer<T, MeerkatMode
 	@Override
 	public ResourceLocation getTextureLocation(T p_110775_1_) {
 		return TEXTURE;
-	}
-
-	@Override
-	protected void scale(T p_115314_, PoseStack p_115315_, float p_115316_) {
-		super.scale(p_115314_, p_115315_, p_115316_);
-		p_115315_.scale(p_115314_.getScale(), p_115314_.getScale(), p_115314_.getScale());
 	}
 }

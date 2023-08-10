@@ -8,12 +8,7 @@ import com.camcamcamcamcam.biome_backlog.world.level.entity.Meerkat;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
-import net.minecraft.client.model.geom.builders.CubeDeformation;
-import net.minecraft.client.model.geom.builders.CubeListBuilder;
-import net.minecraft.client.model.geom.builders.LayerDefinition;
-import net.minecraft.client.model.geom.builders.MeshDefinition;
-import net.minecraft.client.model.geom.builders.PartDefinition;
-import net.minecraft.util.Mth;
+import net.minecraft.client.model.geom.builders.*;
 
 public class MeerkatModel<T extends Meerkat> extends HierarchicalModel<T> {
 	private final ModelPart root;
@@ -41,7 +36,7 @@ public class MeerkatModel<T extends Meerkat> extends HierarchicalModel<T> {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();
 
-		PartDefinition root = partdefinition.addOrReplaceChild("root", CubeListBuilder.create(), PartPose.offset(0.0F, 24.0F, -4.0F));
+		PartDefinition root = partdefinition.addOrReplaceChild("root", CubeListBuilder.create(), PartPose.offset(0.0F, 24.0F, 0.0F));
 
 		PartDefinition head = root.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 0).addBox(-3.0F, -3.0F, -5.0F, 6.0F, 5.0F, 5.0F, new CubeDeformation(0.0F))
 				.texOffs(17, 0).addBox(-2.0F, 0.0F, -7.0F, 4.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -7.0F, -1.0F));
@@ -72,17 +67,15 @@ public class MeerkatModel<T extends Meerkat> extends HierarchicalModel<T> {
 		this.head.xRot = headPitch * ((float) Math.PI / 180F);
 		this.head.yRot = netHeadYaw * ((float) Math.PI / 180F);
 
-		if (!entity.isStanding()) {
-			this.rightLeg.xRot = Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-			this.leftLeg.xRot = Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
-			this.rightArm.xRot = Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
-			this.leftArm.xRot = Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-		}
 
-		this.animate(entity.standingAnimationState, MeerkatAnimation.STAND_UP, ageInTicks);
+		this.animate(entity.standingAnimationState, MeerkatAnimation.STANDING, ageInTicks);
 		this.animate(entity.stopStandingAnimationState, MeerkatAnimation.STOP_STAND, ageInTicks);
-		this.animate(entity.diggingAnimationState, MeerkatAnimation.DIG, ageInTicks);
+		this.animate(entity.diggingAnimationState, MeerkatAnimation.DIGGING, ageInTicks);
 		this.animate(entity.digUpAnimationState, MeerkatAnimation.DIGUP, ageInTicks);
+		this.animateWalk(MeerkatAnimation.WALK, limbSwing, limbSwingAmount, 1.0F, 2.5F);
+		if (this.young) {
+			this.applyStatic(MeerkatAnimation.BABY);
+		}
 	}
 
 	@Override
