@@ -2,12 +2,15 @@ package com.camcamcamcamcam.biome_backlog.world.level.entity;
 
 import com.camcamcamcamcam.biome_backlog.register.ModBlocks;
 import com.camcamcamcamcam.biome_backlog.register.ModEntities;
+import com.camcamcamcamcam.biome_backlog.register.ModItems;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.vehicle.Boat;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 
@@ -30,6 +33,19 @@ public class ModBoat extends Boat implements ModBoatType {
 	protected void defineSynchedData() {
 		super.defineSynchedData();
 		this.entityData.define(DATA_ID_TYPE, BoatType.PALM.type);
+	}
+
+	public Item getDropItem() {
+		Item item;
+		switch (this.getModBoatType()) {
+			case PALM:
+				item = ModItems.PALM_BOAT.get();
+				break;
+			default:
+				item = Items.OAK_BOAT;
+		}
+
+		return item;
 	}
 
 	@Override
