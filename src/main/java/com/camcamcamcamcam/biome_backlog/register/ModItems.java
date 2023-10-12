@@ -3,8 +3,8 @@ package com.camcamcamcamcam.biome_backlog.register;
 import com.camcamcamcamcam.biome_backlog.BiomeBacklog;
 import com.camcamcamcamcam.biome_backlog.world.level.entity.ModBoat;
 import com.camcamcamcamcam.biome_backlog.world.level.item.ModBoatItem;
+import com.camcamcamcamcam.biome_backlog.world.level.item.PalmShieldItem;
 import com.camcamcamcamcam.biome_backlog.world.level.item.VinegarBottleItem;
-import net.minecraft.world.food.Foods;
 import net.minecraft.world.item.BowlFoodItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemNameBlockItem;
@@ -39,6 +39,7 @@ public class ModItems {
 
 	public static final RegistryObject<Item> PALM_BOAT = ITEMS.register("palm_boat", () -> new ModBoatItem(false, ModBoat.BoatType.PALM, (new Item.Properties()).stacksTo(1)));
 	public static final RegistryObject<Item> PALM_BOAT_CHEST = ITEMS.register("palm_boat_chest", () -> new ModBoatItem(true, ModBoat.BoatType.PALM, (new Item.Properties()).stacksTo(1)));
+    public static final RegistryObject<Item> PALM_SHIELD = ITEMS.register("palm_shield", () -> new PalmShieldItem((new Item.Properties()).stacksTo(1).durability(336)));
 
 	public static final RegistryObject<Item> SUCCULENT_CUTTING = ITEMS.register("succulent_cutting", () -> new Item(new Item.Properties()));
 

@@ -30,5 +30,6 @@
     "recipes": [
       "biome_backlog:vinegar_bottle"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

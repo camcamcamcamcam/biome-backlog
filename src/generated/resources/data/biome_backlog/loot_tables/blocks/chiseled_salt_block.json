@@ -16,5 +16,6 @@
       ],
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "biome_backlog:blocks/chiseled_salt_block"
 }

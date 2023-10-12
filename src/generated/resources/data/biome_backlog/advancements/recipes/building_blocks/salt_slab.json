@@ -30,5 +30,6 @@
     "recipes": [
       "biome_backlog:salt_slab"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

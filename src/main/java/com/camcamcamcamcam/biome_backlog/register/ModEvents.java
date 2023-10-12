@@ -27,6 +27,7 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.EntityLeaveLevelEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -129,6 +130,13 @@ public class ModEvents {
                     cap.addDeathTrackRequest(request);
                 });
             }
+        }
+    }
+
+    @SubscribeEvent
+    public static void burnTimeEvent(FurnaceFuelBurnTimeEvent event) {
+        if (event.getItemStack().is(ModBlocks.COCONUT_SAPLING.get().asItem()) || event.getItemStack().is(ModBlocks.DATE_SAPLING.get().asItem())) {
+            event.setBurnTime(200);
         }
     }
 }

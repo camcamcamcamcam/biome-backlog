@@ -30,5 +30,6 @@
     "recipes": [
       "biome_backlog:cooked_ostrich_from_smoker"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

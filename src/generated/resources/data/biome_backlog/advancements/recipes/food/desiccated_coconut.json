@@ -30,5 +30,6 @@
     "recipes": [
       "biome_backlog:desiccated_coconut"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

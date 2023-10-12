@@ -30,5 +30,6 @@
     "recipes": [
       "biome_backlog:calcite"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

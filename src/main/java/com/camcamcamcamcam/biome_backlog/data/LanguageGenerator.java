@@ -80,6 +80,7 @@ public class LanguageGenerator extends LanguageProvider {
         this.add(ModItems.CALCITE_POWDER_BOTTLE.get(), "Calcite Powder Bottle");
         this.add(ModItems.PALM_BOAT.get(), "Palm Boat");
         this.add(ModItems.PALM_BOAT_CHEST.get(), "Palm Chest Boat");
+        this.add(ModItems.PALM_SHIELD.get(), "Palm Shield");
         this.add(ModItems.SUCCULENT_CUTTING.get(), "Succulent Cutting");
         this.add(ModItems.MEERKAT_SPAWN_EGG.get(), "Meerkat Spawn Egg");
         this.add(ModItems.OSTRICH_SPAWN_EGG.get(), "Ostrich Spawn Egg");

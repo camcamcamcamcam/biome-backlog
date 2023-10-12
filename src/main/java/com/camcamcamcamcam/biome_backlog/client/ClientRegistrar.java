@@ -7,10 +7,7 @@ import com.camcamcamcamcam.biome_backlog.client.model.TumbleweedModel;
 import com.camcamcamcamcam.biome_backlog.client.model.VultureModel;
 import com.camcamcamcamcam.biome_backlog.client.particle.CalciteBubbleParticle;
 import com.camcamcamcamcam.biome_backlog.client.render.*;
-import com.camcamcamcamcam.biome_backlog.register.ModBlockEntities;
-import com.camcamcamcamcam.biome_backlog.register.ModBlocks;
-import com.camcamcamcamcam.biome_backlog.register.ModEntities;
-import com.camcamcamcamcam.biome_backlog.register.ModParticles;
+import com.camcamcamcamcam.biome_backlog.register.*;
 import com.camcamcamcamcam.biome_backlog.world.level.block.SucculentBlock;
 import com.camcamcamcamcam.biome_backlog.world.level.entity.ModBoat;
 import net.minecraft.client.model.BoatModel;
@@ -23,10 +20,13 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.blockentity.SignRenderer;
 import net.minecraft.client.renderer.entity.NoopRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
+import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.FoliageColor;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -99,6 +99,14 @@ public class ClientRegistrar {
 		event.register((state, reader, pos, color) -> {
 			return reader != null & pos != null ? SucculentBlock.getColor(state.getValue(SucculentBlock.COLOR)) : FoliageColor.getDefaultColor();
 		}, ModBlocks.SUCCULENT.get());
+	}
+
+	@SubscribeEvent
+	public static void modelBake(ModelEvent.ModifyBakingResult event) {
+
+		ItemProperties.register(ModItems.PALM_SHIELD.get(), new ResourceLocation("blocking"), (p_174590_, p_174591_, p_174592_, p_174593_) -> {
+			return p_174592_ != null && p_174592_.isUsingItem() && p_174592_.getUseItem() == p_174590_ ? 1.0F : 0.0F;
+		});
 	}
 
 	@SubscribeEvent
