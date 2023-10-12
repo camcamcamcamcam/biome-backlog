@@ -27,7 +27,7 @@ public class PalmShieldBWLR extends BlockEntityWithoutLevelRenderer {
         if (pStack.is(ModItems.PALM_SHIELD.get())) {
             pPoseStack.pushPose();
             pPoseStack.scale(1.0F, -1.0F, -1.0F);
-            VertexConsumer vertexconsumer = ItemRenderer.getFoilBufferDirect(pBuffer, this.shieldModel.renderType(new ResourceLocation(BiomeBacklog.MODID, "textures/entity/palm_shield.png")), true, pStack.hasFoil());
+            VertexConsumer vertexconsumer = ItemRenderer.getFoilBufferDirect(pBuffer, this.shieldModel.renderType(new ResourceLocation(BiomeBacklog.MODID, "textures/entity/shield/palm_shield.png")), true, pStack.hasFoil());
             this.shieldModel.handle().render(pPoseStack, vertexconsumer, pPackedLight, pOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
             this.shieldModel.plate().render(pPoseStack, vertexconsumer, pPackedLight, pOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
 

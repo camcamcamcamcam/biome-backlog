@@ -36,6 +36,7 @@ import java.util.UUID;
 
 @Mod.EventBusSubscriber(modid = BiomeBacklog.MODID)
 public class ModEvents {
+
     @SubscribeEvent
     public static void onProjectileHit(ProjectileImpactEvent event) {
         if (event.getRayTraceResult() instanceof BlockHitResult blockHitResult) {
@@ -68,6 +69,16 @@ public class ModEvents {
 
                         event.setCanceled(true);
                     }
+                }
+            }
+            if (entityHitResult.getEntity() instanceof LivingEntity living) {
+                if (living.isBlocking() && living.getUseItem().is(ModItems.PALM_SHIELD.get())) {
+                    projectile.setDeltaMovement(new Vec3(-projectileMovement.x, -projectileMovement.y, -projectileMovement.z));
+                    living.level().playSound(null, living.blockPosition(), SoundEvents.SLIME_BLOCK_HIT, SoundSource.BLOCKS, 1.0f, 1.0f);
+                    living.getUseItem().hurtAndBreak(1, living, (p_35997_) -> {
+                        p_35997_.broadcastBreakEvent(living.getUsedItemHand());
+                    });
+                    event.setCanceled(true);
                 }
             }
         }

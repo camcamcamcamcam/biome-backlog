@@ -30,6 +30,17 @@ public class RecipeGenerator extends RecipeProvider implements IConditionBuilder
 
     @Override
     protected void buildRecipes(Consumer<FinishedRecipe> finishedRecipeConsumer) {
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.PALM_SHIELD.get())
+                .define('#', ModBlocks.PALM_PLANKS.get())
+                .define('I', Items.IRON_INGOT)
+                .pattern("#I#")
+                .pattern("###")
+                .pattern(" # ")
+                .unlockedBy("has_item", inventoryTrigger(ItemPredicate.Builder.item()
+                        .of(ModBlocks.PALM_PLANKS.get()).build()))
+                .save(finishedRecipeConsumer);
+
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, Blocks.CALCITE)
                 .define('#', ModItems.CALCITE_POWDER_BOTTLE.get())
                 .pattern("##")

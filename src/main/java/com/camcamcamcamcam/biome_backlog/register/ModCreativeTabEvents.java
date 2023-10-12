@@ -80,5 +80,8 @@ public class ModCreativeTabEvents {
 			event.accept(ModItems.CALCITE_POWDER_BOTTLE);
 			event.accept(ModItems.SUCCULENT_CUTTING);
 		}
+		if (event.getTabKey() == CreativeModeTabs.COMBAT) {
+			event.accept(ModItems.PALM_SHIELD);
+		}
 	}
 }

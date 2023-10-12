@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "biome_backlog:palm_planks"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "pattern": [
+    "#I#",
+    "###",
+    " # "
+  ],
+  "result": {
+    "item": "biome_backlog:palm_shield"
+  },
+  "show_notification": true
+}
