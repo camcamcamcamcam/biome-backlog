@@ -6,12 +6,12 @@
       "item": "biome_backlog:palm_planks"
     },
     "I": {
-      "item": "minecraft:iron_ingot"
+      "item": "minecraft:shield"
     }
   },
   "pattern": [
+    " # ",
     "#I#",
-    "###",
     " # "
   ],
   "result": {

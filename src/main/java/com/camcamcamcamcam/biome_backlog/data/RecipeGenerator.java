@@ -33,9 +33,9 @@ public class RecipeGenerator extends RecipeProvider implements IConditionBuilder
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.PALM_SHIELD.get())
                 .define('#', ModBlocks.PALM_PLANKS.get())
-                .define('I', Items.IRON_INGOT)
+                .define('I', Items.SHIELD)
+                .pattern(" # ")
                 .pattern("#I#")
-                .pattern("###")
                 .pattern(" # ")
                 .unlockedBy("has_item", inventoryTrigger(ItemPredicate.Builder.item()
                         .of(ModBlocks.PALM_PLANKS.get()).build()))
