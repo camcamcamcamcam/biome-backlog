@@ -17,6 +17,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.BonemealableBlock;
@@ -84,14 +85,25 @@ public class CoconutBlock extends HorizontalDirectionalBlock implements Fallable
     }
 
     public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource source) {
+        Direction direction = state.getValue(FACING);
+        BlockPos blockpos = pos.relative(direction);
 
-        if (isFree(level.getBlockState(pos.below())) && pos.getY() >= level.getMinBuildHeight()) {
-            FallingBlockEntity fallingblockentity = FallingBlockEntity.fall(level, pos, state);
+        if ((isFree(level.getBlockState(pos.below())) && !state.getValue(GREEN) || state.getValue(GREEN) && !level.getBlockState(blockpos).is(BlockTags.LOGS)) && pos.getY() >= level.getMinBuildHeight()) {
+            FallingBlockEntity fallingblockentity = FallingBlockEntity.fall(level, pos, state.setValue(GREEN, false));
             this.falling(fallingblockentity);
         }
     }
 
+    public BlockState updateShape(BlockState p_49210_, Direction p_49211_, BlockState p_49212_, LevelAccessor p_49213_, BlockPos p_49214_, BlockPos p_49215_) {
+
+        p_49213_.scheduleTick(p_49214_, this, 1);
+
+
+        return super.updateShape(p_49210_, p_49211_, p_49212_, p_49213_, p_49214_, p_49215_);
+    }
+
     protected void falling(FallingBlockEntity entity) {
+        entity.setHurtsEntities(1.0F, 20);
     }
 
     public static boolean isFree(BlockState p_53242_) {
