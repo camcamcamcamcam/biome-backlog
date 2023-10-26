@@ -36,7 +36,7 @@ public class ModBlockTagProvider extends BlockTagsProvider {
 		this.tag(BlockTags.MINEABLE_WITH_HOE).add(ModBlocks.THATCH_BLOCK.get(), ModBlocks.THATCH_STAIRS.get()).add(ModBlocks.PALM_LEAVES.get(), ModBlocks.PALM_LEAVES_HANGING.get(), ModBlocks.BAOBAB_LEAVES.get());
 		this.tag(BlockTags.LEAVES).add(ModBlocks.PALM_LEAVES.get(), ModBlocks.BAOBAB_LEAVES.get());
 
-		this.tag(BlockTags.LOGS_THAT_BURN).add(ModBlocks.PALM_LOG.get(), ModBlocks.BAOBAB_TRUNK.get());
+		this.tag(BlockTags.LOGS_THAT_BURN).add(ModBlocks.STRIPPED_PALM_LOG.get(), ModBlocks.STRIPPED_PALM_WOOD.get(), ModBlocks.PALM_LOG.get(), ModBlocks.BAOBAB_TRUNK.get());
 		this.tag(ModTags.COLORED_CONCRETE).add(
 						//Blocks.WHITE_CONCRETE,
 						Blocks.ORANGE_CONCRETE, Blocks.MAGENTA_CONCRETE, Blocks.LIGHT_BLUE_CONCRETE,

@@ -8,6 +8,7 @@ import com.camcamcamcamcam.biome_backlog.world.level.entity.Vulture;
 import com.camcamcamcamcam.biome_backlog.world.server.DeathTrackRequest;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -16,8 +17,10 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
@@ -31,7 +34,9 @@ import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.MissingMappingsEvent;
 
+import java.util.List;
 import java.util.UUID;
 
 @Mod.EventBusSubscriber(modid = BiomeBacklog.MODID)
@@ -149,5 +154,32 @@ public class ModEvents {
         if (event.getItemStack().is(ModBlocks.COCONUT_SAPLING.get().asItem()) || event.getItemStack().is(ModBlocks.DATE_SAPLING.get().asItem())) {
             event.setBurnTime(200);
         }
+
+        if (event.getItemStack().is(ModBlocks.PALM_PLANKS.get().asItem()) || event.getItemStack().is(ModBlocks.PALM_FENCE.get().asItem()) || event.getItemStack().is(ModBlocks.PALM_FENCE_GATE.get().asItem())) {
+            event.setBurnTime(300);
+        }
+        if (event.getItemStack().is(ModBlocks.PALM_WOOD.get().asItem()) || event.getItemStack().is(ModBlocks.PALM_LOG.get().asItem()) || event.getItemStack().is(ModBlocks.STRIPPED_PALM_LOG.get().asItem())) {
+            event.setBurnTime(300);
+        }
+    }
+
+    @SubscribeEvent
+    public void missingMappingEvent(MissingMappingsEvent event) {
+        List<MissingMappingsEvent.Mapping<Block>> block = event.getMappings(Registries.BLOCK, "biome_vote_losers");
+        block.forEach(blockMapping -> {
+            ResourceLocation resourceLocation = new ResourceLocation(BiomeBacklog.MODID, blockMapping.getKey().getPath());
+            Block block1 = ForgeRegistries.BLOCKS.getValue(resourceLocation);
+            if (block1 != null) {
+                blockMapping.remap(block1);
+            }
+        });
+        List<MissingMappingsEvent.Mapping<Item>> item = event.getMappings(Registries.ITEM, "biome_vote_losers");
+        item.forEach(blockMapping -> {
+            ResourceLocation resourceLocation = new ResourceLocation(BiomeBacklog.MODID, blockMapping.getKey().getPath());
+            Item item1 = ForgeRegistries.ITEMS.getValue(resourceLocation);
+            if (item1 != null) {
+                blockMapping.remap(item1);
+            }
+        });
     }
 }
