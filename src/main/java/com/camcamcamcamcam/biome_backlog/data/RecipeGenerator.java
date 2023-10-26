@@ -299,6 +299,15 @@ public class RecipeGenerator extends RecipeProvider implements IConditionBuilder
                         .of(ModItems.COCONUT_SHELL.get()).build()))
                 .save(finishedRecipeConsumer, new ResourceLocation(BiomeBacklog.MODID, "charcoal_from_coconut_shell"));
 
+
+        slabBuilder(RecipeCategory.BUILDING_BLOCKS, ModBlocks.PALM_SLAB.get(), Ingredient.of(ModBlocks.PALM_PLANKS.get()))
+                .unlockedBy("has_block", has(ModBlocks.PALM_PLANKS.get().asItem()))
+                .save(finishedRecipeConsumer);
+        stairBuilder(ModBlocks.PALM_STAIRS.get(), Ingredient.of(ModBlocks.PALM_PLANKS.get()))
+                .unlockedBy("has_block", has(ModBlocks.PALM_PLANKS.get().asItem()))
+                .save(finishedRecipeConsumer);
+
+
         ColorLoseBuilder.recipe(BlockStateIngredient.of(BlockTags.WOOL), BlockPropertyPair.of(Blocks.WHITE_WOOL, Map.of()), ModRecipeSerializers.COLOR_LOSE.get()).save(finishedRecipeConsumer, BiomeBacklog.prefix("wools"));
         ColorLoseBuilder.recipe(BlockStateIngredient.of(BlockTags.WOOL_CARPETS), BlockPropertyPair.of(Blocks.WHITE_CARPET, Map.of()), ModRecipeSerializers.COLOR_LOSE.get()).save(finishedRecipeConsumer, BiomeBacklog.prefix("carpets"));
         ColorLoseBuilder.recipe(BlockStateIngredient.of(BlockTags.CANDLES), BlockPropertyPair.of(Blocks.CANDLE, Map.of()), ModRecipeSerializers.COLOR_LOSE.get()).save(finishedRecipeConsumer, BiomeBacklog.prefix("candles"));

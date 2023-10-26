@@ -2,17 +2,7 @@ package com.camcamcamcamcam.biome_backlog;
 
 import com.camcamcamcamcam.biome_backlog.capability.DeathTrackCapability;
 import com.camcamcamcamcam.biome_backlog.client.ClientRegistrar;
-import com.camcamcamcamcam.biome_backlog.register.ModBiomeModifiers;
-import com.camcamcamcamcam.biome_backlog.register.ModBlockEntities;
-import com.camcamcamcamcam.biome_backlog.register.ModBlocks;
-import com.camcamcamcamcam.biome_backlog.register.ModEntities;
-import com.camcamcamcamcam.biome_backlog.register.ModFoliagePlacerTypes;
-import com.camcamcamcamcam.biome_backlog.register.ModItems;
-import com.camcamcamcamcam.biome_backlog.register.ModParticles;
-import com.camcamcamcamcam.biome_backlog.register.ModRecipeSerializers;
-import com.camcamcamcamcam.biome_backlog.register.ModRecipeTypes;
-import com.camcamcamcamcam.biome_backlog.register.ModTreeDecoratorTypes;
-import com.camcamcamcamcam.biome_backlog.register.ModTrunkPlacerTypes;
+import com.camcamcamcamcam.biome_backlog.register.*;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.logging.LogUtils;
 import it.unimi.dsi.fastutil.longs.LongSet;
@@ -99,6 +89,7 @@ public class BiomeBacklog {
 			WoodType.register(ModBlocks.PALM_TYPE);
 			((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.SUCCULENT.getId(), ModBlocks.POTTED_SUCCULENT);
 			ModTrunkPlacerTypes.init();
+			ModBlocks.flamableInit();
 		});
 
 		ModEntities.spawnPlacementSetup();
