@@ -9,6 +9,7 @@ import net.minecraft.world.item.BowlFoodItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemNameBlockItem;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -48,4 +49,16 @@ public class ModItems {
 	public static final RegistryObject<Item> OSTRICH_SPAWN_EGG = ITEMS.register("ostrich_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.OSTRICH, 0xD5AA9A, 0x362A2A, new Item.Properties()));
 	public static final RegistryObject<Item> VULTURE_SPAWN_EGG = ITEMS.register("vulture_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.VULTURE, 0x654225, 0xD49076, new Item.Properties()));
 
+	public static void registerCompostableItem() {
+		ComposterBlock.COMPOSTABLES.put(COCONUT_CHUNK.get(), 0.3F);
+		ComposterBlock.COMPOSTABLES.put(COCONUT_HALF.get(), 0.2F);
+		ComposterBlock.COMPOSTABLES.put(PRICKLY_PEAR.get(), 0.3F);
+		ComposterBlock.COMPOSTABLES.put(PRICKLESS_PEAR.get(), 0.3F);
+		ComposterBlock.COMPOSTABLES.put(CACTUS_PAD.get(), 0.3F);
+		ComposterBlock.COMPOSTABLES.put(ModBlocks.DATE_BUNCH.get(), 0.6F);
+		ComposterBlock.COMPOSTABLES.put(ModBlocks.COCONUT.get(), 0.6F);
+		ComposterBlock.COMPOSTABLES.put(ModBlocks.BAOBAB_LEAVES.get(), 0.3F);
+		ComposterBlock.COMPOSTABLES.put(ModBlocks.PALM_LEAVES.get(), 0.3F);
+		ComposterBlock.COMPOSTABLES.put(ModBlocks.PALM_LEAVES_HANGING.get(), 0.3F);
+	}
 }

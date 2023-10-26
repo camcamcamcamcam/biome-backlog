@@ -90,6 +90,7 @@ public class BiomeBacklog {
 			((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.SUCCULENT.getId(), ModBlocks.POTTED_SUCCULENT);
 			ModTrunkPlacerTypes.init();
 			ModBlocks.flamableInit();
+			ModItems.registerCompostableItem();
 		});
 
 		ModEntities.spawnPlacementSetup();
