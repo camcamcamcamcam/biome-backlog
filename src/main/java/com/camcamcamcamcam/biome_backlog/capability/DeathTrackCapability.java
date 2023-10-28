@@ -1,7 +1,7 @@
 package com.camcamcamcamcam.biome_backlog.capability;
 
-import com.camcamcamcamcam.biome_backlog.world.server.DeathTrackRequest;
 import com.camcamcamcamcam.biome_backlog.BiomeBacklog;
+import com.camcamcamcamcam.biome_backlog.world.server.DeathTrackRequest;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -36,7 +36,6 @@ public class DeathTrackCapability implements ICapabilityProvider, INBTSerializab
 				tag.putUUID("VultureUUID", request.getVultureUUID());
 				tag.putString("EntityType", request.getEntityTypeLoc());
 				tag.putUUID("OwnerUUID", request.getOwnerUUID());
-				tag.putLong("Timestamp", request.getTimestamp());
 				tag.putInt("X", request.getChunkPosition().getX());
 				tag.putInt("Y", request.getChunkPosition().getY());
 				tag.putInt("Z", request.getChunkPosition().getZ());
@@ -50,11 +49,11 @@ public class DeathTrackCapability implements ICapabilityProvider, INBTSerializab
 	}
 
 	public void deserializeNBT(CompoundTag nbt) {
-		if (nbt.contains("VultureList")) {
+		if (nbt.contains("VultureList", 10)) {
 			ListTag listtag = nbt.getList("VultureList", 10);
 			for (int i = 0; i < listtag.size(); ++i) {
 				CompoundTag innerTag = listtag.getCompound(i);
-				deathTrackList.add(new DeathTrackRequest(innerTag.getUUID("VultureUUID"), innerTag.getString("EntityType"), innerTag.getUUID("OwnerUUID"), new BlockPos(innerTag.getInt("X"), innerTag.getInt("Y"), innerTag.getInt("Z")), innerTag.getLong("Timestamp")));
+				deathTrackList.add(new DeathTrackRequest(innerTag.getUUID("VultureUUID"), innerTag.getString("EntityType"), innerTag.getUUID("OwnerUUID"), new BlockPos(innerTag.getInt("X"), innerTag.getInt("Y"), innerTag.getInt("Z"))));
 			}
 		}
 	}

@@ -138,7 +138,7 @@ public class ModEvents {
             if (!event.getLevel().isClientSide && living.isAlive() && living instanceof Vulture && ((Vulture) living).isTame() && ((Vulture) living).hasCircle()) {
                 UUID ownerUUID = ((Vulture) living).getOwnerUUID();
                 event.getLevel().getCapability(BiomeBacklog.TRUSTED_VULTURE_CAP).ifPresent(cap -> {
-                    DeathTrackRequest request = new DeathTrackRequest(living.getUUID(), ForgeRegistries.ENTITY_TYPES.getKey(event.getEntity().getType()).toString(), ownerUUID, living.blockPosition(), event.getEntity().level().dayTime());
+                    DeathTrackRequest request = new DeathTrackRequest(living.getUUID(), ForgeRegistries.ENTITY_TYPES.getKey(event.getEntity().getType()).toString(), ownerUUID, living.blockPosition());
                     if (cap.getDeathTrackRequestsFor().isEmpty() || cap.getDeathTrackRequestsFor().stream().noneMatch(predicate -> predicate.getVultureUUID() == event.getEntity().getUUID())) {
                         cap.addDeathTrackRequest(request);
                     }

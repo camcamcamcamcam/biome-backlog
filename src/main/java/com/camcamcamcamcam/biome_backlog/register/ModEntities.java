@@ -35,6 +35,7 @@ public class ModEntities {
 	public static void spawnPlacementSetup() {
 		SpawnPlacements.register(MEERKAT.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Meerkat::checkMeerkatSpawnRules);
 		SpawnPlacements.register(OSTRICH.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules);
+		SpawnPlacements.register(VULTURE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Vulture::checkVultureSpawnRules);
 	}
 
 	@SubscribeEvent

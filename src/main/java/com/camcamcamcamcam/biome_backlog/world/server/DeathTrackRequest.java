@@ -9,18 +9,16 @@ import java.util.UUID;
 
 public class DeathTrackRequest {
 	private String entityType;
-	private long timestamp;
 	private UUID vultureUUID;
 	private UUID ownerUUID;
 
 	private BlockPos chunkPosition;
 
-	public DeathTrackRequest(UUID vultureUUID, String entityType, UUID ownerUUID, BlockPos chunkPosition, long timestamp) {
+	public DeathTrackRequest(UUID vultureUUID, String entityType, UUID ownerUUID, BlockPos chunkPosition) {
 		this.vultureUUID = vultureUUID;
 		this.entityType = entityType;
 		this.chunkPosition = chunkPosition;
 		this.ownerUUID = ownerUUID;
-		this.timestamp = timestamp;
 	}
 
 	public UUID getVultureUUID() {
@@ -37,10 +35,6 @@ public class DeathTrackRequest {
 
 	public UUID getOwnerUUID() {
 		return ownerUUID;
-	}
-
-	public long getTimestamp() {
-		return timestamp;
 	}
 
 	public BlockPos getChunkPosition() {
