@@ -6,9 +6,11 @@ import com.camcamcamcamcam.biome_backlog.register.*;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.logging.LogUtils;
 import it.unimi.dsi.fastutil.longs.LongSet;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
@@ -24,12 +26,11 @@ import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.MissingMappingsEvent;
 import org.slf4j.Logger;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Mod(BiomeBacklog.MODID)
 public class BiomeBacklog {
@@ -58,6 +59,7 @@ public class BiomeBacklog {
 		ModRecipeSerializers.RECIPE_SERIALIZERS.register(modEventBus);
 
 		modEventBus.addListener(this::commonSetup);
+		MinecraftForge.EVENT_BUS.addListener(this::missingMappingEvent);
 		MinecraftForge.EVENT_BUS.register(this);
 		DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientRegistrar::setup));
 	}
@@ -105,5 +107,22 @@ public class BiomeBacklog {
 		AxeItem.STRIPPABLES = stripMap;
 	}
 
-
+	public void missingMappingEvent(MissingMappingsEvent event) {
+		List<MissingMappingsEvent.Mapping<Block>> block = event.getMappings(Registries.BLOCK, "biome_vote_losers");
+		block.forEach(blockMapping -> {
+			ResourceLocation resourceLocation = new ResourceLocation(BiomeBacklog.MODID, blockMapping.getKey().getPath());
+			Block block1 = ForgeRegistries.BLOCKS.getValue(resourceLocation);
+			if (block1 != null) {
+				blockMapping.remap(block1);
+			}
+		});
+		List<MissingMappingsEvent.Mapping<Item>> item = event.getMappings(Registries.ITEM, "biome_vote_losers");
+		item.forEach(blockMapping -> {
+			ResourceLocation resourceLocation = new ResourceLocation(BiomeBacklog.MODID, blockMapping.getKey().getPath());
+			Item item1 = ForgeRegistries.ITEMS.getValue(resourceLocation);
+			if (item1 != null) {
+				blockMapping.remap(item1);
+			}
+		});
+	}
 }

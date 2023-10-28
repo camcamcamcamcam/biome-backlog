@@ -3,15 +3,12 @@ package com.camcamcamcamcam.biome_backlog.client.model;// Made with Blockbench 4
 // Paste this class into your mod and generate all required imports
 
 
+import com.camcamcamcamcam.biome_backlog.client.animation.definitions.VultureAnimations;
 import com.camcamcamcamcam.biome_backlog.world.level.entity.Vulture;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
-import net.minecraft.client.model.geom.builders.CubeDeformation;
-import net.minecraft.client.model.geom.builders.CubeListBuilder;
-import net.minecraft.client.model.geom.builders.LayerDefinition;
-import net.minecraft.client.model.geom.builders.MeshDefinition;
-import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
 
 public class VultureModel<T extends Vulture> extends HierarchicalModel<T> {
@@ -82,20 +79,18 @@ public class VultureModel<T extends Vulture> extends HierarchicalModel<T> {
 
 	@Override
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		float f = ((float) entity.getUniqueFlapTickOffset() + ageInTicks) * 7.448451F * ((float) Math.PI / 180F);
+		float f = ((float) entity.getUniqueFlapTickOffset() + ageInTicks) * 12.448451F * ((float) Math.PI / 180F);
 		float f1 = 16.0F;
 		this.left_wing.yRot = Mth.cos(f) * 16.0F * ((float) Math.PI / 180F);
 		this.left_wing_but_more.yRot = Mth.cos(f) * 16.0F * ((float) Math.PI / 180F);
 		this.right_wing.yRot = -this.left_wing.yRot;
 		this.right_wing_but_more.yRot = -this.left_wing_but_more.yRot;
 
-		this.vulture.yRot = 3.1416F;
-
-		this.right_wing.xRot = -(float) ((Math.PI / 2F) * limbSwingAmount);
-		this.left_wing.xRot = -(float) ((Math.PI / 2F) * limbSwingAmount);
-
-		this.vulture.xRot = -0.25F * limbSwingAmount;
-
+		if (entity.isAggressive()) {
+			this.applyStatic(VultureAnimations.FLYING_AGRESSIVE);
+		} else {
+			this.applyStatic(VultureAnimations.FLYING);
+		}
 	}
 
 	@Override

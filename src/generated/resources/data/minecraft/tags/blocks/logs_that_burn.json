@@ -1,5 +1,7 @@
 {
   "values": [
+    "biome_backlog:stripped_palm_log",
+    "biome_backlog:stripped_palm_wood",
     "biome_backlog:palm_log",
     "biome_backlog:baobab_trunk"
   ]
