@@ -9,10 +9,6 @@ public class VultureAnimations {
 
     public static final AnimationDefinition FLYING = AnimationDefinition.Builder.withLength(0f)
             .addAnimation("vulture",
-                    new AnimationChannel(AnimationChannel.Targets.POSITION,
-                            new Keyframe(0f, KeyframeAnimations.posVec(0f, 0f, -10f),
-                                    AnimationChannel.Interpolations.LINEAR)))
-            .addAnimation("vulture",
                     new AnimationChannel(AnimationChannel.Targets.ROTATION,
                             new Keyframe(0f, KeyframeAnimations.degreeVec(-52.5f, 0f, 0f),
                                     AnimationChannel.Interpolations.LINEAR)))
@@ -33,10 +29,6 @@ public class VultureAnimations {
                             new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
                                     AnimationChannel.Interpolations.LINEAR))).build();
     public static final AnimationDefinition FLYING_AGRESSIVE = AnimationDefinition.Builder.withLength(0f)
-            .addAnimation("vulture",
-                    new AnimationChannel(AnimationChannel.Targets.POSITION,
-                            new Keyframe(0f, KeyframeAnimations.posVec(0f, 0f, -10f),
-                                    AnimationChannel.Interpolations.LINEAR)))
             .addAnimation("vulture",
                     new AnimationChannel(AnimationChannel.Targets.ROTATION,
                             new Keyframe(0f, KeyframeAnimations.degreeVec(-52.5f, 0f, 0f),

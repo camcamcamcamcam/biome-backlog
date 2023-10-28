@@ -212,20 +212,20 @@ public class Vulture extends TamableAnimal {
 				if (!p_30412_.getAbilities().instabuild) {
 					itemstack.shrink(1);
 				}
-				if (!this.level().isClientSide) {
-					UUID ownerUUID = this.getOwnerUUID();
-					this.level().getCapability(BiomeBacklog.TRUSTED_VULTURE_CAP).ifPresent(cap -> {
-						DeathTrackRequest request = new DeathTrackRequest(this.getUUID(), ForgeRegistries.ENTITY_TYPES.getKey(this.getType()).toString(), ownerUUID, this.blockPosition(), this.level().dayTime());
-						if (cap.getDeathTrackRequestsFor().isEmpty() || cap.getDeathTrackRequestsFor().stream().noneMatch(predicate -> predicate.getVultureUUID() == this.getUUID())) {
-							cap.addDeathTrackRequest(request);
-						}
-					});
-				}
+
 				this.setCircle(true);
 				this.tame(p_30412_);
 				this.navigation.stop();
 				this.setTarget((LivingEntity) null);
 				this.level().broadcastEntityEvent(this, (byte) 7);
+				UUID ownerUUID = this.getOwnerUUID();
+				this.level().getCapability(BiomeBacklog.TRUSTED_VULTURE_CAP).ifPresent(cap -> {
+					DeathTrackRequest request = new DeathTrackRequest(this.getUUID(), ForgeRegistries.ENTITY_TYPES.getKey(this.getType()).toString(), ownerUUID, this.blockPosition(), this.level().dayTime());
+					if (cap.getDeathTrackRequestsFor().isEmpty() || cap.getDeathTrackRequestsFor().stream().noneMatch(predicate -> predicate.getVultureUUID() == this.getUUID())) {
+						cap.addDeathTrackRequest(request);
+					}
+				});
+
 
 				return InteractionResult.SUCCESS;
 			}
