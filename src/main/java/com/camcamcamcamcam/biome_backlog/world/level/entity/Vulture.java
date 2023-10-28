@@ -1,7 +1,9 @@
 package com.camcamcamcamcam.biome_backlog.world.level.entity;
 
+import com.camcamcamcamcam.biome_backlog.BiomeBacklog;
 import com.camcamcamcamcam.biome_backlog.register.ModEntities;
 import com.camcamcamcamcam.biome_backlog.world.level.entity.goal.LongTemptGoal;
+import com.camcamcamcamcam.biome_backlog.world.server.DeathTrackRequest;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -22,7 +24,6 @@ import net.minecraft.world.entity.ai.control.LookControl;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
-import net.minecraft.world.entity.animal.Cat;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Ghast;
 import net.minecraft.world.entity.monster.Zombie;
@@ -36,6 +37,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Comparator;
@@ -209,6 +211,15 @@ public class Vulture extends TamableAnimal {
 			if (flag) {
 				if (!p_30412_.getAbilities().instabuild) {
 					itemstack.shrink(1);
+				}
+				if (!this.level().isClientSide) {
+					UUID ownerUUID = this.getOwnerUUID();
+					this.level().getCapability(BiomeBacklog.TRUSTED_VULTURE_CAP).ifPresent(cap -> {
+						DeathTrackRequest request = new DeathTrackRequest(this.getUUID(), ForgeRegistries.ENTITY_TYPES.getKey(this.getType()).toString(), ownerUUID, this.blockPosition(), this.level().dayTime());
+						if (cap.getDeathTrackRequestsFor().isEmpty() || cap.getDeathTrackRequestsFor().stream().noneMatch(predicate -> predicate.getVultureUUID() == this.getUUID())) {
+							cap.addDeathTrackRequest(request);
+						}
+					});
 				}
 				this.setCircle(true);
 				this.tame(p_30412_);
@@ -575,26 +586,17 @@ public class Vulture extends TamableAnimal {
 				if (!this.canUse()) {
 					return false;
 				} else {
-					if (Vulture.this.tickCount > this.catSearchTick) {
-						this.catSearchTick = Vulture.this.tickCount + 20;
-						List<Cat> list = Vulture.this.level().getEntitiesOfClass(Cat.class, Vulture.this.getBoundingBox().inflate(16.0D), EntitySelector.ENTITY_STILL_ALIVE);
-
-						for (Cat cat : list) {
-							cat.hiss();
-						}
-
-						this.isScaredOfCat = !list.isEmpty();
-					}
-
-					return !this.isScaredOfCat;
+					return true;
 				}
 			}
 		}
 
 		public void start() {
+			Vulture.this.setAggressive(true);
 		}
 
 		public void stop() {
+			Vulture.this.setAggressive(false);
 			Vulture.this.setTarget((LivingEntity) null);
 			Vulture.this.attackPhase = Vulture.AttackPhase.CIRCLE;
 		}

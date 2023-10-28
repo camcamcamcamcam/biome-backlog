@@ -13,6 +13,7 @@ import net.minecraft.util.Mth;
 
 public class VultureModel<T extends Vulture> extends HierarchicalModel<T> {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
+	private final ModelPart root;
 	private final ModelPart vulture;
 	private final ModelPart right_wing;
 	private final ModelPart right_wing_but_more;
@@ -21,6 +22,7 @@ public class VultureModel<T extends Vulture> extends HierarchicalModel<T> {
 
 
 	public VultureModel(ModelPart root) {
+		this.root = root;
 		this.vulture = root.getChild("vulture");
 		this.right_wing = this.vulture.getChild("right_wing");
 		this.right_wing_but_more = this.right_wing.getChild("right_wing_but_more");
@@ -79,6 +81,8 @@ public class VultureModel<T extends Vulture> extends HierarchicalModel<T> {
 
 	@Override
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+		this.root().getAllParts().forEach(ModelPart::resetPose);
+		this.vulture.yRot = 3.1416F;
 		float f = ((float) entity.getUniqueFlapTickOffset() + ageInTicks) * 12.448451F * ((float) Math.PI / 180F);
 		float f1 = 16.0F;
 		this.left_wing.yRot = Mth.cos(f) * 16.0F * ((float) Math.PI / 180F);
@@ -95,6 +99,6 @@ public class VultureModel<T extends Vulture> extends HierarchicalModel<T> {
 
 	@Override
 	public ModelPart root() {
-		return this.vulture;
+		return this.root;
 	}
 }

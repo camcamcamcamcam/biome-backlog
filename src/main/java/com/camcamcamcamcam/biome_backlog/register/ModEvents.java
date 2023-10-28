@@ -114,7 +114,8 @@ public class ModEvents {
                                 }
                             }
                             loadChunksAround(serverLevel, request.getVultureUUID(), request.getChunkPosition(), false);
-                            deathTrackCapability.removeDeathTrackRequestAll(deathTrackCapability.getDeathTrackRequestsFor());
+                            deathTrackCapability.removeDeathTrackRequest(request);
+                            return;
                         }
                     });
                 }
@@ -138,7 +139,9 @@ public class ModEvents {
                 UUID ownerUUID = ((Vulture) living).getOwnerUUID();
                 event.getLevel().getCapability(BiomeBacklog.TRUSTED_VULTURE_CAP).ifPresent(cap -> {
                     DeathTrackRequest request = new DeathTrackRequest(living.getUUID(), ForgeRegistries.ENTITY_TYPES.getKey(event.getEntity().getType()).toString(), ownerUUID, living.blockPosition(), event.getEntity().level().dayTime());
-                    cap.addDeathTrackRequest(request);
+                    if (cap.getDeathTrackRequestsFor().isEmpty() || cap.getDeathTrackRequestsFor().stream().noneMatch(predicate -> predicate.getVultureUUID() == event.getEntity().getUUID())) {
+                        cap.addDeathTrackRequest(request);
+                    }
                 });
             }
         }
