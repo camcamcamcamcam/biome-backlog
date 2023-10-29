@@ -156,7 +156,17 @@ public class ModEvents {
         if (event.getItemStack().is(ModBlocks.PALM_PLANKS.get().asItem()) || event.getItemStack().is(ModBlocks.PALM_FENCE.get().asItem()) || event.getItemStack().is(ModBlocks.PALM_FENCE_GATE.get().asItem())) {
             event.setBurnTime(300);
         }
-        if (event.getItemStack().is(ModBlocks.PALM_WOOD.get().asItem()) || event.getItemStack().is(ModBlocks.PALM_LOG.get().asItem()) || event.getItemStack().is(ModBlocks.STRIPPED_PALM_LOG.get().asItem())) {
+        if (event.getItemStack().is(ModBlocks.PALM_STAIRS.get().asItem()) || event.getItemStack().is(ModBlocks.PALM_SLAB.get().asItem())) {
+            event.setBurnTime(300);
+        }
+
+        if (event.getItemStack().is(ModBlocks.PALM_SLAB.get().asItem())) {
+            event.setBurnTime(150);
+        }
+        if (event.getItemStack().is(ModBlocks.PALM_WOOD.get().asItem()) || event.getItemStack().is(ModBlocks.PALM_LOG.get().asItem()) || event.getItemStack().is(ModBlocks.STRIPPED_PALM_LOG.get().asItem()) || event.getItemStack().is(ModBlocks.STRIPPED_PALM_WOOD.get().asItem())) {
+            event.setBurnTime(300);
+        }
+        if (event.getItemStack().is(ModBlocks.BAOBAB_TRUNK.get().asItem()) || event.getItemStack().is(ModBlocks.BAOBAB_BARK.get().asItem())) {
             event.setBurnTime(300);
         }
     }

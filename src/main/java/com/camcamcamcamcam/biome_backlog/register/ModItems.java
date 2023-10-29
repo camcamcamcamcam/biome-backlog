@@ -50,15 +50,15 @@ public class ModItems {
 	public static final RegistryObject<Item> VULTURE_SPAWN_EGG = ITEMS.register("vulture_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.VULTURE, 0x654225, 0xD49076, new Item.Properties()));
 
 	public static void registerCompostableItem() {
-		ComposterBlock.COMPOSTABLES.put(COCONUT_CHUNK.get(), 0.3F);
-		ComposterBlock.COMPOSTABLES.put(COCONUT_HALF.get(), 0.2F);
-		ComposterBlock.COMPOSTABLES.put(PRICKLY_PEAR.get(), 0.3F);
-		ComposterBlock.COMPOSTABLES.put(PRICKLESS_PEAR.get(), 0.3F);
-		ComposterBlock.COMPOSTABLES.put(CACTUS_PAD.get(), 0.3F);
-		ComposterBlock.COMPOSTABLES.put(ModBlocks.DATE_BUNCH.get(), 0.6F);
-		ComposterBlock.COMPOSTABLES.put(ModBlocks.COCONUT.get(), 0.6F);
-		ComposterBlock.COMPOSTABLES.put(ModBlocks.BAOBAB_LEAVES.get(), 0.3F);
-		ComposterBlock.COMPOSTABLES.put(ModBlocks.PALM_LEAVES.get(), 0.3F);
-		ComposterBlock.COMPOSTABLES.put(ModBlocks.PALM_LEAVES_HANGING.get(), 0.3F);
+		ComposterBlock.COMPOSTABLES.put(COCONUT_CHUNK.get().asItem(), 0.3F);
+		ComposterBlock.COMPOSTABLES.put(COCONUT_HALF.get().asItem(), 0.2F);
+		ComposterBlock.COMPOSTABLES.put(PRICKLY_PEAR.get().asItem(), 0.3F);
+		ComposterBlock.COMPOSTABLES.put(PRICKLESS_PEAR.get().asItem(), 0.3F);
+		ComposterBlock.COMPOSTABLES.put(CACTUS_PAD.get().asItem(), 0.3F);
+		ComposterBlock.COMPOSTABLES.put(ModBlocks.DATE_BUNCH.get().asItem(), 0.6F);
+		ComposterBlock.COMPOSTABLES.put(ModBlocks.COCONUT.get().asItem(), 0.6F);
+		ComposterBlock.COMPOSTABLES.put(ModBlocks.BAOBAB_LEAVES.get().asItem(), 0.3F);
+		ComposterBlock.COMPOSTABLES.put(ModBlocks.PALM_LEAVES.get().asItem(), 0.3F);
+		ComposterBlock.COMPOSTABLES.put(ModBlocks.PALM_LEAVES_HANGING.get().asItem(), 0.3F);
 	}
 }
