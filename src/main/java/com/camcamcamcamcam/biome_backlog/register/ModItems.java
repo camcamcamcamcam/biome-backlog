@@ -60,5 +60,7 @@ public class ModItems {
 		ComposterBlock.COMPOSTABLES.put(ModBlocks.BAOBAB_LEAVES.get().asItem(), 0.3F);
 		ComposterBlock.COMPOSTABLES.put(ModBlocks.PALM_LEAVES.get().asItem(), 0.3F);
 		ComposterBlock.COMPOSTABLES.put(ModBlocks.PALM_LEAVES_HANGING.get().asItem(), 0.3F);
+		ComposterBlock.COMPOSTABLES.put(ModBlocks.COCONUT_SAPLING.get().asItem(), 0.3F);
+		ComposterBlock.COMPOSTABLES.put(ModBlocks.DATE_SAPLING.get().asItem(), 0.3F);
 	}
 }

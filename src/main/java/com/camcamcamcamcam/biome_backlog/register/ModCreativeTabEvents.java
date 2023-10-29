@@ -47,6 +47,7 @@ public class ModCreativeTabEvents {
 		}
 		if (event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS) {
 			event.accept(ModBlocks.PALM_LEAVES);
+			event.accept(ModBlocks.PALM_LEAVES_HANGING);
 			event.accept(ModBlocks.COCONUT_SAPLING);
 			event.accept(ModBlocks.COCONUT);
 			event.accept(ModBlocks.DATE_SAPLING);
