@@ -38,6 +38,11 @@ public class ModBlockTagProvider extends BlockTagsProvider {
 		this.tag(BlockTags.WOODEN_SLABS).add(ModBlocks.PALM_SLAB.get());
 		this.tag(BlockTags.WOODEN_STAIRS).add(ModBlocks.PALM_STAIRS.get());
 
+
+		this.tag(ModTags.PALM_WOOD)
+				.add(ModBlocks.STRIPPED_PALM_LOG.get(), ModBlocks.STRIPPED_PALM_WOOD.get(), ModBlocks.PALM_LOG.get(), ModBlocks.PALM_PLANKS.get(), ModBlocks.PALM_WOOD.get())
+				.add(ModBlocks.PALM_BUTTON.get(), ModBlocks.PALM_DOOR.get(), ModBlocks.PALM_TRAPDOOR.get(), ModBlocks.PALM_FENCE.get(), ModBlocks.PALM_FENCE_GATE.get(), ModBlocks.PALM_PRESSURE_PLATE.get(), ModBlocks.PALM_SIGN.get(), ModBlocks.PALM_WALL_SIGN.get(), ModBlocks.PALM_STAIRS.get(), ModBlocks.PALM_SLAB.get());
+
 		this.tag(BlockTags.LOGS_THAT_BURN).add(ModBlocks.STRIPPED_PALM_LOG.get(), ModBlocks.STRIPPED_PALM_WOOD.get(), ModBlocks.PALM_LOG.get(), ModBlocks.BAOBAB_TRUNK.get(), ModBlocks.BAOBAB_BARK.get());
 		this.tag(ModTags.COLORED_CONCRETE).add(
 						//Blocks.WHITE_CONCRETE,
