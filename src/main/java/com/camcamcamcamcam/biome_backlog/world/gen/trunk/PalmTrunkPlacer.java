@@ -28,7 +28,7 @@ public class PalmTrunkPlacer extends TrunkPlacer {
 	}
 
 	protected TrunkPlacerType<?> type() {
-		return ModTrunkPlacerTypes.PALM_TRUNK_PLACER;
+		return ModTrunkPlacerTypes.PALM_TRUNK_PLACER.get();
 	}
 
 	public List<FoliagePlacer.FoliageAttachment> placeTrunk(LevelSimulatedReader p_226116_, BiConsumer<BlockPos, BlockState> p_226117_, RandomSource p_226118_, int p_226119_, BlockPos p_226120_, TreeConfiguration p_226121_) {

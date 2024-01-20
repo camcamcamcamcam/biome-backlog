@@ -5,7 +5,7 @@ import com.camcamcamcamcam.biome_backlog.register.ModBlocks;
 import com.camcamcamcamcam.biome_backlog.register.ModEntities;
 import com.camcamcamcamcam.biome_backlog.register.ModItems;
 import net.minecraft.data.PackOutput;
-import net.minecraftforge.common.data.LanguageProvider;
+import net.neoforged.neoforge.common.data.LanguageProvider;
 
 public class LanguageGenerator extends LanguageProvider {
     public LanguageGenerator(PackOutput gen) {

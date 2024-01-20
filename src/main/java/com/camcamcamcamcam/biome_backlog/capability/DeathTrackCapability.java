@@ -1,30 +1,18 @@
 package com.camcamcamcamcam.biome_backlog.capability;
 
-import com.camcamcamcamcam.biome_backlog.BiomeBacklog;
 import com.camcamcamcamcam.biome_backlog.world.server.DeathTrackRequest;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.common.util.INBTSerializable;
-import net.minecraftforge.common.util.LazyOptional;
+import net.neoforged.neoforge.common.util.INBTSerializable;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class DeathTrackCapability implements ICapabilityProvider, INBTSerializable<CompoundTag> {
+public class DeathTrackCapability implements INBTSerializable<CompoundTag> {
 	private List<DeathTrackRequest> deathTrackList = new ArrayList<>();
 
-	@Override
-	@Nonnull
-	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing) {
-		return capability == BiomeBacklog.TRUSTED_VULTURE_CAP ? LazyOptional.of(() -> this).cast() : LazyOptional.empty();
-	}
 
 	public CompoundTag serializeNBT() {
 		CompoundTag compound = new CompoundTag();

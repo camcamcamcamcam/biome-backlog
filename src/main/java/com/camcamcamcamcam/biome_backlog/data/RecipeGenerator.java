@@ -2,13 +2,13 @@ package com.camcamcamcamcam.biome_backlog.data;
 
 import com.camcamcamcamcam.biome_backlog.BiomeBacklog;
 import com.camcamcamcamcam.biome_backlog.data.recipe.ColorLoseBuilder;
-import com.camcamcamcamcam.biome_backlog.recipe.BlockPropertyPair;
 import com.camcamcamcamcam.biome_backlog.recipe.BlockStateIngredient;
 import com.camcamcamcamcam.biome_backlog.register.ModBlocks;
 import com.camcamcamcamcam.biome_backlog.register.ModItems;
 import com.camcamcamcamcam.biome_backlog.register.ModRecipeSerializers;
 import com.camcamcamcamcam.biome_backlog.register.ModTags;
 import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
@@ -16,20 +16,20 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
+import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.common.conditions.IConditionBuilder;
 
-import java.util.Map;
-import java.util.function.Consumer;
+import java.util.concurrent.CompletableFuture;
 
 public class RecipeGenerator extends RecipeProvider implements IConditionBuilder {
-    public RecipeGenerator(PackOutput generator) {
-        super(generator);
+    public RecipeGenerator(PackOutput generator, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+        super(generator, lookupProvider);
     }
 
     @Override
-    protected void buildRecipes(Consumer<FinishedRecipe> finishedRecipeConsumer) {
+    protected void buildRecipes(RecipeOutput finishedRecipeConsumer) {
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.PALM_SHIELD.get())
                 .define('#', ModBlocks.PALM_PLANKS.get())
@@ -67,7 +67,7 @@ public class RecipeGenerator extends RecipeProvider implements IConditionBuilder
                 .save(finishedRecipeConsumer);
 
         SimpleCookingRecipeBuilder.generic(Ingredient.of(ModItems.PRICKLY_PEAR.get()), RecipeCategory.FOOD, ModItems.PRICKLESS_PEAR.get(),
-                        0.45F, 300, RecipeSerializer.SMELTING_RECIPE)
+                        0.45F, 300, RecipeSerializer.SMELTING_RECIPE, SmeltingRecipe::new)
                 .unlockedBy("has_prickly_pear", inventoryTrigger(ItemPredicate.Builder.item()
                         .of(ModItems.PRICKLY_PEAR.get()).build()))
                 .save(finishedRecipeConsumer, new ResourceLocation(BiomeBacklog.MODID, "prickless_pear"));
@@ -84,7 +84,7 @@ public class RecipeGenerator extends RecipeProvider implements IConditionBuilder
 
 
         SimpleCookingRecipeBuilder.generic(Ingredient.of(ModItems.RAW_OSTRICH.get()), RecipeCategory.FOOD, ModItems.COOKED_OSTRICH.get(),
-                        0.45F, 300, RecipeSerializer.SMELTING_RECIPE)
+                        0.45F, 300, RecipeSerializer.SMELTING_RECIPE, SmeltingRecipe::new)
                 .unlockedBy("has_raw_ostrich", inventoryTrigger(ItemPredicate.Builder.item()
                         .of(ModItems.RAW_OSTRICH.get()).build()))
                 .save(finishedRecipeConsumer, new ResourceLocation(BiomeBacklog.MODID, "cooked_ostrich"));
@@ -294,7 +294,7 @@ public class RecipeGenerator extends RecipeProvider implements IConditionBuilder
                 .save(finishedRecipeConsumer, BiomeBacklog.prefix("bowl"));
 
         SimpleCookingRecipeBuilder.generic(Ingredient.of(ModItems.COCONUT_SHELL.get()), RecipeCategory.FOOD, Items.CHARCOAL,
-                        0.45F, 300, RecipeSerializer.SMELTING_RECIPE)
+                        0.45F, 300, RecipeSerializer.SMELTING_RECIPE, SmeltingRecipe::new)
                 .unlockedBy("has_coconut_shell", inventoryTrigger(ItemPredicate.Builder.item()
                         .of(ModItems.COCONUT_SHELL.get()).build()))
                 .save(finishedRecipeConsumer, new ResourceLocation(BiomeBacklog.MODID, "charcoal_from_coconut_shell"));
@@ -308,16 +308,16 @@ public class RecipeGenerator extends RecipeProvider implements IConditionBuilder
                 .save(finishedRecipeConsumer);
 
 
-        ColorLoseBuilder.recipe(BlockStateIngredient.of(BlockTags.WOOL), BlockPropertyPair.of(Blocks.WHITE_WOOL, Map.of()), ModRecipeSerializers.COLOR_LOSE.get()).save(finishedRecipeConsumer, BiomeBacklog.prefix("wools"));
-        ColorLoseBuilder.recipe(BlockStateIngredient.of(BlockTags.WOOL_CARPETS), BlockPropertyPair.of(Blocks.WHITE_CARPET, Map.of()), ModRecipeSerializers.COLOR_LOSE.get()).save(finishedRecipeConsumer, BiomeBacklog.prefix("carpets"));
-        ColorLoseBuilder.recipe(BlockStateIngredient.of(BlockTags.CANDLES), BlockPropertyPair.of(Blocks.CANDLE, Map.of()), ModRecipeSerializers.COLOR_LOSE.get()).save(finishedRecipeConsumer, BiomeBacklog.prefix("candles"));
-        ColorLoseBuilder.recipe(BlockStateIngredient.of(BlockTags.BANNERS), BlockPropertyPair.of(Blocks.WHITE_BANNER, Map.of()), ModRecipeSerializers.COLOR_LOSE.get()).save(finishedRecipeConsumer, BiomeBacklog.prefix("banners"));
-        ColorLoseBuilder.recipe(BlockStateIngredient.of(ModTags.COLORED_BEDS), BlockPropertyPair.of(Blocks.WHITE_BED, Map.of()), ModRecipeSerializers.COLOR_LOSE.get()).save(finishedRecipeConsumer, BiomeBacklog.prefix("beds"));
-        ColorLoseBuilder.recipe(BlockStateIngredient.of(ModTags.COLORED_CONCRETE), BlockPropertyPair.of(Blocks.WHITE_CONCRETE, Map.of()), ModRecipeSerializers.COLOR_LOSE.get()).save(finishedRecipeConsumer, BiomeBacklog.prefix("concretes"));
-        ColorLoseBuilder.recipe(BlockStateIngredient.of(ModTags.COLORED_CONCRETE_POWDER), BlockPropertyPair.of(Blocks.WHITE_CONCRETE_POWDER, Map.of()), ModRecipeSerializers.COLOR_LOSE.get()).save(finishedRecipeConsumer, BiomeBacklog.prefix("concrete_powders"));
-        ColorLoseBuilder.recipe(BlockStateIngredient.of(BlockTags.TERRACOTTA), BlockPropertyPair.of(Blocks.TERRACOTTA, Map.of()), ModRecipeSerializers.COLOR_LOSE.get()).save(finishedRecipeConsumer, BiomeBacklog.prefix("terracottas"));
-        ColorLoseBuilder.recipe(BlockStateIngredient.of(ModTags.COLORED_SHULKER_BOXS), BlockPropertyPair.of(Blocks.SHULKER_BOX, Map.of()), ModRecipeSerializers.COLOR_LOSE.get()).save(finishedRecipeConsumer, BiomeBacklog.prefix("shulker_boxes"));
-        ColorLoseBuilder.recipe(BlockStateIngredient.of(Tags.Blocks.STAINED_GLASS), BlockPropertyPair.of(Blocks.GLASS, Map.of()), ModRecipeSerializers.COLOR_LOSE.get()).save(finishedRecipeConsumer, BiomeBacklog.prefix("glass"));
-        ColorLoseBuilder.recipe(BlockStateIngredient.of(Tags.Blocks.STAINED_GLASS_PANES), BlockPropertyPair.of(Blocks.GLASS_PANE, Map.of()), ModRecipeSerializers.COLOR_LOSE.get()).save(finishedRecipeConsumer, BiomeBacklog.prefix("glass_pane"));
+        ColorLoseBuilder.recipe(BlockStateIngredient.of(BlockTags.WOOL), Blocks.WHITE_WOOL, ModRecipeSerializers.COLOR_LOSE.get()).save(finishedRecipeConsumer, BiomeBacklog.prefix("wools"));
+        ColorLoseBuilder.recipe(BlockStateIngredient.of(BlockTags.WOOL_CARPETS), Blocks.WHITE_CARPET, ModRecipeSerializers.COLOR_LOSE.get()).save(finishedRecipeConsumer, BiomeBacklog.prefix("carpets"));
+        ColorLoseBuilder.recipe(BlockStateIngredient.of(BlockTags.CANDLES), Blocks.CANDLE, ModRecipeSerializers.COLOR_LOSE.get()).save(finishedRecipeConsumer, BiomeBacklog.prefix("candles"));
+        ColorLoseBuilder.recipe(BlockStateIngredient.of(BlockTags.BANNERS), Blocks.WHITE_BANNER, ModRecipeSerializers.COLOR_LOSE.get()).save(finishedRecipeConsumer, BiomeBacklog.prefix("banners"));
+        ColorLoseBuilder.recipe(BlockStateIngredient.of(ModTags.COLORED_BEDS), Blocks.WHITE_BED, ModRecipeSerializers.COLOR_LOSE.get()).save(finishedRecipeConsumer, BiomeBacklog.prefix("beds"));
+        ColorLoseBuilder.recipe(BlockStateIngredient.of(ModTags.COLORED_CONCRETE), Blocks.WHITE_CONCRETE, ModRecipeSerializers.COLOR_LOSE.get()).save(finishedRecipeConsumer, BiomeBacklog.prefix("concretes"));
+        ColorLoseBuilder.recipe(BlockStateIngredient.of(ModTags.COLORED_CONCRETE_POWDER), Blocks.WHITE_CONCRETE_POWDER, ModRecipeSerializers.COLOR_LOSE.get()).save(finishedRecipeConsumer, BiomeBacklog.prefix("concrete_powders"));
+        ColorLoseBuilder.recipe(BlockStateIngredient.of(BlockTags.TERRACOTTA), Blocks.TERRACOTTA, ModRecipeSerializers.COLOR_LOSE.get()).save(finishedRecipeConsumer, BiomeBacklog.prefix("terracottas"));
+        ColorLoseBuilder.recipe(BlockStateIngredient.of(ModTags.COLORED_SHULKER_BOXS), Blocks.SHULKER_BOX, ModRecipeSerializers.COLOR_LOSE.get()).save(finishedRecipeConsumer, BiomeBacklog.prefix("shulker_boxes"));
+        ColorLoseBuilder.recipe(BlockStateIngredient.of(Tags.Blocks.STAINED_GLASS), Blocks.GLASS, ModRecipeSerializers.COLOR_LOSE.get()).save(finishedRecipeConsumer, BiomeBacklog.prefix("glass"));
+        ColorLoseBuilder.recipe(BlockStateIngredient.of(Tags.Blocks.STAINED_GLASS_PANES), Blocks.GLASS_PANE, ModRecipeSerializers.COLOR_LOSE.get()).save(finishedRecipeConsumer, BiomeBacklog.prefix("glass_pane"));
     }
 }

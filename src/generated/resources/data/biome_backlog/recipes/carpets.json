@@ -3,7 +3,5 @@
   "ingredient": {
     "tag": "minecraft:wool_carpets"
   },
-  "result": {
-    "block": "minecraft:white_carpet"
-  }
+  "result": "minecraft:white_carpet"
 }

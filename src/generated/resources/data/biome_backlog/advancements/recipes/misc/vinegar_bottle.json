@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_date",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_date"
     ]
   ],
   "rewards": {
     "recipes": [
       "biome_backlog:vinegar_bottle"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

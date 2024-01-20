@@ -3,7 +3,5 @@
   "ingredient": {
     "tag": "minecraft:terracotta"
   },
-  "result": {
-    "block": "minecraft:terracotta"
-  }
+  "result": "minecraft:terracotta"
 }

@@ -3,7 +3,5 @@
   "ingredient": {
     "tag": "minecraft:candles"
   },
-  "result": {
-    "block": "minecraft:candle"
-  }
+  "result": "minecraft:candle"
 }

@@ -8,7 +8,7 @@ import com.camcamcamcamcam.biome_backlog.world.level.entity.Vulture;
 import com.camcamcamcamcam.biome_backlog.world.server.DeathTrackRequest;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -21,16 +21,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
-import net.minecraftforge.common.world.ForgeChunkManager;
-import net.minecraftforge.event.AttachCapabilitiesEvent;
-import net.minecraftforge.event.entity.EntityLeaveLevelEvent;
-import net.minecraftforge.event.entity.ProjectileImpactEvent;
-import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.event.entity.EntityLeaveLevelEvent;
+import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
+import net.neoforged.neoforge.event.entity.living.LivingEvent;
+import net.neoforged.neoforge.event.furnace.FurnaceFuelBurnTimeEvent;
 
 import java.util.UUID;
 
@@ -84,16 +80,6 @@ public class ModEvents {
         }
     }
 
-    @SubscribeEvent
-    public static void registerCapabilities(RegisterCapabilitiesEvent event) {
-        event.register(DeathTrackCapability.class);
-    }
-
-    @SubscribeEvent
-    public static void onAttachEntityCapabilities(AttachCapabilitiesEvent<Level> event) {
-        event.addCapability(new ResourceLocation(BiomeBacklog.MODID, "death_track"), new DeathTrackCapability());
-    }
-
 
     @SubscribeEvent
     public static void livingTickEvent(LivingEvent.LivingTickEvent event) {
@@ -103,8 +89,8 @@ public class ModEvents {
             if (((Player) livingEntity).getLastDeathLocation().isPresent()) {
                 if (livingEntity.level() instanceof ServerLevel serverLevel) {
                     BlockPos pos = ((Player) livingEntity).getLastDeathLocation().get().pos();
-                    livingEntity.level().getCapability(BiomeBacklog.TRUSTED_VULTURE_CAP).ifPresent(deathTrackCapability -> {
-                        for (DeathTrackRequest request : deathTrackCapability.getDeathTrackRequestsFor()) {
+                    DeathTrackCapability capability = livingEntity.level().getData(ModCapabilitys.DEATH_TRACK);
+                    for (DeathTrackRequest request : capability.getDeathTrackRequestsFor()) {
                             loadChunksAround(serverLevel, request.getVultureUUID(), request.getChunkPosition(), true);
                             Entity entityFromChunk = serverLevel.getEntity(request.getVultureUUID());
                             if (entityFromChunk != null) {
@@ -114,10 +100,9 @@ public class ModEvents {
                                 }
                             }
                             loadChunksAround(serverLevel, request.getVultureUUID(), request.getChunkPosition(), false);
-                            deathTrackCapability.removeDeathTrackRequest(request);
+                        capability.removeDeathTrackRequest(request);
                             return;
                         }
-                    });
                 }
             }
         }
@@ -127,9 +112,10 @@ public class ModEvents {
         ChunkPos chunkPos = new ChunkPos(center);
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
-                ForgeChunkManager.forceChunk(serverLevel, BiomeBacklog.MODID, ticket, chunkPos.x + i, chunkPos.z + j, load, true);
+                BiomeBacklog.deathRequestController.forceChunk(serverLevel, ticket, chunkPos.x + i, chunkPos.z + j, load, true);
             }
         }
+
     }
 
     @SubscribeEvent
@@ -137,12 +123,11 @@ public class ModEvents {
         if (event.getEntity() instanceof LivingEntity living) {
             if (!event.getLevel().isClientSide && living.isAlive() && living instanceof Vulture && ((Vulture) living).isTame() && ((Vulture) living).hasCircle()) {
                 UUID ownerUUID = ((Vulture) living).getOwnerUUID();
-                event.getLevel().getCapability(BiomeBacklog.TRUSTED_VULTURE_CAP).ifPresent(cap -> {
-                    DeathTrackRequest request = new DeathTrackRequest(living.getUUID(), ForgeRegistries.ENTITY_TYPES.getKey(event.getEntity().getType()).toString(), ownerUUID, living.blockPosition());
+                DeathTrackCapability cap = event.getLevel().getData(ModCapabilitys.DEATH_TRACK);
+                DeathTrackRequest request = new DeathTrackRequest(living.getUUID(), BuiltInRegistries.ENTITY_TYPE.getKey(event.getEntity().getType()).toString(), ownerUUID, living.blockPosition());
                     if (cap.getDeathTrackRequestsFor().isEmpty() || cap.getDeathTrackRequestsFor().stream().noneMatch(predicate -> predicate.getVultureUUID() == event.getEntity().getUUID())) {
                         cap.addDeathTrackRequest(request);
                     }
-                });
             }
         }
     }

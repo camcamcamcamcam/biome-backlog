@@ -1,8 +1,9 @@
 package com.camcamcamcamcam.biome_backlog.world.level.block;
 
+import com.camcamcamcamcam.biome_backlog.register.ModBlockEntities;
 import com.camcamcamcamcam.biome_backlog.world.level.block.entity.BurrowBlockEntity;
 import com.camcamcamcamcam.biome_backlog.world.level.entity.Meerkat;
-import com.camcamcamcamcam.biome_backlog.register.ModBlockEntities;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
@@ -22,6 +23,11 @@ import java.util.List;
 public class BurrowBlock extends BaseEntityBlock {
 	public BurrowBlock(Properties properties) {
 		super(properties);
+	}
+
+	@Override
+	protected MapCodec<? extends BaseEntityBlock> codec() {
+		return null;
 	}
 
 	public RenderShape getRenderShape(BlockState p_48727_) {

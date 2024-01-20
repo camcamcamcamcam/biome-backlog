@@ -1,6 +1,7 @@
 package com.camcamcamcamcam.biome_backlog.world.level.block;
 
 import com.camcamcamcamcam.biome_backlog.register.ModBlocks;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -32,6 +33,8 @@ import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.neoforged.neoforge.common.CommonHooks;
+import net.neoforged.neoforge.common.PlantType;
 import org.jetbrains.annotations.Nullable;
 
 public class PearCactusBlock extends BushBlock implements BonemealableBlock {
@@ -44,6 +47,11 @@ public class PearCactusBlock extends BushBlock implements BonemealableBlock {
 	public PearCactusBlock(BlockBehaviour.Properties properties) {
 		super(properties);
 		this.registerDefaultState(this.stateDefinition.any().setValue(AGE, 0));
+	}
+
+	@Override
+	protected MapCodec<? extends BushBlock> codec() {
+		return null;
 	}
 
 	@Nullable
@@ -69,11 +77,11 @@ public class PearCactusBlock extends BushBlock implements BonemealableBlock {
 
 	public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
 		int i = state.getValue(AGE);
-		if (i < 2 && level.getRawBrightness(pos.above(), 0) >= 9 && net.minecraftforge.common.ForgeHooks.onCropsGrowPre(level, pos, state, random.nextInt(5) == 0)) {
+		if (i < 2 && level.getRawBrightness(pos.above(), 0) >= 9 && CommonHooks.onCropsGrowPre(level, pos, state, random.nextInt(5) == 0)) {
 			BlockState blockstate = state.setValue(AGE, Integer.valueOf(i + 1));
 			level.setBlock(pos, blockstate, 2);
 			level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(blockstate));
-			net.minecraftforge.common.ForgeHooks.onCropsGrowPost(level, pos, state);
+			CommonHooks.onCropsGrowPost(level, pos, state);
 		}
 	}
 
@@ -101,8 +109,8 @@ public class PearCactusBlock extends BushBlock implements BonemealableBlock {
 	}
 
 	@Override
-	public net.minecraftforge.common.PlantType getPlantType(BlockGetter world, BlockPos pos) {
-		return net.minecraftforge.common.PlantType.DESERT;
+	public PlantType getPlantType(BlockGetter world, BlockPos pos) {
+		return PlantType.DESERT;
 	}
 
 
@@ -112,7 +120,7 @@ public class PearCactusBlock extends BushBlock implements BonemealableBlock {
 	}
 
 	@Override
-	public boolean isValidBonemealTarget(LevelReader p_50897_, BlockPos p_50898_, BlockState p_50899_, boolean p_50900_) {
+	public boolean isValidBonemealTarget(LevelReader p_50897_, BlockPos p_50898_, BlockState p_50899_) {
 		return p_50899_.getValue(AGE) < 2;
 	}
 

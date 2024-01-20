@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_coconut_chunk",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_coconut_chunk"
     ]
   ],
   "rewards": {
     "recipes": [
       "biome_backlog:desiccated_coconut"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -3,7 +3,5 @@
   "ingredient": {
     "tag": "biome_backlog:colored_concrete_powder"
   },
-  "result": {
-    "block": "minecraft:white_concrete_powder"
-  }
+  "result": "minecraft:white_concrete_powder"
 }

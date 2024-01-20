@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_coconut_half",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_coconut_half"
     ]
   ],
   "rewards": {
     "recipes": [
       "biome_backlog:coconut_chunk"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

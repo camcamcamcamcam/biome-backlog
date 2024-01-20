@@ -1,6 +1,7 @@
 package com.camcamcamcamcam.biome_backlog.world.level.block;
 
 import com.camcamcamcamcam.biome_backlog.register.ModBlocks;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -44,6 +45,11 @@ public class CoconutBlock extends HorizontalDirectionalBlock implements Fallable
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(GREEN, false));
 
+    }
+
+    @Override
+    protected MapCodec<? extends HorizontalDirectionalBlock> codec() {
+        return null;
     }
 
     @Nullable
@@ -122,7 +128,7 @@ public class CoconutBlock extends HorizontalDirectionalBlock implements Fallable
     }
 
 	@Override
-	public boolean isValidBonemealTarget(LevelReader blockGetter, BlockPos pos, BlockState state, boolean isClientSide) {
+    public boolean isValidBonemealTarget(LevelReader blockGetter, BlockPos pos, BlockState state) {
 		return !state.getValue(GREEN);
 	}
 

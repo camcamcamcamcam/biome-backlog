@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_salt",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_salt"
     ]
   ],
   "rewards": {
     "recipes": [
       "biome_backlog:salt_lamp"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

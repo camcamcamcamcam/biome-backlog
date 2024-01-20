@@ -1,9 +1,9 @@
 package com.camcamcamcamcam.biome_backlog.world.server;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.UUID;
 
@@ -30,7 +30,7 @@ public class DeathTrackRequest {
 	}
 
 	public EntityType getEntityType() {
-		return ForgeRegistries.ENTITY_TYPES.getValue(new ResourceLocation(this.entityType));
+		return BuiltInRegistries.ENTITY_TYPE.get(new ResourceLocation(this.entityType));
 	}
 
 	public UUID getOwnerUUID() {

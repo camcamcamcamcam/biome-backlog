@@ -1,13 +1,12 @@
 package com.camcamcamcamcam.biome_backlog.data.recipe;
 
-import com.camcamcamcamcam.biome_backlog.recipe.BlockPropertyPair;
 import com.camcamcamcamcam.biome_backlog.recipe.BlockStateIngredient;
+import com.camcamcamcamcam.biome_backlog.recipe.recipes.ColorLoseRecipe;
 import com.camcamcamcamcam.biome_backlog.recipe.serializer.ColorLoseRecipeSerializer;
-import com.google.gson.JsonObject;
-import net.minecraft.advancements.CriterionTriggerInstance;
+import net.minecraft.advancements.Criterion;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeBuilder;
+import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -16,21 +15,25 @@ import net.minecraft.world.level.block.Block;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.function.Consumer;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class ColorLoseBuilder implements RecipeBuilder {
+	private final Map<String, Criterion<?>> criteria = new LinkedHashMap();
 	private final BlockStateIngredient ingredient;
 
-	private final BlockPropertyPair result;
+	private final Block result;
 	private final RecipeSerializer<?> serializer;
 
-	public ColorLoseBuilder(BlockStateIngredient ingredient, @Nullable BlockPropertyPair result, RecipeSerializer<?> serializer) {
+
+	public ColorLoseBuilder(BlockStateIngredient ingredient, @Nullable Block result, RecipeSerializer<?> serializer) {
 		this.ingredient = ingredient;
 		this.result = result;
 		this.serializer = serializer;
 	}
 
-	public static ColorLoseBuilder recipe(BlockStateIngredient ingredient, BlockPropertyPair result, ColorLoseRecipeSerializer serializer) {
+
+	public static ColorLoseBuilder recipe(BlockStateIngredient ingredient, Block result, ColorLoseRecipeSerializer serializer) {
 		return new ColorLoseBuilder(ingredient, result, serializer);
 	}
 
@@ -38,20 +41,12 @@ public class ColorLoseBuilder implements RecipeBuilder {
 		return this.ingredient;
 	}
 
-	public BlockPropertyPair getResultBlock() {
-		return this.result;
-	}
 
-	public RecipeSerializer<?> getSerializer() {
-		return this.serializer;
-	}
-
-	@Nonnull
 	@Override
-	public RecipeBuilder unlockedBy(@Nonnull String criterionName, @Nonnull CriterionTriggerInstance criterionTriggerInstance) {
+	public ColorLoseBuilder unlockedBy(String p_176781_, Criterion<?> p_300897_) {
+		this.criteria.put(p_176781_, p_300897_);
 		return this;
 	}
-
 	@Nonnull
 	@Override
 	public RecipeBuilder group(@Nullable String groupName) {
@@ -64,62 +59,17 @@ public class ColorLoseBuilder implements RecipeBuilder {
 		return Items.AIR;
 	}
 
-	public void save(Consumer<FinishedRecipe> p_176499_) {
-		this.save(p_176499_, getDefaultBlockRecipeId(this.getResultBlock().block()));
+	public Map<String, Criterion<?>> getCriteria() {
+		return criteria;
+	}
+
+	@Override
+	public void save(RecipeOutput p_301137_, ResourceLocation p_126328_) {
+		ColorLoseRecipe singleitemrecipe = new ColorLoseRecipe(this.result, this.ingredient);
+		p_301137_.accept(p_126328_, singleitemrecipe, null);
 	}
 
 	static ResourceLocation getDefaultBlockRecipeId(Block p_176494_) {
 		return BuiltInRegistries.BLOCK.getKey(p_176494_);
-	}
-
-	@Override
-	public void save(@Nonnull Consumer<FinishedRecipe> finishedRecipeConsumer, @Nonnull ResourceLocation recipeId) {
-		finishedRecipeConsumer.accept(new Result(recipeId, this.result, this.ingredient, this.serializer));
-	}
-
-	public static class Result implements FinishedRecipe {
-		private final ResourceLocation id;
-
-		private final BlockPropertyPair result;
-		private final BlockStateIngredient ingredient;
-		private final RecipeSerializer<?> serializer;
-
-		public Result(ResourceLocation id, BlockPropertyPair result, BlockStateIngredient ingredient, RecipeSerializer<?> serializer) {
-			this.id = id;
-			this.result = result;
-			this.ingredient = ingredient;
-			this.serializer = serializer;
-		}
-
-		@Override
-		public void serializeRecipeData(@Nonnull JsonObject json) {
-			json.add("result", BlockStateIngredient.of(this.result.block()).toJson());
-			json.add("ingredient", this.ingredient.toJson());
-
-		}
-
-		@Nonnull
-		@Override
-		public RecipeSerializer<?> getType() {
-			return this.serializer;
-		}
-
-		@Nonnull
-		@Override
-		public ResourceLocation getId() {
-			return this.id;
-		}
-
-		@Nullable
-		@Override
-		public JsonObject serializeAdvancement() {
-			return null;
-		}
-
-		@Nullable
-		@Override
-		public ResourceLocation getAdvancementId() {
-			return null;
-		}
 	}
 }

@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_raw_ostrich",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_raw_ostrich"
     ]
   ],
   "rewards": {
     "recipes": [
       "biome_backlog:cooked_ostrich_from_campfire"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

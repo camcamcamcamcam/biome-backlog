@@ -1,5 +1,6 @@
 package com.camcamcamcamcam.biome_backlog.world.level.block;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
@@ -48,6 +49,11 @@ public class SucculentBlock extends BushBlock {
     public SucculentBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(TYPE, 0));
+    }
+
+    @Override
+    protected MapCodec<? extends BushBlock> codec() {
+        return null;
     }
 
     @Override

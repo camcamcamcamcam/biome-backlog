@@ -1,36 +1,31 @@
 package com.camcamcamcamcam.biome_backlog;
 
-import com.camcamcamcamcam.biome_backlog.capability.DeathTrackCapability;
 import com.camcamcamcamcam.biome_backlog.client.ClientRegistrar;
 import com.camcamcamcamcam.biome_backlog.register.*;
-import com.mojang.datafixers.util.Pair;
 import com.mojang.logging.LogUtils;
-import it.unimi.dsi.fastutil.longs.LongSet;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.AxeItem;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraft.world.level.block.state.properties.WoodType;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityManager;
-import net.minecraftforge.common.capabilities.CapabilityToken;
-import net.minecraftforge.common.world.ForgeChunkManager;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.MissingMappingsEvent;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.neoforge.common.world.chunk.RegisterTicketControllersEvent;
+import net.neoforged.neoforge.common.world.chunk.TicketController;
+import net.neoforged.neoforge.common.world.chunk.TicketHelper;
+import net.neoforged.neoforge.common.world.chunk.TicketSet;
 import org.slf4j.Logger;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.UUID;
 
 @Mod(BiomeBacklog.MODID)
 public class BiomeBacklog {
@@ -39,38 +34,35 @@ public class BiomeBacklog {
 
 	private static final Logger LOGGER = LogUtils.getLogger();
 
-	public static Capability<DeathTrackCapability> TRUSTED_VULTURE_CAP = CapabilityManager.get(new CapabilityToken<>() {
-	});
 
-	public BiomeBacklog() {
-		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+	public static final TicketController deathRequestController = new TicketController(prefix("death_request"), BiomeBacklog::removeAllChunkTickets);
 
+	public BiomeBacklog(IEventBus modEventBus) {
 		ModBlocks.BLOCKS.register(modEventBus);
 
 		ModItems.ITEMS.register(modEventBus);
 		ModEntities.ENTITIES.register(modEventBus);
 		ModBlockEntities.BLOCK_ENTITIES.register(modEventBus);
 		ModTreeDecoratorTypes.DECORATOR_TYPE.register(modEventBus);
+		ModTrunkPlacerTypes.TRUNK_PLACER_TYPE.register(modEventBus);
 		ModFoliagePlacerTypes.FOLIAGE_PLACER_TYPE.register(modEventBus);
 		ModBiomeModifiers.BIOME_MODIFIER_SERIALIZERS.register(modEventBus);
 		ModParticles.PARTICLES.register(modEventBus);
+		ModCapabilitys.ATTACHMENT_TYPES.register(modEventBus);
 
 		ModRecipeTypes.RECIPE_TYPES.register(modEventBus);
 		ModRecipeSerializers.RECIPE_SERIALIZERS.register(modEventBus);
 
 		modEventBus.addListener(this::commonSetup);
-		MinecraftForge.EVENT_BUS.addListener(this::missingMappingEvent);
-		MinecraftForge.EVENT_BUS.register(this);
-		DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientRegistrar::setup));
+		modEventBus.addListener(this::registerTicket);
+		if (FMLEnvironment.dist == Dist.CLIENT) {
+			modEventBus.addListener(ClientRegistrar::setup);
+		}
 	}
 
-	public void serverInit() {
-		ForgeChunkManager.setForcedChunkLoadingCallback(BiomeBacklog.MODID, this::removeAllChunkTickets);
-	}
-
-	private void removeAllChunkTickets(ServerLevel serverLevel, ForgeChunkManager.TicketHelper ticketHelper) {
+	private static void removeAllChunkTickets(ServerLevel serverLevel, TicketHelper ticketHelper) {
 		int i = 0;
-		for (Map.Entry<UUID, Pair<LongSet, LongSet>> entry : ticketHelper.getEntityTickets().entrySet()) {
+		for (Map.Entry<UUID, TicketSet> entry : ticketHelper.getEntityTickets().entrySet()) {
 			ticketHelper.removeAllTickets(entry.getKey());
 			i++;
 		}
@@ -86,17 +78,21 @@ public class BiomeBacklog {
 		return MODID + ":" + name.toLowerCase(Locale.ROOT);
 	}
 
+
+	private void registerTicket(final RegisterTicketControllersEvent event) {
+		event.register(deathRequestController);
+	}
+
+
 	private void commonSetup(final FMLCommonSetupEvent event) {
 		event.enqueueWork(() -> {
 			WoodType.register(ModBlocks.PALM_TYPE);
-			((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.SUCCULENT.getId(), ModBlocks.POTTED_SUCCULENT);
-			ModTrunkPlacerTypes.init();
+			((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(BuiltInRegistries.BLOCK.getKey(ModBlocks.SUCCULENT.get()), ModBlocks.POTTED_SUCCULENT);
 			ModBlocks.flamableInit();
 			ModItems.registerCompostableItem();
 		});
 
 		ModEntities.spawnPlacementSetup();
-		event.enqueueWork(this::serverInit);
 		event.enqueueWork(this::afterCommonSetup);
     }
 
@@ -107,22 +103,7 @@ public class BiomeBacklog {
 		AxeItem.STRIPPABLES = stripMap;
 	}
 
-	public void missingMappingEvent(MissingMappingsEvent event) {
-		List<MissingMappingsEvent.Mapping<Block>> block = event.getMappings(Registries.BLOCK, "biome_vote_losers");
-		block.forEach(blockMapping -> {
-			ResourceLocation resourceLocation = new ResourceLocation(BiomeBacklog.MODID, blockMapping.getKey().getPath());
-			Block block1 = ForgeRegistries.BLOCKS.getValue(resourceLocation);
-			if (block1 != null) {
-				blockMapping.remap(block1);
-			}
-		});
-		List<MissingMappingsEvent.Mapping<Item>> item = event.getMappings(Registries.ITEM, "biome_vote_losers");
-		item.forEach(blockMapping -> {
-			ResourceLocation resourceLocation = new ResourceLocation(BiomeBacklog.MODID, blockMapping.getKey().getPath());
-			Item item1 = ForgeRegistries.ITEMS.getValue(resourceLocation);
-			if (item1 != null) {
-				blockMapping.remap(item1);
-			}
-		});
+	public TicketController getDeathRequestController() {
+		return deathRequestController;
 	}
 }

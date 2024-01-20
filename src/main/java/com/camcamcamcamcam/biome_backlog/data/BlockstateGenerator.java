@@ -4,6 +4,7 @@ import com.camcamcamcamcam.biome_backlog.BiomeBacklog;
 import com.camcamcamcamcam.biome_backlog.register.ModBlocks;
 import com.camcamcamcamcam.biome_backlog.world.level.block.SaltBlock;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -12,11 +13,10 @@ import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.state.properties.Half;
 import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraft.world.level.block.state.properties.StairsShape;
-import net.minecraftforge.client.model.generators.BlockStateProvider;
-import net.minecraftforge.client.model.generators.ConfiguredModel;
-import net.minecraftforge.client.model.generators.ModelFile;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
+import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
+import net.neoforged.neoforge.client.model.generators.ModelFile;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 import javax.annotation.Nonnull;
 
@@ -187,7 +187,7 @@ public class BlockstateGenerator extends BlockStateProvider {
 
 
 	private ResourceLocation key(Block block) {
-		return ForgeRegistries.BLOCKS.getKey(block);
+		return BuiltInRegistries.BLOCK.getKey(block);
 	}
 
 	protected ResourceLocation texture(String name) {
@@ -195,7 +195,7 @@ public class BlockstateGenerator extends BlockStateProvider {
 	}
 
 	protected String name(Block block) {
-		return ForgeRegistries.BLOCKS.getKey(block).getPath();
+		return BuiltInRegistries.BLOCK.getKey(block).getPath();
 	}
 
 	private ResourceLocation suffix(ResourceLocation rl, String suffix) {

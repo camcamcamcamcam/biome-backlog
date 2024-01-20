@@ -3,7 +3,5 @@
   "ingredient": {
     "tag": "biome_backlog:colored_shulker_boxs"
   },
-  "result": {
-    "block": "minecraft:shulker_box"
-  }
+  "result": "minecraft:shulker_box"
 }

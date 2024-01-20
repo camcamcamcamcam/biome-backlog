@@ -4,10 +4,10 @@ import com.camcamcamcamcam.biome_backlog.BiomeBacklog;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.data.event.GatherDataEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -25,7 +25,7 @@ public class DataGenerators {
 		generator.addProvider(event.includeServer(), blockTags);
         generator.addProvider(event.includeServer(), new ModItemTagProvider(packOutput, lookupProvider, blockTags.contentsGetter(), existingFileHelper));
         generator.addProvider(event.includeServer(), LootGenerator.create(packOutput));
-		generator.addProvider(event.includeServer(), new RecipeGenerator(packOutput));
+		generator.addProvider(event.includeServer(), new RecipeGenerator(packOutput, lookupProvider));
 		generator.addProvider(event.includeServer(), new LanguageGenerator(packOutput));
 		generator.addProvider(event.includeServer(), new WorldGenerator(packOutput, lookupProvider));
 	}

@@ -3,7 +3,5 @@
   "ingredient": {
     "tag": "minecraft:wool"
   },
-  "result": {
-    "block": "minecraft:white_wool"
-  }
+  "result": "minecraft:white_wool"
 }

@@ -2,6 +2,7 @@ package com.camcamcamcamcam.biome_backlog.world.level.block;
 
 import com.camcamcamcamcam.biome_backlog.register.ModEntities;
 import com.camcamcamcamcam.biome_backlog.world.level.entity.Tumbleweed;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -31,6 +32,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.neoforged.neoforge.common.CommonHooks;
+import net.neoforged.neoforge.common.PlantType;
 
 public class TumbleWeedBlock extends BushBlock implements BonemealableBlock {
     private static final int MAX_AGE = 2;
@@ -45,6 +48,11 @@ public class TumbleWeedBlock extends BushBlock implements BonemealableBlock {
     public TumbleWeedBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(AGE, 0).setValue(STUNTED, false));
+    }
+
+    @Override
+    protected MapCodec<? extends BushBlock> codec() {
+        return null;
     }
 
     @Override
@@ -65,11 +73,11 @@ public class TumbleWeedBlock extends BushBlock implements BonemealableBlock {
 
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         int age = state.getValue(AGE);
-        if (age < MAX_AGE && level.getRawBrightness(pos.above(), 0) >= 9 && net.minecraftforge.common.ForgeHooks.onCropsGrowPre(level, pos, state, random.nextInt(5) == 0)) {
+        if (age < MAX_AGE && level.getRawBrightness(pos.above(), 0) >= 9 && CommonHooks.onCropsGrowPre(level, pos, state, random.nextInt(5) == 0)) {
             BlockState blockstate = state.setValue(AGE, Integer.valueOf(age + 1));
             level.setBlock(pos, blockstate, Block.UPDATE_CLIENTS);
             level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(blockstate));
-            net.minecraftforge.common.ForgeHooks.onCropsGrowPost(level, pos, state);
+            CommonHooks.onCropsGrowPost(level, pos, state);
         } else if (age >= MAX_AGE && random.nextInt(10) == 0) {
             level.removeBlock(pos, false);
             level.gameEvent(GameEvent.BLOCK_DESTROY, pos, GameEvent.Context.of(state));
@@ -98,8 +106,8 @@ public class TumbleWeedBlock extends BushBlock implements BonemealableBlock {
     }
 
     @Override
-    public net.minecraftforge.common.PlantType getPlantType(BlockGetter world, BlockPos pos) {
-        return net.minecraftforge.common.PlantType.DESERT;
+    public PlantType getPlantType(BlockGetter world, BlockPos pos) {
+        return PlantType.DESERT;
     }
 
     @Override
@@ -108,7 +116,7 @@ public class TumbleWeedBlock extends BushBlock implements BonemealableBlock {
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader p_50897_, BlockPos p_50898_, BlockState state, boolean p_50900_) {
+    public boolean isValidBonemealTarget(LevelReader p_50897_, BlockPos p_50898_, BlockState state) {
         return !state.getValue(STUNTED) && state.getValue(AGE) < MAX_AGE;
     }
 

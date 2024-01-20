@@ -3,7 +3,5 @@
   "ingredient": {
     "tag": "minecraft:banners"
   },
-  "result": {
-    "block": "minecraft:white_banner"
-  }
+  "result": "minecraft:white_banner"
 }

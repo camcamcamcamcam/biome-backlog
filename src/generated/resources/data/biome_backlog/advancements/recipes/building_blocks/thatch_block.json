@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_palm_leaves",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_palm_leaves"
     ]
   ],
   "rewards": {
     "recipes": [
       "biome_backlog:thatch_block"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

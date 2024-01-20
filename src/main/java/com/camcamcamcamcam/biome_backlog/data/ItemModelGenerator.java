@@ -3,16 +3,17 @@ package com.camcamcamcamcam.biome_backlog.data;
 import com.camcamcamcamcam.biome_backlog.BiomeBacklog;
 import com.camcamcamcamcam.biome_backlog.register.ModBlocks;
 import com.camcamcamcamcam.biome_backlog.register.ModItems;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.client.model.generators.ItemModelBuilder;
-import net.minecraftforge.client.model.generators.ItemModelProvider;
-import net.minecraftforge.client.model.generators.ModelFile;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
+import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
+import net.neoforged.neoforge.client.model.generators.ModelFile;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+
+import java.util.function.Supplier;
 
 import static com.camcamcamcamcam.biome_backlog.BiomeBacklog.prefix;
 
@@ -116,8 +117,8 @@ public class ItemModelGenerator extends ItemModelProvider {
 		return builder;
 	}
 
-	private ItemModelBuilder singleTexTool(RegistryObject<Item> item) {
-		return tool(ForgeRegistries.ITEMS.getKey(item.get()).getPath(), prefix("item/" + ForgeRegistries.ITEMS.getKey(item.get()).getPath()));
+	private ItemModelBuilder singleTexTool(Supplier<Item> item) {
+		return tool(BuiltInRegistries.ITEM.getKey(item.get()).getPath(), prefix("item/" + BuiltInRegistries.ITEM.getKey(item.get()).getPath()));
 	}
 
 	private ItemModelBuilder tool(String name, ResourceLocation... layers) {
@@ -128,8 +129,8 @@ public class ItemModelGenerator extends ItemModelProvider {
 		return builder;
 	}
 
-	private ItemModelBuilder singleTex(RegistryObject<? extends Item> item) {
-		return generated(ForgeRegistries.ITEMS.getKey(item.get()).getPath(), prefix("item/" + ForgeRegistries.ITEMS.getKey(item.get()).getPath()));
+	private ItemModelBuilder singleTex(Supplier<? extends Item> item) {
+		return generated(BuiltInRegistries.ITEM.getKey(item.get()).getPath(), prefix("item/" + BuiltInRegistries.ITEM.getKey(item.get()).getPath()));
 	}
 
 	private ItemModelBuilder bowItem(String name, ResourceLocation... layers) {
@@ -140,43 +141,43 @@ public class ItemModelGenerator extends ItemModelProvider {
 		return builder;
 	}
 
-	private ItemModelBuilder bowTex(RegistryObject<Item> item, ModelFile pull0, ModelFile pull1, ModelFile pull2) {
-		return bowItem(item.getId().getPath(), prefix("item/" + item.getId().getPath()))
+	private ItemModelBuilder bowTex(Supplier<Item> item, ModelFile pull0, ModelFile pull1, ModelFile pull2) {
+		return bowItem(itemName(item.get()), prefix("item/" + itemName(item.get())))
 				.override().predicate(new ResourceLocation("pulling"), 1).model(pull0).end()
 				.override().predicate(new ResourceLocation("pulling"), 1).predicate(new ResourceLocation("pull"), (float) 0.65).model(pull1).end()
 				.override().predicate(new ResourceLocation("pulling"), 1).predicate(new ResourceLocation("pull"), (float) 0.9).model(pull2).end();
 	}
 
-	private void woodenButton(RegistryObject<? extends Block> button, RegistryObject<Block> wood) {
-		getBuilder(ForgeRegistries.BLOCKS.getKey(button.get()).getPath())
+	private void woodenButton(Supplier<? extends Block> button, Supplier<Block> wood) {
+		getBuilder(BuiltInRegistries.BLOCK.getKey(button.get()).getPath())
 				.parent(getExistingFile(mcLoc("block/button_inventory")))
-				.texture("texture", "block/" + ForgeRegistries.BLOCKS.getKey(wood.get()).getPath());
+				.texture("texture", "block/" + BuiltInRegistries.BLOCK.getKey(wood.get()).getPath());
 	}
 
-	private void woodenFence(RegistryObject<? extends Block> fence, RegistryObject<? extends Block> block) {
-		getBuilder(ForgeRegistries.BLOCKS.getKey(fence.get()).getPath())
+	private void woodenFence(Supplier<? extends Block> fence, Supplier<? extends Block> block) {
+		getBuilder(BuiltInRegistries.BLOCK.getKey(fence.get()).getPath())
 				.parent(getExistingFile(mcLoc("block/fence_inventory")))
-				.texture("texture", "block/" + ForgeRegistries.BLOCKS.getKey(block.get()).getPath());
+				.texture("texture", "block/" + BuiltInRegistries.BLOCK.getKey(block.get()).getPath());
 	}
 
 	private void woodenFence(Block fence, String texture) {
-		getBuilder(ForgeRegistries.BLOCKS.getKey(fence).getPath())
+		getBuilder(BuiltInRegistries.BLOCK.getKey(fence).getPath())
 				.parent(getExistingFile(mcLoc("block/fence_inventory")))
 				.texture("texture", "block/" + texture);
 	}
 
-	private void toBlock(RegistryObject<? extends Block> b) {
-		toBlockModel(b.get(), ForgeRegistries.BLOCKS.getKey(b.get()).getPath());
+	private void toBlock(Supplier<? extends Block> b) {
+		toBlockModel(b.get(), BuiltInRegistries.BLOCK.getKey(b.get()).getPath());
 	}
 	private void toBlockModel(Block b, String model) {
 		toBlockModel(b, prefix("block/" + model));
 	}
 
 	private void toBlockModel(Block b, ResourceLocation model) {
-		withExistingParent(ForgeRegistries.BLOCKS.getKey(b).getPath(), model);
+		withExistingParent(BuiltInRegistries.BLOCK.getKey(b).getPath(), model);
 	}
 
-	public ItemModelBuilder itemBlockFlat(RegistryObject<? extends Block> block) {
+	public ItemModelBuilder itemBlockFlat(Supplier<? extends Block> block) {
 		return itemBlockFlat(block.get(), blockName(block.get()));
 	}
 
@@ -185,12 +186,16 @@ public class ItemModelGenerator extends ItemModelProvider {
 				.texture("layer0", modLoc("block/" + name));
 	}
 
-	public ItemModelBuilder egg(RegistryObject<Item> item) {
-		return withExistingParent(ForgeRegistries.ITEMS.getKey(item.get()).getPath(), mcLoc("item/template_spawn_egg"));
+	public ItemModelBuilder egg(Supplier<Item> item) {
+		return withExistingParent(BuiltInRegistries.ITEM.getKey(item.get()).getPath(), mcLoc("item/template_spawn_egg"));
 	}
 
 	public String blockName(Block block) {
-		return ForgeRegistries.BLOCKS.getKey(block).getPath();
+		return BuiltInRegistries.BLOCK.getKey(block).getPath();
+	}
+
+	public String itemName(Item item) {
+		return BuiltInRegistries.ITEM.getKey(item).getPath();
 	}
 
 	@Override

@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_calcite_powder",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_calcite_powder"
     ]
   ],
   "rewards": {
     "recipes": [
       "biome_backlog:calcite"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

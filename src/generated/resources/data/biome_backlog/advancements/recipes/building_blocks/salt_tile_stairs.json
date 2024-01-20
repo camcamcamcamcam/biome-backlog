@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_salt_block",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_salt_block"
     ]
   ],
   "rewards": {
     "recipes": [
       "biome_backlog:salt_tile_stairs"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

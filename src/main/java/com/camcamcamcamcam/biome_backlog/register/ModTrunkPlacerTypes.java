@@ -2,20 +2,15 @@ package com.camcamcamcamcam.biome_backlog.register;
 
 import com.camcamcamcamcam.biome_backlog.BiomeBacklog;
 import com.camcamcamcamcam.biome_backlog.world.gen.trunk.PalmTrunkPlacer;
-import com.mojang.serialization.Codec;
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
+import net.neoforged.neoforge.registries.DeferredRegister;
+
+import java.util.function.Supplier;
 
 public class ModTrunkPlacerTypes {
-	public static final TrunkPlacerType<PalmTrunkPlacer> PALM_TRUNK_PLACER = register(BiomeBacklog.prefixOnString("palm_trunk_placer"), PalmTrunkPlacer.CODEC);
+	public static final DeferredRegister<TrunkPlacerType<?>> TRUNK_PLACER_TYPE = DeferredRegister.create(BuiltInRegistries.TRUNK_PLACER_TYPE, BiomeBacklog.MODID);
 
-	private static <P extends TrunkPlacer> TrunkPlacerType<P> register(String p_70327_, Codec<P> p_70328_) {
-		return Registry.register(BuiltInRegistries.TRUNK_PLACER_TYPE, p_70327_, new TrunkPlacerType<>(p_70328_));
-	}
+	public static final Supplier<TrunkPlacerType<PalmTrunkPlacer>> PALM_TRUNK_PLACER = TRUNK_PLACER_TYPE.register("palm_trunk_placer", () -> new TrunkPlacerType<>(PalmTrunkPlacer.CODEC));
 
-	public static void init() {
-
-	}
 }

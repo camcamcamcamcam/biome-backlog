@@ -3,7 +3,5 @@
   "ingredient": {
     "tag": "biome_backlog:colored_beds"
   },
-  "result": {
-    "block": "minecraft:white_bed"
-  }
+  "result": "minecraft:white_bed"
 }

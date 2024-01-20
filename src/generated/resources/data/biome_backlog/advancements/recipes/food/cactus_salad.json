@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_cactus_pad",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_cactus_pad"
     ]
   ],
   "rewards": {
     "recipes": [
       "biome_backlog:cactus_salad"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

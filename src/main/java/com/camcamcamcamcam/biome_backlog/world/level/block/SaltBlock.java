@@ -3,21 +3,22 @@ package com.camcamcamcamcam.biome_backlog.world.level.block;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
-import net.minecraft.world.level.block.AbstractGlassBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.StainedGlassBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 
-public class SaltBlock extends AbstractGlassBlock {
+public class SaltBlock extends StainedGlassBlock {
 
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
 
     public SaltBlock(Properties properties) {
-        super(properties);
+        super(DyeColor.WHITE, properties);
         this.registerDefaultState(this.getStateDefinition().any().setValue(LIT, false));
     }
 

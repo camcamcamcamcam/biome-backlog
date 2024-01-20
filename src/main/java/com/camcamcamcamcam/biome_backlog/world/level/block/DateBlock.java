@@ -45,7 +45,7 @@ public class DateBlock extends Block implements BonemealableBlock {
     }
 
 	@Override
-	public boolean isValidBonemealTarget(LevelReader setter, BlockPos pos, BlockState state, boolean isClient) {
+    public boolean isValidBonemealTarget(LevelReader setter, BlockPos pos, BlockState state) {
 		return true;
 	}
 
