@@ -23,5 +23,7 @@ public class ModItemTagProvider extends ItemTagsProvider {
 		this.tag(ItemTags.LOGS_THAT_BURN).add(ModBlocks.STRIPPED_PALM_LOG.get().asItem(), ModBlocks.STRIPPED_PALM_WOOD.get().asItem(), ModBlocks.PALM_LOG.get().asItem(), ModBlocks.BAOBAB_TRUNK.get().asItem(), ModBlocks.BAOBAB_BARK.get().asItem());
 		this.tag(ItemTags.PLANKS).add(ModBlocks.PALM_PLANKS.get().asItem());
 		this.tag(Tags.Items.EGGS).add(ModBlocks.OSTRICH_EGG.get().asItem());
+		this.tag(ItemTags.WOODEN_SLABS).add(ModBlocks.PALM_SLAB.get().asItem());
+		this.tag(ItemTags.WOODEN_STAIRS).add(ModBlocks.PALM_STAIRS.get().asItem());
 	}
 }
