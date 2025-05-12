@@ -104,7 +104,7 @@ public class ClientRegistrar {
 	@SubscribeEvent
 	public static void modelBake(ModelEvent.ModifyBakingResult event) {
 
-		ItemProperties.register(ModItems.PALM_SHIELD.get(), new ResourceLocation("blocking"), (p_174590_, p_174591_, p_174592_, p_174593_) -> {
+		ItemProperties.register(ModItems.PALM_SHIELD.get(), ResourceLocation.parse("blocking"), (p_174590_, p_174591_, p_174592_, p_174593_) -> {
 			return p_174592_ != null && p_174592_.isUsingItem() && p_174592_.getUseItem() == p_174590_ ? 1.0F : 0.0F;
 		});
 	}
