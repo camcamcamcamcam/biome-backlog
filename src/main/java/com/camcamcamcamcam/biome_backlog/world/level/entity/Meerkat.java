@@ -105,10 +105,10 @@ public class Meerkat extends Animal {
 	}
 
 	@Override
-	protected void defineSynchedData() {
-		super.defineSynchedData();
-		this.entityData.define(DATA_TRUSTED_ID_0, Optional.empty());
-		this.entityData.define(DATA_STANDING, false);
+	protected void defineSynchedData(SynchedEntityData.Builder builder) {
+		super.defineSynchedData(builder);
+		builder.define(DATA_TRUSTED_ID_0, Optional.empty());
+		builder.define(DATA_STANDING, false);
 	}
 
 	public void onSyncedDataUpdated(EntityDataAccessor<?> p_29615_) {
@@ -282,7 +282,7 @@ public class Meerkat extends Animal {
 	}
 
 	public static boolean checkMeerkatSpawnRules(EntityType<? extends Animal> p_218105_, LevelAccessor p_218106_, MobSpawnType p_218107_, BlockPos p_218108_, RandomSource p_218109_) {
-		return p_218106_.getBlockState(p_218108_.below()).is(Tags.Blocks.SAND) && isBrightEnoughToSpawn(p_218106_, p_218108_);
+		return p_218106_.getBlockState(p_218108_.below()).is(Tags.Blocks.SANDS) && isBrightEnoughToSpawn(p_218106_, p_218108_);
 	}
 
 	@Override

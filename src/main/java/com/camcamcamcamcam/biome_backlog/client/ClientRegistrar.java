@@ -26,16 +26,16 @@ import net.minecraft.world.level.FoliageColor;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 
 @OnlyIn(Dist.CLIENT)
-@Mod.EventBusSubscriber(modid = BiomeBacklog.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = BiomeBacklog.MODID, value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
 public class ClientRegistrar {
 	public static void setup(FMLCommonSetupEvent event) {
 
@@ -104,7 +104,7 @@ public class ClientRegistrar {
 	@SubscribeEvent
 	public static void modelBake(ModelEvent.ModifyBakingResult event) {
 
-		ItemProperties.register(ModItems.PALM_SHIELD.get(), new ResourceLocation("blocking"), (p_174590_, p_174591_, p_174592_, p_174593_) -> {
+		ItemProperties.register(ModItems.PALM_SHIELD.get(), ResourceLocation.parse("blocking"), (p_174590_, p_174591_, p_174592_, p_174593_) -> {
 			return p_174592_ != null && p_174592_.isUsingItem() && p_174592_.getUseItem() == p_174590_ ? 1.0F : 0.0F;
 		});
 	}

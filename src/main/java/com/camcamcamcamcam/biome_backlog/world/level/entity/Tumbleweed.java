@@ -66,14 +66,14 @@ public class Tumbleweed extends Entity {
 
     @Override
     protected float getEyeHeight(Pose pose, EntityDimensions dimensions) {
-        return dimensions.height * 0.5F;
+        return dimensions.height() * 0.5F;
     }
 
     @Override
-    protected void defineSynchedData() {
-        this.entityData.define(DAMAGE_COOLDOWN_ID, DAMAGE_COOLDOWN_MAX);
-        this.entityData.define(WIND_DIRECTION_ID,  0.0F);
-        this.entityData.define(ROLL_ID,            0.0F);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        builder.define(DAMAGE_COOLDOWN_ID, DAMAGE_COOLDOWN_MAX);
+        builder.define(WIND_DIRECTION_ID,  0.0F);
+        builder.define(ROLL_ID,            0.0F);
     }
 
     @Override
